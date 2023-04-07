@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.HomeActivity">
+    tools:context=".activity.MainActivity">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +16,7 @@
 
             <TextView
                 android:id="@+id/tvHi"
-                android:text="Hello Nguyễn Văn Mười"
+                android:text="Fragment Nguyễn Văn Mười"
                 android:textColor="@color/orange"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -149,136 +149,65 @@
                 android:layout_marginRight="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/rcPopular"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="30sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="35sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="40sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="45sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="50sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="55sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:text="Day la text view vi du"
+                    android:textSize="60sp"/>
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent">
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/appBar"
-            app:fabCradleMargin="5dp"
-            app:fabCradleRoundedCornerRadius="40dp"
-            android:layout_gravity="bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:weightSum="10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/home"/>
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Home"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/notification"/>
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Notification"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/settings"/>
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Settings"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/person"/>
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="Me"/>
-
-                </LinearLayout>
-
-
-
-            </LinearLayout>
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_anchor="@id/appBar"
-            android:elevation="6dp"
-            app:elevation="3dp"
-            android:src="@drawable/cart"
-            android:backgroundTint="@color/orange"/>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
