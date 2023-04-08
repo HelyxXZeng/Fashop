@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new HomeFragment());
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.notification:
