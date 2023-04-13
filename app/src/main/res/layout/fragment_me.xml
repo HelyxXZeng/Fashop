@@ -46,14 +46,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nguyễn Văn Mười"
+                    android:text="Bow Jaro"
                     android:textSize="25sp"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="nguyenvanmuoi@gmail.com"
+                    android:text="bowjaro@gmail.com"
                     android:textSize="17sp"/>
 
             </LinearLayout>
