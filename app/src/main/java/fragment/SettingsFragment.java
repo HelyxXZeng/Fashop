@@ -31,6 +31,7 @@ public class SettingsFragment extends Fragment {
     TextView tvCommunityRules;
     TextView tvFashopPolicies;
 
+    public SettingsFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         initUI(view);
+
+
         darkModeBtn.setChecked(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES);
 
         return view;
@@ -54,7 +57,17 @@ public class SettingsFragment extends Fragment {
     {
         darkModeBtn = view.findViewById(R.id.darkModeBtn);
 
+        tvHelpCenter = view.findViewById(R.id.tvHelpCenter);
 
+        tvCommunityRules = view.findViewById(R.id.tvCommunityRules);
+
+        tvFashopPolicies = view.findViewById(R.id.tvFashopPolicies);
+
+        initListener();
+    }
+
+    void initListener()
+    {
         darkModeBtn.setOnClickListener(v -> {
             if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -63,19 +76,16 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        tvHelpCenter = view.findViewById(R.id.tvHelpCenter);
         tvHelpCenter.setOnClickListener(v -> {
             Intent intent = new Intent(context, HelpCenterActivity.class);
             startActivity(intent);
         });
 
-        tvCommunityRules = view.findViewById(R.id.tvCommunityRules);
         tvCommunityRules.setOnClickListener(v ->{
             Intent intent = new Intent(context, CommunityRulesActivity.class);
             startActivity(intent);
         });
 
-        tvFashopPolicies = view.findViewById(R.id.tvFashopPolicies);
         tvFashopPolicies.setOnClickListener(v->{
             Intent intent = new Intent(context, FashopPoliciesActivity.class);
             startActivity(intent);
@@ -87,6 +97,5 @@ public class SettingsFragment extends Fragment {
         super.onPause();
 
     }
-
 
 }
