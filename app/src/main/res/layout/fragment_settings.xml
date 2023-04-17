@@ -13,7 +13,7 @@
         android:background="@color/orange"
         android:layout_height="300dp">
         <TextView
-            android:id="@+id/tvAccount"
+            android:id="@+id/tvSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvAccount"
+            app:layout_constraintTop_toBottomOf="@+id/tvSettings"
             app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
@@ -199,14 +199,19 @@
 
                 <TextView
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:text="Dark mode"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:layout_weight="1"/>
 
+                <Switch
+                    android:id="@+id/darkModeBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="right"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -237,6 +242,7 @@
                     android:src="@drawable/help"/>
 
                 <TextView
+                    android:id="@+id/tvHelpCenter"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
                     android:layout_width="match_parent"
@@ -272,6 +278,7 @@
                     android:src="@drawable/group"/>
 
                 <TextView
+                    android:id="@+id/tvCommunityRules"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
                     android:layout_width="match_parent"
@@ -307,6 +314,7 @@
                     android:src="@drawable/info"/>
 
                 <TextView
+                    android:id="@+id/tvFashopPolicies"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
                     android:layout_width="match_parent"

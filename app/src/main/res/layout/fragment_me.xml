@@ -269,6 +269,7 @@
                     android:src="@drawable/lock"/>
 
                 <TextView
+                    android:id="@+id/tvPrivacyPolicy"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
                     android:layout_width="match_parent"
@@ -304,6 +305,7 @@
                     android:src="@drawable/question"/>
 
                 <TextView
+                    android:id="@+id/tvQuestions"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
                     android:layout_width="match_parent"
@@ -339,6 +341,7 @@
                     android:src="@drawable/info"/>
 
                 <TextView
+                    android:id="@+id/tvLegalInformation"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
                     android:layout_width="match_parent"
@@ -374,6 +377,7 @@
                     android:src="@drawable/group"/>
 
                 <TextView
+                    android:id="@+id/tvAboutUs"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
                     android:layout_width="match_parent"
