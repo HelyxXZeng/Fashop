@@ -4,14 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.fashop.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import fragment.HomeFragment;
@@ -23,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     Fragment currentFragment;
+
+    //
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +46,19 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(itemIdToFragment(item.getItemId()));
             return true;
         });
+
+
+
+        //
+        floatingActionButton = findViewById(R.id.cartBtn);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CartListActivity.class));
+            }
+        });
     }
+
 
     private Fragment itemIdToFragment(int id)
     {

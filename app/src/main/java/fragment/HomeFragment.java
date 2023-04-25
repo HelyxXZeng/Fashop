@@ -6,19 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.ClothingDomain;
 import com.example.fashop.activity.LoginActivity;
-import com.example.fashop.activity.MainUserActivity;
+import com.example.fashop.activity.PopularAdaptor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +57,10 @@ public class HomeFragment extends Fragment {
     private ImageView imgAvt;
     //
 
+    private RecyclerView.Adapter adapter;
+    private RecyclerView recycleViewPopularList;
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -79,7 +86,9 @@ public class HomeFragment extends Fragment {
     private void initUI(View view) {
         tvHi = view.findViewById(R.id.tvHi);
         imgAvt = view.findViewById(R.id.imgAvt);
+        recycleViewPopularList= view.findViewById(R.id.rcPopular);
         checkUser();
+        recyclerViewPopular();
     }
 
     private void checkUser() {
@@ -122,6 +131,20 @@ public class HomeFragment extends Fragment {
 
                     }
                 });
+    }
+
+    private void recyclerViewPopular(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        recycleViewPopularList.setLayoutManager(linearLayoutManager);
+
+        ArrayList<ClothingDomain> foodList = new ArrayList<>();
+        foodList.add(new ClothingDomain("clothing1", "clothing1", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest.", 10.0 ));
+        foodList.add(new ClothingDomain("clothing2", "clothing2", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest, 2 front flap pockets and 4 sleeve buttons on each side.", 12.0));
+        foodList.add(new ClothingDomain("clothing3", "clothing3", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest, 2 front flap pockets and 4 sleeve buttons on each side.", 20.0 ));
+
+
+        adapter = new PopularAdaptor(foodList);
+        recycleViewPopularList.setAdapter(adapter);
     }
 
 
