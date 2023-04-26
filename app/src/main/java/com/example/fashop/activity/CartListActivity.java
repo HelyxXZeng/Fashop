@@ -14,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fashop.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.w3c.dom.Text;
+
 public class CartListActivity extends AppCompatActivity {
 
     private RecyclerView.Adapter adapter;
     private RecyclerView recyclerViewList;
     private ManagementCart managementCart;
 
-    TextView totalFeeTxt, taxTxt, deliveryTxt, totalTxt, emptyTxt;
+    TextView totalFeeTxt, taxTxt, deliveryTxt, totalTxt, emptyTxt, backBtn;
     private double tax;
     private ScrollView scrollView;
 
@@ -33,20 +35,31 @@ public class CartListActivity extends AppCompatActivity {
         initView();
         initList();
         CalculateCart();
-        bottomNavigation();
+        BackEvent();
+        //bottomNavigation();
     }
 
-    private void bottomNavigation() {
-        FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+    private void BackEvent(){
+        backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CartListActivity.this, CartListActivity.class));
+                startActivity(new Intent(CartListActivity.this, MainActivity.class));
             }
         });
-
     }
+
+//    private void bottomNavigation() {
+//        FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
+//
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(CartListActivity.this, CartListActivity.class));
+//            }
+//        });
+//
+//    }
 
     private void initView(){
         recyclerViewList=findViewById(R.id.cartView);

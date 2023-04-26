@@ -23,7 +23,7 @@
                 android:layout_marginTop="60dp"
                 android:text="Title"
                 android:textAlignment="center"
-                android:textColor="#373b54"
+                android:textColor="@color/purple1"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="$"
                 android:textAlignment="center"
-                android:textColor="#ff5e00"
+                android:textColor="@color/orange3"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
                     android:layout_marginEnd="16dp"
                     android:text="1"
                     android:textAlignment="center"
-                    android:textColor="#373b54"
+                    android:textColor="@color/purple1"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="description"
-                android:textColor="#686767"
+                android:textColor="@color/gray1"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -99,7 +99,7 @@
         android:background="@drawable/orange_button"
         android:gravity="center"
         android:textSize="23sp"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

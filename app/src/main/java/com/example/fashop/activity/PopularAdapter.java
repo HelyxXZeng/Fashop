@@ -15,16 +15,16 @@ import com.example.fashop.R;
 
 import java.util.ArrayList;
 
-public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHolder> {
+public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHolder> {
     ArrayList<ClothingDomain> popularFood;
 
-    public PopularAdaptor(ArrayList<ClothingDomain> categoryDomains) {
+    public PopularAdapter(ArrayList<ClothingDomain> categoryDomains) {
         this.popularFood = categoryDomains;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_pupular,parent,false);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_popular,parent,false);
         return new ViewHolder(inflate);
     }
 

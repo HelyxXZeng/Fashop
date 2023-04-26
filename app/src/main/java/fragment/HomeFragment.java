@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.example.fashop.R;
 import com.example.fashop.activity.ClothingDomain;
 import com.example.fashop.activity.LoginActivity;
-import com.example.fashop.activity.PopularAdaptor;
+import com.example.fashop.activity.PopularAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -143,7 +143,7 @@ public class HomeFragment extends Fragment {
         foodList.add(new ClothingDomain("clothing3", "clothing3", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest, 2 front flap pockets and 4 sleeve buttons on each side.", 20.0 ));
 
 
-        adapter = new PopularAdaptor(foodList);
+        adapter = new PopularAdapter(foodList);
         recycleViewPopularList.setAdapter(adapter);
     }
 
