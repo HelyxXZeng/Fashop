@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.fashop.R;
 
+import MyClass.ManagementCart;
+import MyClass.ClothingDomain;
+
 public class ShowDetailActivity extends AppCompatActivity {
     private TextView addToCartBtn;
     private TextView titleTxt, feeTxt, descriptionTxt, numberOrderTxt;

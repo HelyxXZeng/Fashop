@@ -3,7 +3,6 @@ package com.example.fashop.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -12,9 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.w3c.dom.Text;
+import Adapter.CartListAdapter;
+import MyClass.ManagementCart;
 
 public class CartListActivity extends AppCompatActivity {
 

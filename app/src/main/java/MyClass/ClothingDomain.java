@@ -1,4 +1,4 @@
-package com.example.fashop.activity;
+package MyClass;
 
 import java.io.Serializable;
 

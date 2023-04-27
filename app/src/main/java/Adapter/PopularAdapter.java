@@ -1,4 +1,4 @@
-package com.example.fashop.activity;
+package Adapter;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fashop.R;
+import MyClass.ClothingDomain;
+import com.example.fashop.activity.ShowDetailActivity;
 
 import java.util.ArrayList;
 

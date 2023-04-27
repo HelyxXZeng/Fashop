@@ -1,9 +1,14 @@
-package com.example.fashop.activity;
+package MyClass;
 
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.fashop.activity.ChangNumberItemsListener;
+import MyClass.ClothingDomain;
+
 import java.util.ArrayList;
+
+import MyClass.TinyDB;
 
 public class ManagementCart {
     private Context context;

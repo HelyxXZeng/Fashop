@@ -17,9 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fashop.R;
-import com.example.fashop.activity.ClothingDomain;
+import MyClass.ClothingDomain;
 import com.example.fashop.activity.LoginActivity;
-import com.example.fashop.activity.PopularAdapter;
+import Adapter.PopularAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
