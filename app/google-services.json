@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "465927164434",
+    "project_id": "fashop-5841f",
+    "storage_bucket": "fashop-5841f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465927164434:android:faf2a8164ddf221a11becb",
+        "android_client_info": {
+          "package_name": "com.example.fashop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465927164434-rt98acvtf2eat8e5h2viq6l9afl53fi3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVOPNjYW1SUFaT9TXHxy8cggZaRC21y0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465927164434-rt98acvtf2eat8e5h2viq6l9afl53fi3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
