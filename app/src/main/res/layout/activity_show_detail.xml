@@ -23,7 +23,6 @@
                 android:layout_marginTop="60dp"
                 android:text="Title"
                 android:textAlignment="center"
-                android:textColor="@color/purple1"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -41,7 +40,8 @@
                 android:id="@+id/picFood"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                app:srcCompat="@drawable/clothing3" />
+                app:srcCompat="@drawable/clothing3"
+                android:layout_marginBottom="3dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,7 +63,6 @@
                     android:layout_marginEnd="16dp"
                     android:text="1"
                     android:textAlignment="center"
-                    android:textColor="@color/purple1"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -81,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="description"
-                android:textColor="@color/gray1"
+                android:justificationMode="inter_word"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
