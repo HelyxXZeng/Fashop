@@ -115,7 +115,8 @@ public class MeFragment extends Fragment {
                             String email = ""+ds.child("email").getValue();
                             String phone = ""+ds.child("phone").getValue();
                             String address = ""+ds.child("address").getValue();
-                            String password = ""+ds.child("password").getValue();
+                            //don't show password
+//                            String password = ""+ds.child("password").getValue();
 
                             String profileImage = ""+ds.child("profileImage").getValue();
 
@@ -123,7 +124,7 @@ public class MeFragment extends Fragment {
                             tvName.setText(name);
                             tvUserEmail.setText(email);
                             tvEmail.setText(email);
-                            tvPassword.setText(password);
+//                            tvPassword.setText(password);
                             tvAddress.setText(address);
                             tvPhone.setText(phone);
 

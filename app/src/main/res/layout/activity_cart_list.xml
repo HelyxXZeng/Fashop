@@ -67,7 +67,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Items Total:"
-                    android:textColor="@color/purple1"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -76,7 +75,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0"
-                    android:textColor="@color/purple1"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -95,7 +93,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Delivery Services:"
-                    android:textColor="@color/purple1"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -104,7 +101,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0"
-                    android:textColor="@color/purple1"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -123,7 +119,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Tax:"
-                    android:textColor="@color/purple1"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -132,7 +127,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0"
-                    android:textColor="@color/purple1"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -151,7 +145,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Total:"
-                    android:textColor="@color/purple1"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
@@ -160,7 +153,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0"
-                    android:textColor="@color/purple1"
                     android:textSize="30sp"
                     android:textStyle="bold" />
             </LinearLayout>
