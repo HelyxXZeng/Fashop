@@ -3,20 +3,16 @@ package fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,8 +22,6 @@ import com.example.fashop.activity.CommunityRulesActivity;
 import com.example.fashop.activity.FashopPoliciesActivity;
 import com.example.fashop.activity.HelpCenterActivity;
 import com.example.fashop.activity.LoginActivity;
-import com.example.fashop.activity.MainActivity;
-import com.example.fashop.activity.MainUserActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -137,7 +131,7 @@ public class SettingsFragment extends Fragment {
         progressDialog.setMessage("Logging Out...");
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("Online","false");
+        hashMap.put("online","false");
 
         //update value to db
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
