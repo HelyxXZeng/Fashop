@@ -100,16 +100,22 @@
                     android:layout_height="30dp"
                     android:src="@drawable/person"/>
 
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
+
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:text="Name"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:textSize="25sp"/>
+                    android:layout_height="40dp">
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:textSize="25sp"/>
+                </ScrollView>
+
 
 
             </LinearLayout>
@@ -171,18 +177,21 @@
                     android:layout_height="30dp"
                     android:src="@drawable/location"/>
 
-                <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:text="Address"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:textSize="25sp"/>
+                    android:layout_height="40dp">
 
-
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:textSize="25sp"/>
+                </ScrollView>
 
             </LinearLayout>
 
@@ -207,17 +216,20 @@
                     android:layout_height="30dp"
                     android:src="@drawable/email"/>
 
-                <TextView
-                    android:id="@+id/tvEmail"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:text="Email"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:textSize="25sp"/>
-
+                    android:layout_height="40dp">
+                    <TextView
+                        android:id="@+id/tvEmail"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:textSize="25sp"/>
+                </ScrollView>
 
             </LinearLayout>
 
@@ -292,8 +304,6 @@
                     android:clickable="true"
                     android:textSize="25sp"/>
 
-
-
             </LinearLayout>
 
             <View
@@ -327,8 +337,6 @@
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:textSize="25sp"/>
-
-
 
             </LinearLayout>
 
@@ -364,8 +372,6 @@
                     android:clickable="true"
                     android:textSize="25sp"/>
 
-
-
             </LinearLayout>
 
             <View
@@ -400,12 +406,10 @@
                     android:clickable="true"
                     android:textSize="25sp"/>
 
-
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

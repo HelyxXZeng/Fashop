@@ -1,13 +1,13 @@
 package com.example.fashop.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fashop.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
                     checkUserType();
                 }
             }
-        }, 500);
+        }, 300);
 
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
