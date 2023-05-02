@@ -114,7 +114,11 @@ public class MeFragment extends Fragment {
                             String name = "" + ds.child("name").getValue();
                             String email = ""+ds.child("email").getValue();
                             String phone = ""+ds.child("phone").getValue();
-                            String address = ""+ds.child("address").getValue();
+
+                            String address = ""+ds.child("streetAddress").getValue() +", "
+                                    + ds.child("ward").getValue()  +", "
+                                    + ds.child("district").getValue()  +", "
+                                    + ds.child("city").getValue();
                             //don't show password
 //                            String password = ""+ds.child("password").getValue();
 

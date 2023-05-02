@@ -29,14 +29,6 @@ tools:context=".activity.RegisterUserActivity">
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="@color/white"/>
-
-    <ImageButton
-        android:id="@+id/gpsBtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/gps_white"
-        android:layout_alignParentEnd="true"
-        android:background="@null"/>
 </RelativeLayout>
 
 <ImageView
@@ -62,18 +54,21 @@ tools:context=".activity.RegisterUserActivity">
     android:src="@drawable/person_orange"/>
 
 
-<EditText
-    android:id="@+id/nameEt"
-    android:hint="Full Name"
-    android:layout_below="@id/profileTv"
-    android:padding="10dp"
-    android:drawableStart="@drawable/person_orange"
-    android:drawablePadding="5dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:inputType="textPersonName|textCapWords"
-    android:background="@drawable/shape_rect02"/>
+    <EditText
+        android:id="@+id/nameEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileTv"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape_rect02"
+        android:drawableStart="@drawable/person_orange"
+        android:drawablePadding="5dp"
+        android:hint="Full Name"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp" />
 
 <EditText
     android:id="@+id/phoneEt"
@@ -91,67 +86,106 @@ tools:context=".activity.RegisterUserActivity">
     android:inputType="phone"
     android:padding="10dp" />
 
-<LinearLayout
-    android:id="@+id/addressLl"
 
-    android:layout_below="@id/phoneEt"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <EditText
-        android:id="@+id/countryEt"
-        android:hint="Country"
-        android:layout_below="@id/nameEt"
-        android:padding="10dp"
-        android:drawableStart="@drawable/location_orange"
-        android:drawablePadding="5dp"
+    <LinearLayout
+        android:id="@+id/cityInfor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/phoneEt"
         android:layout_margin="5dp"
-        android:inputType="textPostalAddress"
-        android:layout_weight="1"
-        android:background="@drawable/shape_rect02"/>
-    <EditText
-        android:id="@+id/stateEt"
-        android:hint="State"
-        android:layout_below="@id/nameEt"
-        android:padding="10dp"
-        android:drawableStart="@drawable/location_orange"
-        android:drawablePadding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:inputType="textPostalAddress"
-        android:layout_weight="1"
-        android:background="@drawable/shape_rect02"/>
-    <EditText
-        android:id="@+id/cityEt"
-        android:hint="City"
-        android:layout_below="@id/nameEt"
-        android:padding="10dp"
-        android:drawableStart="@drawable/location_orange"
-        android:drawablePadding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:inputType="textPostalAddress"
-        android:layout_weight="1"
-        android:background="@drawable/shape_rect02"/>
-</LinearLayout>
+        android:orientation="horizontal">
 
-<EditText
-    android:id="@+id/addressEt"
-    android:hint="Complete Address"
-    android:layout_below="@id/addressLl"
-    android:padding="10dp"
-    android:drawableStart="@drawable/location_orange"
-    android:drawablePadding="5dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:inputType="textPostalAddress|textMultiLine"
-    android:background="@drawable/shape_rect02"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/location_orange"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="10dp"
+            android:text="City"/>
+
+        <Spinner
+            android:id="@+id/spinner_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/distInfor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cityInfor"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/location_orange"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="10dp"
+            android:text="District"/>
+
+        <Spinner
+            android:id="@+id/spinner_district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/wardInfor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/distInfor"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/location_orange"
+            android:drawablePadding="5dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="10dp"
+            android:text="Ward"/>
+
+        <Spinner
+            android:id="@+id/spinner_ward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/addressEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/wardInfor"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape_rect02"
+        android:drawableStart="@drawable/location_orange"
+        android:drawablePadding="5dp"
+        android:hint="Street Adress"
+        android:inputType="textPostalAddress|textMultiLine"
+        android:padding="10dp" />
 
 <EditText
     android:id="@+id/emailEt"
@@ -210,16 +244,4 @@ tools:context=".activity.RegisterUserActivity">
     android:layout_centerHorizontal="true"
     android:backgroundTint="@color/orange1"
     app:cornerRadius="20dp"/>
-
-
-
-
-<TextView
-    android:id="@+id/registerSellerTv"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:text="Are you a seller? Register"
-    android:layout_centerHorizontal="true"
-    android:layout_alignParentBottom="true"/>
 </RelativeLayout>
