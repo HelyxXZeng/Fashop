@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,13 +17,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fashop.R;
+
+import Adapter.CategoryAdapter;
+import Adapter.ModelAdapter;
 import MyClass.ClothingDomain;
 import com.example.fashop.activity.LoginActivity;
 import Adapter.PopularAdapter;
+import MyClass.ModelImage;
+import MyClass.ProductCategory;
+import MyClass.ProductModel;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +71,13 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView.Adapter adapter;
     private RecyclerView recycleViewPopularList;
+    private List<ProductCategory> categories = new ArrayList<>();
+    private List<ProductModel> modelList = new ArrayList<>();
+    private List<ModelImage> modelImageList = new ArrayList<>();
+    private RecyclerView rcCategories;
+    private CategoryAdapter categoryAdapter;
+    private RecyclerView rcModels;
+    private ModelAdapter modelAdapter;
 
 
     public HomeFragment() {
@@ -87,8 +106,196 @@ public class HomeFragment extends Fragment {
         tvHi = view.findViewById(R.id.tvHi);
         imgAvt = view.findViewById(R.id.imgAvt);
         recycleViewPopularList= view.findViewById(R.id.rcPopular);
+        rcCategories = view.findViewById(R.id.rcCategories);
+        rcModels = view.findViewById(R.id.rcModel);
+
         checkUser();
+        loadCategory();
         recyclerViewPopular();
+        loadModel();
+    }
+
+    private void loadModel() {
+        GridLayoutManager manager = new GridLayoutManager(context, 2);
+
+        // Adapter Category
+        rcModels.setLayoutManager(manager);
+        modelAdapter = new ModelAdapter(modelList);
+        rcModels.setAdapter(modelAdapter);
+        getModelData();
+    }
+
+    private void getModelData() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Model");
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                ProductModel model = dataSnapshot.getValue(ProductModel.class);
+                if (model != null)
+                {
+                    modelList.add(model);
+                    modelAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                ProductModel model = dataSnapshot.getValue(ProductModel.class);
+                if (model != null && modelList != null && !modelList.isEmpty())
+                {
+                    int len = modelList.size();
+
+                    for (int i = 0; i < len; ++i)
+                    {
+                        if (modelList.get(i).getID() == model.getID())
+                        {
+                            model.setImages(modelList.get(i).getImages());
+                            modelList.set(i, model);
+                            modelAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                ProductModel model = dataSnapshot.getValue(ProductModel.class);
+                if (model != null && modelList != null && !modelList.isEmpty())
+                {
+                    int len = modelList.size();
+                    for (int i = 0; i < len; ++i)
+                    {
+                        if (modelList.get(i).getID() == model.getID())
+                        {
+                            modelList.remove(i);
+                            modelAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("ModelImage");
+        ChildEventListener childEventListener2 = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                ModelImage modelImage = dataSnapshot.getValue(ModelImage.class);
+                if (modelImage != null)
+                {
+                    modelImageList.add(modelImage);
+                    joinModelWithImage();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                ModelImage modelImage = dataSnapshot.getValue(ModelImage.class);
+                if (modelImage != null && modelImageList != null && !modelImageList.isEmpty())
+                {
+                    int len = modelImageList.size();
+                    for (int i = 0; i < len; ++i)
+                    {
+                        if (modelImageList.get(i).getID() == modelImage.getID())
+                        {
+                            modelImageList.set(i, modelImage);
+                            joinModelWithImage();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                ModelImage modelImage = dataSnapshot.getValue(ModelImage.class);
+                if (modelImage != null && modelImageList != null && !modelImageList.isEmpty())
+                {
+                    int len = modelImageList.size();
+                    for (int i = 0; i < len; ++i)
+                    {
+                        if (modelImageList.get(i).getID() == modelImage.getID())
+                        {
+                            modelImageList.remove(i);
+                            joinModelWithImage();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        ref.addChildEventListener(childEventListener);
+        ref2.addChildEventListener(childEventListener2);
+    }
+
+    private void joinModelWithImage()
+    {
+        for (ProductModel model : modelList){
+            int id = model.getID();
+            List<String> urls = new ArrayList<>();
+            for (ModelImage modelImage : modelImageList){
+                if (modelImage.getModelID() == id)
+                {
+                    urls.add(modelImage.getUrl());
+                }
+            }
+            model.setImages(urls);
+        }
+        modelAdapter.notifyDataSetChanged();
+    }
+    private void loadCategory() {
+
+        getCategoryData();
+
+        LinearLayoutManager manager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
+
+        // Adapter Category
+        rcCategories.setLayoutManager(manager);
+        rcCategories.addItemDecoration(dividerItemDecoration);
+        categoryAdapter = new CategoryAdapter(categories);
+        rcCategories.setAdapter(categoryAdapter);
+    }
+
+
+    private void getCategoryData() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Category");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                categories.clear();
+                for (DataSnapshot child1: snapshot1.getChildren())
+                {
+                    ProductCategory category = child1.getValue(ProductCategory.class);
+                    categories.add(category);
+                }
+                categoryAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Toast.makeText(context, "Failed to get data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void checkUser() {
@@ -99,6 +306,7 @@ public class HomeFragment extends Fragment {
         }
         else{
             loadMyInfo();
+
         }
 
     }
