@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.example.fashop.activity.HelpCenterActivity;
 import com.example.fashop.activity.LegalInformationActivity;
 import com.example.fashop.activity.LoginActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
+import com.example.fashop.activity.ProfileEditUserActivity;
 import com.example.fashop.activity.QuestionsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,6 +51,8 @@ public class MeFragment extends Fragment {
 
     private ImageView imgAvt;
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
+
+    private ImageButton editBtn;
     //
 
     public MeFragment() {
@@ -85,6 +89,7 @@ public class MeFragment extends Fragment {
         tvAddress = view.findViewById(R.id.tvAddress);
         tvEmail = view.findViewById(R.id.tvEmail);
         tvPhone = view.findViewById(R.id.tvPhone);
+        editBtn = view.findViewById(R.id.editBtn);
         //
         checkUser();
         initListener();
@@ -170,6 +175,10 @@ public class MeFragment extends Fragment {
             Intent intent = new Intent(context, AboutUsActivity.class);
             startActivity(intent);
         });
+        editBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ProfileEditUserActivity.class);
+            startActivity(intent);
+        } );
     }
 
     @Override
