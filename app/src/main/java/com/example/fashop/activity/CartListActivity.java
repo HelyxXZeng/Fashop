@@ -3,6 +3,7 @@ package com.example.fashop.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -21,7 +22,9 @@ public class CartListActivity extends AppCompatActivity {
     private RecyclerView recyclerViewList;
     private ManagementCart managementCart;
 
-    TextView totalFeeTxt, taxTxt, deliveryTxt, totalTxt, emptyTxt, backBtn;
+    TextView totalFeeTxt, taxTxt, deliveryTxt, totalTxt, emptyTxt;
+
+    ImageButton backBtn;
     private double tax;
     private ScrollView scrollView;
 
@@ -43,7 +46,7 @@ public class CartListActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CartListActivity.this, MainActivity.class));
+                onBackPressed();
             }
         });
     }

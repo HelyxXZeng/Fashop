@@ -27,26 +27,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvAccount"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAccount">
 
 
             <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                android:id="@+id/imgAvt"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:id="@+id/imgAvt"
+                android:src="@drawable/avt"
                 app:c_border="true"
                 app:c_border_color="@color/orange1"
-                app:c_border_width="1dp"
-                android:src="@drawable/avt"/>
+                app:c_border_width="1dp" />
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvUserName"
@@ -54,16 +54,43 @@
                     android:layout_height="wrap_content"
                     android:text="Bow Jaro"
                     android:textSize="25sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvUserEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="bowjaro@gmail.com"
-                    android:textSize="17sp"/>
+                    android:textSize="17sp" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Edit Profile"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/editBtn"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@null"
+                    android:src="@drawable/edit_white" />
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -177,22 +204,17 @@
                     android:layout_height="30dp"
                     android:src="@drawable/location"/>
 
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        android:id="@+id/tvAddress"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Address"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:textSize="25sp"/>
-                </ScrollView>
-
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="15dp"
+                    android:text="Address"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="25sp"
+                    android:layout_height="fill_parent"
+                    android:layout_width="wrap_content"
+                    android:maxLines="4"
+                    android:lines="4"/>
             </LinearLayout>
 
             <View

@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Checking User...");
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("Online","true");
+        hashMap.put("online","true");
 
         //update value to db
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
