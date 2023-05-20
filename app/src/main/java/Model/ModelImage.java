@@ -1,4 +1,4 @@
-package MyClass;
+package Model;
 
 public class ModelImage {
     private int ID;

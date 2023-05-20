@@ -1,10 +1,8 @@
 package com.example.fashop.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ModelAdapter;
-import MyClass.ModelImage;
-import MyClass.ProductModel;
+import Model.ModelImage;
+import Model.ProductModel;
 
 
 public class SearchActivity extends AppCompatActivity {

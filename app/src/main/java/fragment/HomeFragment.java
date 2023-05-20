@@ -2,7 +2,6 @@ package fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,13 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,14 +26,12 @@ import Adapter.CategoryAdapter;
 import Adapter.ModelAdapter;
 import MyClass.ClothingDomain;
 
-import com.example.fashop.activity.CartListActivity;
 import com.example.fashop.activity.LoginActivity;
 import Adapter.PopularAdapter;
-import MyClass.ModelImage;
-import MyClass.ProductCategory;
-import MyClass.ProductModel;
+import Model.ModelImage;
+import Model.ProductCategory;
+import Model.ProductModel;
 
-import com.example.fashop.activity.MainActivity;
 import com.example.fashop.activity.SearchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

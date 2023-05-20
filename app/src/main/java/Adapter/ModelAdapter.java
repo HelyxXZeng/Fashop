@@ -14,8 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import MyClass.ProductCategory;
-import MyClass.ProductModel;
+import Model.ProductModel;
 
 public class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ViewHolder> {
     List<ProductModel> modelList;
