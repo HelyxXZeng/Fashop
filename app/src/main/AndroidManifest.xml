@@ -77,9 +77,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.SearchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
