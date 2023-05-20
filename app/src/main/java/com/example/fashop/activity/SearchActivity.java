@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapter.CheckboxItemAdapter;
 import Adapter.ModelAdapter;
 import Model.ModelImage;
 import Model.ProductModel;
@@ -28,11 +30,18 @@ public class SearchActivity extends AppCompatActivity {
     private List<ModelImage> modelImageList = new ArrayList<>();
     private RecyclerView rcModels2;
     private ModelAdapter modelAdapter2;
+
+    private ListView listView;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        listView = (ListView) findViewById(R.id.filter_list);
+        String[] items = {"Item 1", "Item 2", "Item 3", "Item 4"};
+        CheckboxItemAdapter adapter = new CheckboxItemAdapter(this, R.layout.viewholder_checkbox_item, items);
+        listView.setAdapter(adapter);
 
         String modelListJson = getIntent().getStringExtra("model_list_key");
         modelList2 = new Gson().fromJson(modelListJson, new TypeToken<List<ProductModel>>(){}.getType());
