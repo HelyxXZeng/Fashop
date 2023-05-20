@@ -128,12 +128,12 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(context, SearchActivity.class);
                 intent.putExtra("model_list_key", new Gson().toJson(modelList));
                 startActivity(intent);
-                Log.v("Hi", "Works perfectly");
+                //Log.v("Hi", "Works perfectly");
             }
 
         });
 
-        edtSearch.addTextChangedListener(new TextWatcher() {
+        /*edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
                 // This method will be invoked before the text is changed.
@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
                 modelAdapter = new ModelAdapter(searchModel);
                 rcModels.setAdapter(modelAdapter);
             }
-        });
+        });*/
 
         checkUser();
         loadCategory();

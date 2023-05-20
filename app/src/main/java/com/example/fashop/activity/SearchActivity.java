@@ -63,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
                 {
                     for (String text : searchText)
                     {
-                        if(models.getName().contains(text))
+                        if(models.getName().toLowerCase().contains(text.toLowerCase()))
                         {
                             searchModel2.add(models);
                         }
