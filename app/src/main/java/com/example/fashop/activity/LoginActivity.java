@@ -147,10 +147,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             String accountType = ""+ds.child("accountType");
-                            if (accountType.equals("Seller")){
+                            if (accountType.equals("Admin")){
                                 progressDialog.dismiss();
                                 //user is seller
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
 //                                Intent intent = new Intent(LoginActivity.this, MainUserActivity.class);
 //                                intent.putExtra("navigateToHomeFragment", true);
 //                                startActivity(intent);
