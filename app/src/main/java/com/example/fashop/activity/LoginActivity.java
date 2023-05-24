@@ -147,7 +147,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             String accountType = ""+ds.child("accountType");
-                            Log.v("Title:",accountType + " " + accountType.contains("Admin"));
                             if (accountType.contains("Admin")){
                                 progressDialog.dismiss();
                                 //user is seller
