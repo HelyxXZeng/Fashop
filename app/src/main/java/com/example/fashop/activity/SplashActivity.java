@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null){
                     //user not logged in start login activity
-                    startActivity(new Intent(SplashActivity.this, AdminMainActivity.class));
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 }
                 else{
@@ -76,9 +76,10 @@ public class SplashActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             String accountType = ""+ds.child("accountType");
-                            if (accountType.equals("Seller")){
+                            if (accountType.contains("Admin")){
                                 //user is seller
-                                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
+                                startActivity(new Intent(SplashActivity.this, AdminMainActivity.class));
 //                                Intent intent = new Intent(SplashActivity.this, MainUserActivity.class);
 //                                intent.putExtra("navigateToHomeFragment", true);
 //                                startActivity(intent);

@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -139,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
     private void checkUserType() {
         // if user is seller, start seller main screen
         // if user is buyer, start user mai screen
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -147,7 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             String accountType = ""+ds.child("accountType");
-                            if (accountType.equals("Admin")){
+                            Log.v("Title:",accountType + " " + accountType.contains("Admin"));
+                            if (accountType.contains("Admin")){
                                 progressDialog.dismiss();
                                 //user is seller
                                 startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
