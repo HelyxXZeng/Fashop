@@ -1,4 +1,4 @@
-package MyClass;
+package Model;
 
 public class ProductCategory {
     private int ID;

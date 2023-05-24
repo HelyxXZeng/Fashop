@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +25,14 @@ import com.example.fashop.R;
 import Adapter.CategoryAdapter;
 import Adapter.ModelAdapter;
 import MyClass.ClothingDomain;
+
 import com.example.fashop.activity.LoginActivity;
 import Adapter.PopularAdapter;
-import MyClass.ModelImage;
-import MyClass.ProductCategory;
-import MyClass.ProductModel;
+import Model.ModelImage;
+import Model.ProductCategory;
+import Model.ProductModel;
 
+import com.example.fashop.activity.SearchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -38,6 +41,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -73,6 +77,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recycleViewPopularList;
     private List<ProductCategory> categories = new ArrayList<>();
     private List<ProductModel> modelList = new ArrayList<>();
+    private List<ProductModel> searchModel = new ArrayList<>();
     private List<ModelImage> modelImageList = new ArrayList<>();
     private RecyclerView rcCategories;
     private CategoryAdapter categoryAdapter;
@@ -108,6 +113,55 @@ public class HomeFragment extends Fragment {
         recycleViewPopularList= view.findViewById(R.id.rcPopular);
         rcCategories = view.findViewById(R.id.rcCategories);
         rcModels = view.findViewById(R.id.rcModel);
+
+        EditText edtSearch = view.findViewById(R.id.edtSearch);
+        edtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SearchActivity.class);
+                intent.putExtra("model_list_key", new Gson().toJson(modelList));
+                startActivity(intent);
+                //Log.v("Hi", "Works perfectly");
+            }
+
+        });
+
+        /*edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+                // This method will be invoked before the text is changed.
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // This method will be invoked whenever the text is changed.
+                if (charSequence.toString() == "") loadModel();
+                // startActivity(new Intent(context, SearchActivity.class));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // This method will be invoked after the text has been changed.
+                String[] searchText = editable.toString().split(" ");
+                searchModel.clear();
+                for (ProductModel models : modelList)
+                {
+                    for (String text : searchText)
+                    {
+                        if(models.getName().contains(text))
+                        {
+                            searchModel.add(models);
+                        }
+                    }
+                }
+                GridLayoutManager manager = new GridLayoutManager(context, 2);
+
+                // Adapter Category
+                rcModels.setLayoutManager(manager);
+                modelAdapter = new ModelAdapter(searchModel);
+                rcModels.setAdapter(modelAdapter);
+            }
+        });*/
 
         checkUser();
         loadCategory();

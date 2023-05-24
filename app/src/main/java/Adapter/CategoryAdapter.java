@@ -1,7 +1,5 @@
 package Adapter;
 
-import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import MyClass.ProductCategory;
+import Model.ProductCategory;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
 
