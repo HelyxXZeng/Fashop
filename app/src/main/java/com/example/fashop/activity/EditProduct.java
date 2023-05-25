@@ -1,8 +1,10 @@
-package com.example.fashop;
+package com.example.fashop.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.fashop.R;
 
 public class EditProduct extends AppCompatActivity {
 
