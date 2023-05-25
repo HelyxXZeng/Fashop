@@ -1,8 +1,11 @@
 package Model;
 
+import com.google.firebase.firestore.PropertyName;
+
 import java.util.List;
 
 public class ProductModel {
+//    @PropertyName("ID")
     private int ID;
     private String name;
     private int categoryID;

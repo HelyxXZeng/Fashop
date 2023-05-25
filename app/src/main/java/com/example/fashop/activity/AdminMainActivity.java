@@ -25,6 +25,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
     private ImageButton logoutBtn;
     Button buttonPedit,buttonPadd;
+    Button btnAddCategory, btnEditCategory;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     @Override
@@ -32,6 +33,13 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
 
+        initUI();
+        checkUser();
+
+
+    }
+
+    private void initUI() {
         logoutBtn = findViewById(R.id.logoutBtn);
         buttonPedit = findViewById(R.id.buttoneditPro);
         buttonPadd = findViewById(R.id.buttonaddPro);
@@ -39,9 +47,13 @@ public class AdminMainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
+        btnAddCategory = findViewById(R.id.buttonaddCa);
+        btnEditCategory = findViewById(R.id.buttoneditCa);
 
-        checkUser();
+        initListener();
+    }
 
+    private void initListener() {
         buttonPedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,9 +63,24 @@ public class AdminMainActivity extends AppCompatActivity {
         buttonPadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminMainActivity.this, AddProduct.class));
+                startActivity(new Intent(AdminMainActivity.this, AddModel.class));
             }
         });
+
+        btnAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(AdminMainActivity.this, AddCategoryActivity.class)));
+            }
+        });
+
+        btnEditCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(AdminMainActivity.this, EditCategoryActivity.class)));
+            }
+        });
+
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +89,7 @@ public class AdminMainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void makeMeOffline() {
         //after logging in, make user online
         progressDialog.setMessage("Logging Out...");
