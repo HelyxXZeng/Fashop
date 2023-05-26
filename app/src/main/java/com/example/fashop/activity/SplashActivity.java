@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
                     checkUserType();
                 }
             }
-        }, 300);
+        }, 100);
 
 //        new Handler().postDelayed(new Runnable() {
 //            @Override

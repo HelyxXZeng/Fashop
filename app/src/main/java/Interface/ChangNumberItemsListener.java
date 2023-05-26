@@ -1,4 +1,4 @@
-package com.example.fashop.activity;
+package Interface;
 
 public interface ChangNumberItemsListener {
      void changed();
