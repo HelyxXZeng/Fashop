@@ -13,13 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
 import com.example.fashop.activity.AddModelActivity;
-import com.example.fashop.activity.EditModelFormActivity;
-import com.example.fashop.activity.ShowDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import Model.ProductCategory;
 import Model.ProductModel;
 
 public class EditModelAdapter extends RecyclerView.Adapter<EditModelAdapter.ViewHolder>{
