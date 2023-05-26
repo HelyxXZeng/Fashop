@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".activity.AddModel">
+    tools:context=".activity.AddModelActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -194,12 +194,26 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
-
-
-    <Button
-        android:id="@+id/btnAddModel"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Add Model"/>
+        android:padding="15dp">
+        <Button
+            android:id="@+id/btnAddModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Add Model"/>
+        <Button
+            android:id="@+id/btnDeleteModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            android:text="Delete Model"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </LinearLayout>

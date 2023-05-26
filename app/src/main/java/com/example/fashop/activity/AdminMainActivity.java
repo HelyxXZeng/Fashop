@@ -57,13 +57,13 @@ public class AdminMainActivity extends AppCompatActivity {
         buttonPedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminMainActivity.this, EditProduct.class));
+                startActivity(new Intent(AdminMainActivity.this, EditModelActivity.class));
             }
         });
         buttonPadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminMainActivity.this, AddModel.class));
+                startActivity(new Intent(AdminMainActivity.this, AddModelActivity.class));
             }
         });
 

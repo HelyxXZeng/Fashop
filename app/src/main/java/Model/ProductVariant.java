@@ -1,6 +1,8 @@
 package Model;
 
-public class ProductVariant {
+import java.io.Serializable;
+
+public class ProductVariant implements Serializable {
     private int ID;
     private int modelID;
     private String color;
