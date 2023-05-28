@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null){
                     //user not logged in start login activity
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
                 }
                 else{
@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
                     checkUserType();
                 }
             }
-        }, 300);
+        }, 100);
 
 //        new Handler().postDelayed(new Runnable() {
 //            @Override

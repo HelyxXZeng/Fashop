@@ -1,6 +1,5 @@
 package com.example.fashop.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fashop.R;
 
 import Adapter.CartListAdapter;
+import Interface.ChangNumberItemsListener;
 import MyClass.ManagementCart;
 
 public class CartListActivity extends AppCompatActivity {
