@@ -9,18 +9,41 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="800dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:id="@+id/imageList"
+                android:layout_width="match_parent"
+                android:layout_height="450dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <me.relex.circleindicator.CircleIndicator3
+                    android:id="@+id/circle_indicator_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:ci_drawable="@drawable/bg_indicator_3" />
+
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/titleTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="20dp"
                 android:text="Title"
                 android:textAlignment="center"
                 android:textSize="24sp"
@@ -35,13 +58,6 @@
                 android:textColor="@color/orange3"
                 android:textSize="22sp"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/picFood"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:srcCompat="@drawable/clothing3"
-                android:layout_marginBottom="3dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -79,27 +95,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="description"
                 android:justificationMode="inter_word"
-                android:textSize="20sp"
+                android:text="description"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
 
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/addToCartBtn"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:text="Add to Cart"
-        android:textStyle="bold"
+        android:layout_height="45dp"
+        android:background="@drawable/orangebutton2"
         android:elevation="3dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/orange_button"
         android:gravity="center"
-        android:textSize="23sp"
+        android:text="Add to Cart"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

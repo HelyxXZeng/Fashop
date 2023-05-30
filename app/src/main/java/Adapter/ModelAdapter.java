@@ -1,21 +1,23 @@
 package Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.ShowDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import MyClass.ProductCategory;
-import MyClass.ProductModel;
+import Model.ProductModel;
 
 public class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ViewHolder> {
     List<ProductModel> modelList;
@@ -47,6 +49,14 @@ public class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ViewHolder> 
 
         holder.tvModelName.setText(model.getName());
         holder.tvModelPrice.setText("$" + String.valueOf(model.getPrice()));
+        holder.addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), ShowDetailActivity.class);
+                intent.putExtra("object", model);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -61,12 +71,15 @@ public class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ViewHolder> 
         private TextView tvModelName;
         private TextView tvModelPrice;
 
+        private LinearLayout addBtn;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgModel = itemView.findViewById(R.id.imgModel);
             tvModelName = itemView.findViewById(R.id.tvModelName);
             tvModelPrice = itemView.findViewById(R.id.tvModelPrice);
+            addBtn = itemView.findViewById(R.id.addBtn);
         }
     }
 }

@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +26,14 @@ import com.example.fashop.R;
 import Adapter.CategoryAdapter;
 import Adapter.ModelAdapter;
 import MyClass.ClothingDomain;
+
 import com.example.fashop.activity.LoginActivity;
 import Adapter.PopularAdapter;
-import MyClass.ModelImage;
-import MyClass.ProductCategory;
-import MyClass.ProductModel;
+import Model.ModelImage;
+import Model.ProductCategory;
+import Model.ProductModel;
 
+import com.example.fashop.activity.SearchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -38,6 +42,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -69,16 +74,20 @@ public class HomeFragment extends Fragment {
     private ImageView imgAvt;
     //
 
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter popularAdapter;
     private RecyclerView recycleViewPopularList;
     private List<ProductCategory> categories = new ArrayList<>();
     private List<ProductModel> modelList = new ArrayList<>();
+    private List<ProductModel> searchModel = new ArrayList<>();
     private List<ModelImage> modelImageList = new ArrayList<>();
     private RecyclerView rcCategories;
     private CategoryAdapter categoryAdapter;
     private RecyclerView rcModels;
     private ModelAdapter modelAdapter;
 
+    private List<ProductModel> popularList = new ArrayList<>();
+
+    private List<ModelImage> popularImageList = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -109,10 +118,60 @@ public class HomeFragment extends Fragment {
         rcCategories = view.findViewById(R.id.rcCategories);
         rcModels = view.findViewById(R.id.rcModel);
 
+        EditText edtSearch = view.findViewById(R.id.edtSearch);
+        edtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SearchActivity.class);
+                intent.putExtra("model_list_key", new Gson().toJson(modelList));
+                startActivity(intent);
+                //Log.v("Hi", "Works perfectly");
+            }
+
+        });
+
+        /*edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+                // This method will be invoked before the text is changed.
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // This method will be invoked whenever the text is changed.
+                if (charSequence.toString() == "") loadModel();
+                // startActivity(new Intent(context, SearchActivity.class));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // This method will be invoked after the text has been changed.
+                String[] searchText = editable.toString().split(" ");
+                searchModel.clear();
+                for (ProductModel models : modelList)
+                {
+                    for (String text : searchText)
+                    {
+                        if(models.getName().contains(text))
+                        {
+                            searchModel.add(models);
+                        }
+                    }
+                }
+                GridLayoutManager manager = new GridLayoutManager(context, 2);
+
+                // Adapter Category
+                rcModels.setLayoutManager(manager);
+                modelAdapter = new ModelAdapter(searchModel);
+                rcModels.setAdapter(modelAdapter);
+            }
+        });*/
+
         checkUser();
         loadCategory();
         recyclerViewPopular();
         loadModel();
+        //recyclerViewPopular();
     }
 
     private void loadModel() {
@@ -135,6 +194,7 @@ public class HomeFragment extends Fragment {
                 {
                     modelList.add(model);
                     modelAdapter.notifyDataSetChanged();
+                    popularAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -152,6 +212,7 @@ public class HomeFragment extends Fragment {
                             model.setImages(modelList.get(i).getImages());
                             modelList.set(i, model);
                             modelAdapter.notifyDataSetChanged();
+                            popularAdapter.notifyDataSetChanged();
                             break;
                         }
                     }
@@ -170,6 +231,7 @@ public class HomeFragment extends Fragment {
                         {
                             modelList.remove(i);
                             modelAdapter.notifyDataSetChanged();
+                            popularAdapter.notifyDataSetChanged();
                             break;
                         }
                     }
@@ -260,17 +322,18 @@ public class HomeFragment extends Fragment {
             model.setImages(urls);
         }
         modelAdapter.notifyDataSetChanged();
+        popularAdapter.notifyDataSetChanged();
     }
     private void loadCategory() {
 
         getCategoryData();
 
         LinearLayoutManager manager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
+        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
 
         // Adapter Category
         rcCategories.setLayoutManager(manager);
-        rcCategories.addItemDecoration(dividerItemDecoration);
+        //rcCategories.addItemDecoration(dividerItemDecoration);
         categoryAdapter = new CategoryAdapter(categories);
         rcCategories.setAdapter(categoryAdapter);
     }
@@ -345,19 +408,9 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recycleViewPopularList.setLayoutManager(linearLayoutManager);
 
-        ArrayList<ClothingDomain> foodList = new ArrayList<>();
-        foodList.add(new ClothingDomain("clothing1", "clothing1", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest.", 10.0 ));
-        foodList.add(new ClothingDomain("clothing2", "clothing2", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest, 2 front flap pockets and 4 sleeve buttons on each side.", 12.0));
-        foodList.add(new ClothingDomain("clothing3", "clothing3", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest, 2 front flap pockets and 4 sleeve buttons on each side.", 20.0 ));
-
-
-        adapter = new PopularAdapter(foodList);
-        recycleViewPopularList.setAdapter(adapter);
+        popularAdapter = new PopularAdapter(modelList);
+        recycleViewPopularList.setAdapter(popularAdapter);
     }
-
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
