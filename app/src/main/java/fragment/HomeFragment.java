@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +87,6 @@ public class HomeFragment extends Fragment {
     private List<ProductModel> popularList = new ArrayList<>();
 
     private List<ModelImage> popularImageList = new ArrayList<>();
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -171,7 +169,6 @@ public class HomeFragment extends Fragment {
         loadCategory();
         recyclerViewPopular();
         loadModel();
-        //recyclerViewPopular();
     }
 
     private void loadModel() {
@@ -329,11 +326,11 @@ public class HomeFragment extends Fragment {
         getCategoryData();
 
         LinearLayoutManager manager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
-        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
 
         // Adapter Category
         rcCategories.setLayoutManager(manager);
-        //rcCategories.addItemDecoration(dividerItemDecoration);
+        rcCategories.addItemDecoration(dividerItemDecoration);
         categoryAdapter = new CategoryAdapter(categories);
         rcCategories.setAdapter(categoryAdapter);
     }
@@ -411,6 +408,10 @@ public class HomeFragment extends Fragment {
         popularAdapter = new PopularAdapter(modelList);
         recycleViewPopularList.setAdapter(popularAdapter);
     }
+
+
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

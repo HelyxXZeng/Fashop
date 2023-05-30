@@ -18,7 +18,6 @@ import Adapter.viewPage2Adapter;
 import Model.ProductModel;
 import MyClass.ManagementCart;
 import MyClass.ClothingDomain;
-import MyClass.Photo;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class ShowDetailActivity extends AppCompatActivity {

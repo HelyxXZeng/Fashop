@@ -3,8 +3,8 @@ package MyClass;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.fashop.activity.ChangNumberItemsListener;
 
+import Interface.ChangNumberItemsListener;
 import Model.ProductModel;
 import MyClass.ClothingDomain;
 
