@@ -95,7 +95,9 @@ public class AdminMainActivity extends AppCompatActivity {
         progressDialog.setMessage("Logging Out...");
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("Online", "false");
+
+        hashMap.put("online", "false");
+
 
         //update value to db
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");

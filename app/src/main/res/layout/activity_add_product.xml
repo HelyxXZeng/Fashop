@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AddProduct">
+ <androidx.appcompat.widget.LinearLayoutCompat
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical"
+     app:layout_constraintTop_toBottomOf="parent">
+  <LinearLayout
+      android:id="@+id/cityInfor"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/phoneEt"
+      android:layout_marginStart="5dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginEnd="5dp"
+      android:layout_marginBottom="5dp"
+      android:orientation="horizontal">
+
+   <TextView
+       android:layout_width="100dp"
+       android:layout_height="wrap_content"
+       android:drawableStart="@drawable/location_orange"
+       android:drawablePadding="5dp"
+       android:focusable="true"
+       android:focusableInTouchMode="true"
+       android:padding="10dp"
+       android:text="City" />
+
+   <Spinner
+       android:id="@+id/spinner_city"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_weight="1" />
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/distInfor"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/cityInfor"
+      android:layout_margin="5dp"
+      android:orientation="horizontal">
+
+   <TextView
+       android:layout_width="100dp"
+       android:layout_height="wrap_content"
+       android:drawablePadding="5dp"
+       android:drawableStart="@drawable/location_orange"
+       android:focusable="true"
+       android:focusableInTouchMode="true"
+       android:padding="10dp"
+       android:text="District"/>
+
+   <Spinner
+       android:id="@+id/spinner_district"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_weight="1" />
+
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:id="@+id/wardInfor"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/distInfor"
+      android:layout_marginStart="5dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginEnd="5dp"
+      android:layout_marginBottom="5dp"
+      android:orientation="horizontal">
+
+   <TextView
+       android:layout_width="100dp"
+       android:layout_height="wrap_content"
+       android:drawableStart="@drawable/location_orange"
+       android:drawablePadding="5dp"
+       android:focusable="true"
+       android:focusableInTouchMode="true"
+       android:padding="10dp"
+       android:text="Ward"/>
+
+   <Spinner
+       android:id="@+id/spinner_ward"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_weight="1" />
+
+  </LinearLayout>
+
+
+ </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

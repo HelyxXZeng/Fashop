@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
     private ImageView imgAvt;
     //
 
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter popularAdapter;
     private RecyclerView recycleViewPopularList;
     private List<ProductCategory> categories = new ArrayList<>();
     private List<ProductModel> modelList = new ArrayList<>();
@@ -84,7 +84,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView rcModels;
     private ModelAdapter modelAdapter;
 
+    private List<ProductModel> popularList = new ArrayList<>();
 
+    private List<ModelImage> popularImageList = new ArrayList<>();
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -189,6 +191,7 @@ public class HomeFragment extends Fragment {
                 {
                     modelList.add(model);
                     modelAdapter.notifyDataSetChanged();
+                    popularAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -206,6 +209,7 @@ public class HomeFragment extends Fragment {
                             model.setImages(modelList.get(i).getImages());
                             modelList.set(i, model);
                             modelAdapter.notifyDataSetChanged();
+                            popularAdapter.notifyDataSetChanged();
                             break;
                         }
                     }
@@ -224,6 +228,7 @@ public class HomeFragment extends Fragment {
                         {
                             modelList.remove(i);
                             modelAdapter.notifyDataSetChanged();
+                            popularAdapter.notifyDataSetChanged();
                             break;
                         }
                     }
@@ -314,6 +319,7 @@ public class HomeFragment extends Fragment {
             model.setImages(urls);
         }
         modelAdapter.notifyDataSetChanged();
+        popularAdapter.notifyDataSetChanged();
     }
     private void loadCategory() {
 
@@ -399,14 +405,8 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recycleViewPopularList.setLayoutManager(linearLayoutManager);
 
-        ArrayList<ClothingDomain> foodList = new ArrayList<>();
-        foodList.add(new ClothingDomain("clothing1", "clothing1", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest.", 10.0 ));
-        foodList.add(new ClothingDomain("clothing2", "clothing2", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest, 2 front flap pockets and 4 sleeve buttons on each side.", 12.0));
-        foodList.add(new ClothingDomain("clothing3", "clothing3", "UNIQUE DESIGN - The mens suits features single breasted, one button closure, notched collar lapel, welted pocket at left chest, 2 front flap pockets and 4 sleeve buttons on each side.", 20.0 ));
-
-
-        adapter = new PopularAdapter(foodList);
-        recycleViewPopularList.setAdapter(adapter);
+        popularAdapter = new PopularAdapter(modelList);
+        recycleViewPopularList.setAdapter(popularAdapter);
     }
 
 
