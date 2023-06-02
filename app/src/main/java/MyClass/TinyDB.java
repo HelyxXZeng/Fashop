@@ -38,7 +38,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+
+import Model.ProductModel;
 
 
 public class TinyDB {
@@ -325,14 +328,14 @@ public class TinyDB {
     }
 
 
-    public ArrayList<ClothingDomain> getListObject(String key){
+    public List<ProductModel> getListObject(String key){
         Gson gson = new Gson();
 
         ArrayList<String> objStrings = getListString(key);
-        ArrayList<ClothingDomain> playerList =  new ArrayList<ClothingDomain>();
+        List<ProductModel> playerList =  new ArrayList<ProductModel>();
 
         for(String jObjString : objStrings){
-            ClothingDomain player  = gson.fromJson(jObjString,  ClothingDomain.class);
+            ProductModel player  = gson.fromJson(jObjString,  ProductModel.class);
             playerList.add(player);
         }
         return playerList;
@@ -482,16 +485,16 @@ public class TinyDB {
      * @param obj is the Object you want to put
      */
     public void putObject(String key, Object obj){
-    	checkForNullKey(key);
-    	Gson gson = new Gson();
-    	putString(key, gson.toJson(obj));
+        checkForNullKey(key);
+        Gson gson = new Gson();
+        putString(key, gson.toJson(obj));
     }
 
-    public void putListObject(String key, ArrayList<ClothingDomain> playerList){
+    public void putListObject(String key, List<ProductModel> playerList){
         checkForNullKey(key);
         Gson gson = new Gson();
         ArrayList<String> objStrings = new ArrayList<String>();
-        for(ClothingDomain player: playerList){
+        for(ProductModel player: playerList){
             objStrings.add(gson.toJson(player));
         }
         putListString(key, objStrings);

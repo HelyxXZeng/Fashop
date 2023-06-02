@@ -5,7 +5,9 @@
     android:orientation="vertical"
     android:layout_margin="5dp"
     android:padding="10dp"
-    android:background="@drawable/rounded_corner">
+    android:elevation="3dp"
+    android:background="@drawable/cart_background"
+    android:id="@+id/addBtn">
 
     <ImageView
         android:id="@+id/imgModel"
@@ -21,12 +23,22 @@
         android:textSize="16sp"
         android:text="This is a very long text that needs to be truncated if it exceeds two lines." />
 
-    <TextView
-        android:id="@+id/tvModelPrice"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/red"
-        android:text="58000 VND"
-        android:textSize="20sp"/>
-
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:text="$ "
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tvModelPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:text="58000"
+            android:textSize="20sp"/>
+    </LinearLayout>
 </LinearLayout>

@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.fashop.R;
@@ -19,12 +22,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 public class AdminMainActivity extends AppCompatActivity {
 
     private ImageButton logoutBtn;
-    Button buttonPedit,buttonPadd;
+    ImageButton buttonPedit,buttonPadd,btnAddCategory, btnEditCategory;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     @Override
@@ -32,6 +36,13 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
 
+        initUI();
+        checkUser();
+
+
+    }
+
+    private void initUI() {
         logoutBtn = findViewById(R.id.logoutBtn);
         buttonPedit = findViewById(R.id.buttoneditPro);
         buttonPadd = findViewById(R.id.buttonaddPro);
@@ -39,21 +50,40 @@ public class AdminMainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
+        btnAddCategory = findViewById(R.id.buttonaddCa);
+        btnEditCategory = findViewById(R.id.buttoneditCa);
 
-        checkUser();
+        initListener();
+    }
 
+    private void initListener() {
         buttonPedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminMainActivity.this, EditProduct.class));
+                startActivity(new Intent(AdminMainActivity.this, EditModelActivity.class));
             }
         });
         buttonPadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminMainActivity.this, AddProduct.class));
+                startActivity(new Intent(AdminMainActivity.this, AddModelActivity.class));
             }
         });
+
+        btnAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(AdminMainActivity.this, AddCategoryActivity.class)));
+            }
+        });
+
+        btnEditCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(AdminMainActivity.this, EditCategoryActivity.class)));
+            }
+        });
+
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +97,9 @@ public class AdminMainActivity extends AppCompatActivity {
         progressDialog.setMessage("Logging Out...");
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("Online", "false");
+
+        hashMap.put("online", "false");
+
 
         //update value to db
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");

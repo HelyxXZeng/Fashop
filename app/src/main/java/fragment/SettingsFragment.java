@@ -122,6 +122,8 @@ public class SettingsFragment extends Fragment {
                 //sign out
                 // go to login activity
                 makeMeOffline();
+
+                getActivity().finish();
             }
         });
     }
