@@ -48,8 +48,7 @@ public class ModelAdapter extends RecyclerView.Adapter<ModelAdapter.ViewHolder> 
         }
 
         holder.tvModelName.setText(model.getName());
-        holder.tvModelPrice.setText(String.valueOf(model.getPrice()));
-
+        holder.tvModelPrice.setText("$" + String.valueOf(model.getPrice()));
         holder.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,8 +1,6 @@
 package Model;
 
-import java.io.Serializable;
-
-public class ModelImage implements Serializable {
+public class ModelImage {
     private int ID;
     private int modelID;
     private String url;

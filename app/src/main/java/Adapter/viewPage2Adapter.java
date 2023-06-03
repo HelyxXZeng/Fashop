@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import MyClass.Photo;
+
 public class viewPage2Adapter extends RecyclerView.Adapter<viewPage2Adapter.PhotoViewHolder> {
 
     private List<String> mListPhoto;

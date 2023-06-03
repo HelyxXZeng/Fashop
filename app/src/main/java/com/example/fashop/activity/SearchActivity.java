@@ -96,6 +96,13 @@ public class SearchActivity extends AppCompatActivity {
         //getModelData();
     }
 
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+
     /*private void getModelData() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Model");
         ChildEventListener childEventListener = new ChildEventListener() {

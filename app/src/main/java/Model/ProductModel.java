@@ -1,13 +1,10 @@
 package Model;
 
-import com.google.firebase.firestore.PropertyName;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-public class ProductModel implements Serializable  {
-//    @PropertyName("ID")
+public class ProductModel implements Serializable {
+
     private int ID;
     private String name;
     private int categoryID;
@@ -24,24 +21,6 @@ public class ProductModel implements Serializable  {
 
     public void setNumberInCart(int numberInCart) {
         this.numberInCart = numberInCart;
-    }
-    private List<String> colorList = new ArrayList<>();
-    private List<String> sizeList = new ArrayList<>();
-
-    public List<String> getColorList() {
-        return colorList;
-    }
-
-    public void setColorList(List<String> colorList) {
-        this.colorList = colorList;
-    }
-
-    public List<String> getSizeList() {
-        return sizeList;
-    }
-
-    public void setSizeList(List<String> sizeList) {
-        this.sizeList = sizeList;
     }
 
     public List<String> getImages() {

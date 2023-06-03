@@ -52,7 +52,7 @@ public class MeFragment extends Fragment {
     private ImageView imgAvt;
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
 
-    private ImageButton editBtn;
+    private ImageButton editBtn, settingBtn;
     //
 
     public MeFragment() {
@@ -90,6 +90,7 @@ public class MeFragment extends Fragment {
         tvEmail = view.findViewById(R.id.tvEmail);
         tvPhone = view.findViewById(R.id.tvPhone);
         editBtn = view.findViewById(R.id.editBtn);
+        settingBtn = view.findViewById(R.id.settingBtn);
         //
         checkUser();
         initListener();
@@ -179,6 +180,18 @@ public class MeFragment extends Fragment {
             Intent intent = new Intent(context, ProfileEditUserActivity.class);
             startActivity(intent);
         } );
+
+        editBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ProfileEditUserActivity.class);
+            startActivity(intent);
+        } );
+
+
+
+//        settingBtn.setOnClickListener(v -> {
+//            Intent intent = new Intent(context, SettingsFragment.class);
+//            startActivity(intent);
+//        } );
     }
 
     @Override
