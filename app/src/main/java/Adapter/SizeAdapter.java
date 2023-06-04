@@ -1,26 +1,21 @@
 package Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
-import com.example.fashop.activity.OnSizeClickListener;
-import com.example.fashop.activity.ShowDetailActivity;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.List;
 
-import Model.ProductModel;
+import Interface.OnSizeClickListener;
 
 public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
     List<String> sizes;
@@ -48,18 +43,18 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public SizeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_size, parent, false);
 //        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_list_model, parent, false);
 
-        SizeAdapter.ViewHolder viewHolder = new SizeAdapter.ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
         //return new SizeAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SizeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String size = sizes.get(position);
         if (size == null)
             return;

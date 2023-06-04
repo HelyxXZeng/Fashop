@@ -122,7 +122,7 @@ public class SettingsFragment extends Fragment {
                 //sign out
                 // go to login activity
                 makeMeOffline();
-                //finishAffinity();
+
                 getActivity().finish();
             }
         });

@@ -40,15 +40,15 @@
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/cartBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:backgroundTint="@color/orange"-->
-<!--            android:elevation="3dp"-->
-<!--            android:src="@drawable/cart"-->
-<!--            app:elevation="1dp"-->
-<!--            app:layout_anchor="@id/appBar" />-->
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--            android:id="@+id/cartBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:backgroundTint="@color/orange"-->
+        <!--            android:elevation="3dp"-->
+        <!--            android:src="@drawable/cart"-->
+        <!--            app:elevation="1dp"-->
+        <!--            app:layout_anchor="@id/appBar" />-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

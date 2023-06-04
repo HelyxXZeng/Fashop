@@ -388,7 +388,7 @@ public class RegisterUserActivity extends AppCompatActivity{
 
         }
         else {
-            //save info without image
+            //save info with image
 
             //name and path of image
             String filePathAndName = "profile_images/" + ""+firebaseAuth.getUid();

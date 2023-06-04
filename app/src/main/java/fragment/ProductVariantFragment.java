@@ -21,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fashop.R;
-import com.example.fashop.activity.OnColorClickListener;
-import com.example.fashop.activity.OnSizeClickListener;
 import com.example.fashop.activity.SearchActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,9 +42,10 @@ import java.util.Set;
 import Adapter.ColorAdapter;
 import Adapter.ModelAdapter;
 import Adapter.SizeAdapter;
+import Interface.OnColorClickListener;
+import Interface.OnSizeClickListener;
 import Model.ProductModel;
 import Model.ProductVariant;
-import MyClass.GridSpacingItemDecoration;
 import MyClass.ManagementCart;
 
 /**
@@ -222,7 +221,7 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (mListSize != null){
-                        mListSize.clear();
+                    mListSize.clear();
                 }
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     ProductVariant productVariant = dataSnapshot.getValue(ProductVariant.class);
@@ -358,11 +357,11 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
             @Override
             public void onClick(View view) {
 
-                    // đây là chỉ mới thay đổi ở tinyDB
-                    object.setNumberInCart(numberOrder);
-                    managementCart.insertFood(object);
-                    // bỏ đoạn ở trên này và push lên thẳng firebase
-                    // your source code
+                // đây là chỉ mới thay đổi ở tinyDB
+                object.setNumberInCart(numberOrder);
+                managementCart.insertFood(object);
+                // bỏ đoạn ở trên này và push lên thẳng firebase
+                // your source code
 
             }
         });

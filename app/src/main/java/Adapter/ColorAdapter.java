@@ -1,11 +1,9 @@
 package Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,14 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
-import com.example.fashop.activity.OnColorClickListener;
-import com.example.fashop.activity.OnSizeClickListener;
-import com.example.fashop.activity.ShowDetailActivity;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import Model.ProductModel;
+import Interface.OnColorClickListener;
 
 
 public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
@@ -54,13 +48,13 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
 
     @NonNull
     @Override
-    public ColorAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_color, parent, false);
-        return new ColorAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ColorAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String color = colors.get(position);
         if (color == null)
             return;
