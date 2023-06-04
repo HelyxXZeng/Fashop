@@ -1,15 +1,12 @@
 package com.example.fashop.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.bumptech.glide.Glide;
 import com.example.fashop.R;
 
 import java.util.ArrayList;
@@ -18,9 +15,7 @@ import java.util.List;
 import Adapter.viewPage2Adapter;
 import Model.ProductModel;
 import MyClass.ManagementCart;
-import MyClass.ClothingDomain;
-import MyClass.Photo;
-import fragment.ProductVariantFragment;
+import Fragment.ProductVariantFragment;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class ShowDetailActivity extends AppCompatActivity {

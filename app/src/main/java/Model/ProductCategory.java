@@ -1,6 +1,8 @@
 package Model;
 
-public class ProductCategory {
+import java.io.Serializable;
+
+public class ProductCategory implements Serializable {
     private int ID;
     private String name;
     private String img;

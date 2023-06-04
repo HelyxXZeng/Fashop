@@ -1,4 +1,4 @@
-package fragment;
+package Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.example.fashop.R;
 import com.example.fashop.activity.AboutUsActivity;
-import com.example.fashop.activity.HelpCenterActivity;
 import com.example.fashop.activity.LegalInformationActivity;
 import com.example.fashop.activity.LoginActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;

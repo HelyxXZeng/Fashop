@@ -24,8 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-import fragment.HomeFragment;
-
 public class MainUserActivity extends AppCompatActivity {
 
     private TextView nameTv;
