@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fashop.R;
 import com.example.fashop.activity.AboutUsActivity;
@@ -23,6 +25,8 @@ import com.example.fashop.activity.LoginActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
 import com.example.fashop.activity.ProfileEditUserActivity;
 import com.example.fashop.activity.QuestionsActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +59,8 @@ public class MeFragment extends Fragment {
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
 
     private ImageButton editBtn;
+
+    private LinearLayout logoutBtn;
     //
 
     public MeFragment() {
@@ -90,6 +98,7 @@ public class MeFragment extends Fragment {
         tvEmail = view.findViewById(R.id.tvEmail);
         tvPhone = view.findViewById(R.id.tvPhone);
         editBtn = view.findViewById(R.id.editBtn);
+        logoutBtn = view.findViewById(R.id.logoutBtn);
         //
         checkUser();
         initListener();
@@ -155,6 +164,38 @@ public class MeFragment extends Fragment {
                 });
     }
 
+    private void makeMeOffline() {
+        //after logging in, make user online
+        progressDialog.setMessage("Logging Out...");
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("online","false");
+
+        //update value to db
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //update successfully
+                        firebaseAuth.signOut();
+                        //checkUser();
+                        startActivity(new Intent(context, LoginActivity.class));
+                        if (getActivity() != null) {
+                            getActivity().finish();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //failed updating
+                        progressDialog.dismiss();
+                        Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     private void initListener() {
         tvPrivacyPolicy.setOnClickListener(v->{
             Intent intent = new Intent(context, PrivacyPolicyActivity.class);
@@ -179,6 +220,18 @@ public class MeFragment extends Fragment {
             Intent intent = new Intent(context, ProfileEditUserActivity.class);
             startActivity(intent);
         } );
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //make offline
+                //sign out
+                // go to login activity
+                makeMeOffline();
+
+                //getActivity().finish();
+            }
+        });
     }
 
     @Override

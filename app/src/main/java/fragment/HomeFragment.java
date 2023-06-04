@@ -326,11 +326,11 @@ public class HomeFragment extends Fragment {
         getCategoryData();
 
         LinearLayoutManager manager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
 
         // Adapter Category
         rcCategories.setLayoutManager(manager);
-        rcCategories.addItemDecoration(dividerItemDecoration);
+//        rcCategories.addItemDecoration(dividerItemDecoration);
         categoryAdapter = new CategoryAdapter(categories);
         rcCategories.setAdapter(categoryAdapter);
     }

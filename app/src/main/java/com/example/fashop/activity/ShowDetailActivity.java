@@ -1,5 +1,6 @@
 package com.example.fashop.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,15 +19,14 @@ import Adapter.viewPage2Adapter;
 import Model.ProductModel;
 import MyClass.ManagementCart;
 import MyClass.ClothingDomain;
+import MyClass.Photo;
+import fragment.ProductVariantFragment;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class ShowDetailActivity extends AppCompatActivity {
-    private TextView addToCartBtn;
-    private TextView titleTxt, feeTxt, descriptionTxt, numberOrderTxt;
-    private ImageView plusBtn, minusBtn, picFood;
+    private TextView addToCartBtn, buyNow;
+    private TextView titleTxt, feeTxt, descriptionTxt;
     private ProductModel object;
-    int numberOrder = 1;
-
     private ManagementCart managementCart;
 
 
@@ -49,53 +49,50 @@ public class ShowDetailActivity extends AppCompatActivity {
 
     private void getBundle(){
         object = (ProductModel)  getIntent().getSerializableExtra("object");
-//        int drawableResourceId = this.getResources().getIdentifier(object.getPic(), "drawable", this.getPackageName() );
-//        Glide.with(this)
-//                .load(drawableResourceId)
-//                .into(picFood);
-
         mListPhoto = object.getImages();
 
         titleTxt.setText(object.getName());
         feeTxt.setText("$" + object.getPrice());
         descriptionTxt.setText(object.getDescription());
-        numberOrderTxt.setText(String.valueOf(numberOrder));
+        //numberOrderTxt.setText(String.valueOf(numberOrder));
 
-        plusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                numberOrder = numberOrder + 1;
-                numberOrderTxt.setText(String.valueOf(numberOrder));
-            }
-        });
 
-        minusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (numberOrder > 1){
-                    numberOrder = numberOrder - 1;
-                }
-                numberOrderTxt.setText(String.valueOf(numberOrder));
-            }
-        });
 
         addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                object.setNumberInCart(numberOrder);
-                managementCart.insertFood(object);
+//                object.setNumberInCart(numberOrder);
+//                managementCart.insertFood(object);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("object", object);
+
+                ProductVariantFragment bottomSheetFragment = new ProductVariantFragment();
+                bottomSheetFragment.setArguments(bundle);
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
             }
         });
+
+        buyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(ShowDetailActivity.this, ProductVariantActivity.class));
+//                ProductVariantFragment bottomSheetFragment = new ProductVariantFragment();
+//                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
+
+
     }
 
     private void initView() {
         addToCartBtn=findViewById(R.id.addToCartBtn);
+        buyNow = findViewById(R.id.buyNow);
         titleTxt=findViewById(R.id.titleTxt);
         feeTxt=findViewById(R.id.priceTxt);
         descriptionTxt=findViewById(R.id.descriptionTxt);
-        numberOrderTxt=findViewById(R.id.numberOrderTxt);
-        plusBtn=findViewById(R.id.plusBtn);
-        minusBtn=findViewById(R.id.minusBtn);
+//        numberOrderTxt=findViewById(R.id.numberOrderTxt);
+//        plusBtn=findViewById(R.id.plusBtn);
+//        minusBtn=findViewById(R.id.minusBtn);
 //        picFood=findViewById(R.id.picFood);
 
         mViewPager2 = findViewById(R.id.view_pager_2);
