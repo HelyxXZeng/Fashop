@@ -364,7 +364,7 @@ public class AddModelActivity extends AppCompatActivity {
 
                 for (String url : urlList){
                     //name and path of image
-                    String filePathAndName = "category_images/" + url.substring( url.lastIndexOf('/')+1);
+                    String filePathAndName = "model_images/" + url.substring( url.lastIndexOf('/')+1);
                     //upload image
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
                     storageReference.putFile(Uri.parse(url))

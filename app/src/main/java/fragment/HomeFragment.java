@@ -1,4 +1,4 @@
-package fragment;
+package Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,11 +7,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +24,6 @@ import com.example.fashop.R;
 
 import Adapter.CategoryAdapter;
 import Adapter.ModelAdapter;
-import MyClass.ClothingDomain;
 
 import com.example.fashop.activity.LoginActivity;
 import Adapter.PopularAdapter;

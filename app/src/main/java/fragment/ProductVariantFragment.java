@@ -1,11 +1,10 @@
-package fragment;
+package Fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,14 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fashop.R;
-import com.example.fashop.activity.SearchActivity;
+import com.example.fashop.activity.AddModelActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,10 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -40,13 +36,13 @@ import java.util.List;
 import java.util.Set;
 
 import Adapter.ColorAdapter;
-import Adapter.ModelAdapter;
 import Adapter.SizeAdapter;
 import Interface.OnColorClickListener;
 import Interface.OnSizeClickListener;
+import Model.CartItem;
 import Model.ProductModel;
 import Model.ProductVariant;
-import MyClass.ManagementCart;
+//import MyClass.ManagementCart;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,6 +72,8 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
 
     private ImageButton minusBtn, plusBtn, closeBtn;
 
+    private boolean activatedAddcartBtn = false;
+
     int numberOrder = 1;
 
     String selectedSize, selectedColor;
@@ -100,7 +98,7 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
 
     private ColorAdapter colorAdapter;
 
-    private ManagementCart managementCart;
+//    private ManagementCart managementCart;
 
     private int selectedSizePosition = -1;
 
@@ -174,20 +172,13 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
             }
         });
 
-//        addtoCartBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // đây là chỉ mới thay đổi ở tinyDB
-////                object.setNumberInCart(numberOrder);
-////                managementCart.insertFood(object);
-//                // bỏ đoạn ở trên này và push lên thẳng firebase
-//                // your source code
-//                if (selectedProductVariant == null)
-//                {
-//                    Toast.makeText(context, "Please select your size and color", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        addtoCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activatedAddcartBtn = true;
+                getSelectedVariantProduct();
+            }
+        });
         LoadImage();
         LoadColors();
         LoadSizes();
@@ -292,7 +283,7 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
         }
 
         context = getContext();
-        managementCart = new ManagementCart(context);
+//        managementCart = new ManagementCart(context);
     }
 
     @Override
@@ -312,18 +303,29 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
     public void onSizeClicked(String size, int position) {
         getColorData(size);
         selectedSize = size;
+        activatedAddcartBtn = false;
         getSelectedVariantProduct();
     }
 
     @Override
     public void onColorClicked(String color, int position) {
         selectedColor = color;
+        activatedAddcartBtn = false;
         getSelectedVariantProduct();
     }
 
 
     private void getSelectedVariantProduct() {
-        if (selectedSize != null && selectedColor != null) {
+
+        if (selectedSize == null && activatedAddcartBtn == true){
+            Toast.makeText(context, "Please select size", Toast.LENGTH_SHORT).show();
+            activatedAddcartBtn = false;
+        }
+        else if (selectedColor == null && activatedAddcartBtn == true){
+            Toast.makeText(context, "Please select color", Toast.LENGTH_SHORT).show();
+            activatedAddcartBtn = false;
+        }
+        else if (selectedSize != null && selectedColor != null && activatedAddcartBtn == true) {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Variant");
 
             ref.addValueEventListener(new ValueEventListener() {
@@ -336,8 +338,8 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
                                 && productVariant.getSize().equals(String.valueOf(selectedSize))
                                 && productVariant.getColor().equals(String.valueOf(selectedColor))){
                             selectedProductVariant = productVariant;
-                            setAddToCartClickListener();
-                            Log.e("ProductVariantFragment", "Selected variant: " + selectedProductVariant.getID());
+                            handleSelectedProductVariant(selectedProductVariant); // Gọi phương thức xử lý sau khi có selectedProductVariant
+                            activatedAddcartBtn = false;
                             break;
                         }
                     }
@@ -352,17 +354,58 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
         }
     }
 
-    private void setAddToCartClickListener() {
-        addtoCartBtn.setOnClickListener(new View.OnClickListener() {
+    private void handleSelectedProductVariant(ProductVariant selectedProductVariant) {
+//        object.setNumberInCart(numberOrder);
+//        managementCart.insertVariantProduct(object);
+//        Log.e("ProductVariantFragment", "Selected variant: " + selectedProductVariant.getID());
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CartItem");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                // đây là chỉ mới thay đổi ở tinyDB
-                object.setNumberInCart(numberOrder);
-                managementCart.insertFood(object);
-                // bỏ đoạn ở trên này và push lên thẳng firebase
-                // your source code
 
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    CartItem cartItem = categorySnapshot.getValue(CartItem.class);
+                    if (cartItem != null && cartItem.getVariantID() == selectedProductVariant.getID()) {
+                        int newQuantity = cartItem.getQuantity() + numberOrder;
+                        ref.child(String.valueOf(cartItem.getID())).child("quantity").setValue(newQuantity,
+                                new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                        Toast.makeText(context, "Added To Your Cart", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                        return;
+                    }
+                }
+
+                int maxId = 0;
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    CartItem cartItem = categorySnapshot.getValue(CartItem.class);
+                    if (cartItem != null && cartItem.getID() > maxId) {
+                        maxId = cartItem.getID();
+                    }
+                }
+
+                CartItem newCartItem = new CartItem();
+                newCartItem.setID(maxId + 1);
+                newCartItem.setQuantity(numberOrder);
+                newCartItem.setVariantID(selectedProductVariant.getID());
+                newCartItem.setCustomerID(FirebaseAuth.getInstance().getUid());
+
+                ref.child(String.valueOf(newCartItem.getID())).setValue(newCartItem,
+                        new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(context, "Added To Your Cart", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
