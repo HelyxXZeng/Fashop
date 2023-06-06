@@ -14,7 +14,6 @@ import java.util.List;
 
 import Adapter.viewPage2Adapter;
 import Model.ProductModel;
-import MyClass.ManagementCart;
 import Fragment.ProductVariantFragment;
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -22,7 +21,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     private TextView addToCartBtn, buyNow;
     private TextView titleTxt, feeTxt, descriptionTxt;
     private ProductModel object;
-    private ManagementCart managementCart;
+//    private ManagementCart managementCart;
 
 
     private ViewPager2 mViewPager2;
@@ -36,7 +35,7 @@ public class ShowDetailActivity extends AppCompatActivity {
 
 
 
-        managementCart = new ManagementCart(this);
+//        managementCart = new ManagementCart(this);
 
         initView();
         getBundle();

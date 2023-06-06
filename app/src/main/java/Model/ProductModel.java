@@ -16,15 +16,15 @@ public class ProductModel implements Serializable  {
     private String description;
     private List<String> images;
 
-    private int numberInCart;
-
-    public int getNumberInCart() {
-        return numberInCart;
-    }
-
-    public void setNumberInCart(int numberInCart) {
-        this.numberInCart = numberInCart;
-    }
+//    private int numberInCart;
+//
+//    public int getNumberInCart() {
+//        return numberInCart;
+//    }
+//
+//    public void setNumberInCart(int numberInCart) {
+//        this.numberInCart = numberInCart;
+//    }
     private List<String> colorList = new ArrayList<>();
     private List<String> sizeList = new ArrayList<>();
 
