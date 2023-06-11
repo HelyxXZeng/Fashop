@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
 
     //
 
-    Context context;
+    public Context context;
     private TextView tvHi;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
@@ -88,6 +88,14 @@ public class HomeFragment extends Fragment {
     private ModelAdapter modelAdapter;
 
     private List<ProductModel> popularList = new ArrayList<>();
+    public List<ProductModel> getModelList(){
+        getModelDatanew();
+        return modelList;
+    }
+    public List<ProductCategory> getCategories(){
+        getCategoryDatanew();
+        return categories;
+    }
 
     private List<ModelImage> popularImageList = new ArrayList<>();
     public HomeFragment() {
@@ -123,16 +131,7 @@ public class HomeFragment extends Fragment {
         edtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedPreferences = getActivity().getSharedPreferences("Data", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                String json = new Gson().toJson(modelList);
-                editor.putString("model_list_key", json);
-
-                String json2 = new Gson().toJson(categories);
-                editor.putString("categories_list_key", json2);
-
-                editor.apply();
+                updateSearch();
                 Intent intent = new Intent(context, SearchActivity.class);
                 intent.putExtra("model_list_key", new Gson().toJson(modelList));
                 intent.putExtra("categories_list_key", new Gson().toJson(categories));
@@ -183,6 +182,20 @@ public class HomeFragment extends Fragment {
         loadCategory();
         recyclerViewPopular();
         loadModel();
+        updateSearch();
+    }
+
+    private void updateSearch(){
+        sharedPreferences = getActivity().getSharedPreferences("Data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String json = new Gson().toJson(modelList);
+        editor.putString("model_list_key", json);
+
+        String json2 = new Gson().toJson(categories);
+        editor.putString("categories_list_key", json2);
+
+        editor.apply();
     }
 
     private void loadModel() {
@@ -194,7 +207,6 @@ public class HomeFragment extends Fragment {
         rcModels.setAdapter(modelAdapter);
         getModelData();
     }
-
     private void getModelData() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Model");
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -318,9 +330,7 @@ public class HomeFragment extends Fragment {
         ref.addChildEventListener(childEventListener);
         ref2.addChildEventListener(childEventListener2);
     }
-
-    private void joinModelWithImage()
-    {
+    private void joinModelWithImage() {
         for (ProductModel model : modelList){
             int id = model.getID();
             List<String> urls = new ArrayList<>();
@@ -336,9 +346,7 @@ public class HomeFragment extends Fragment {
         popularAdapter.notifyDataSetChanged();
     }
     private void loadCategory() {
-
         getCategoryData();
-
         LinearLayoutManager manager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
 
@@ -348,8 +356,6 @@ public class HomeFragment extends Fragment {
         categoryAdapter = new CategoryAdapter(categories);
         rcCategories.setAdapter(categoryAdapter);
     }
-
-
     private void getCategoryData() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Category");
         ref.addValueEventListener(new ValueEventListener() {
@@ -371,7 +377,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null)
@@ -384,8 +389,6 @@ public class HomeFragment extends Fragment {
         }
 
     }
-
-
     private void loadMyInfo() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
@@ -414,7 +417,6 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
-
     private void recyclerViewPopular(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recycleViewPopularList.setLayoutManager(linearLayoutManager);
@@ -451,5 +453,155 @@ public class HomeFragment extends Fragment {
         initUI(view);
 
         return view;
+    }
+    private void getModelDatanew() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Model");
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                ProductModel model = dataSnapshot.getValue(ProductModel.class);
+                if (model != null)
+                {
+                    modelList.add(model);
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                ProductModel model = dataSnapshot.getValue(ProductModel.class);
+                if (model != null && modelList != null && !modelList.isEmpty())
+                {
+                    int len = modelList.size();
+
+                    for (int i = 0; i < len; ++i)
+                    {
+                        if (modelList.get(i).getID() == model.getID())
+                        {
+                            model.setImages(modelList.get(i).getImages());
+                            modelList.set(i, model);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                ProductModel model = dataSnapshot.getValue(ProductModel.class);
+                if (model != null && modelList != null && !modelList.isEmpty())
+                {
+                    int len = modelList.size();
+                    for (int i = 0; i < len; ++i)
+                    {
+                        if (modelList.get(i).getID() == model.getID())
+                        {
+                            modelList.remove(i);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("ModelImage");
+        ChildEventListener childEventListener2 = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                ModelImage modelImage = dataSnapshot.getValue(ModelImage.class);
+                if (modelImage != null)
+                {
+                    modelImageList.add(modelImage);
+                    joinModelWithImagenew();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                ModelImage modelImage = dataSnapshot.getValue(ModelImage.class);
+                if (modelImage != null && modelImageList != null && !modelImageList.isEmpty())
+                {
+                    int len = modelImageList.size();
+                    for (int i = 0; i < len; ++i)
+                    {
+                        if (modelImageList.get(i).getID() == modelImage.getID())
+                        {
+                            modelImageList.set(i, modelImage);
+                            joinModelWithImagenew();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                ModelImage modelImage = dataSnapshot.getValue(ModelImage.class);
+                if (modelImage != null && modelImageList != null && !modelImageList.isEmpty())
+                {
+                    int len = modelImageList.size();
+                    for (int i = 0; i < len; ++i)
+                    {
+                        if (modelImageList.get(i).getID() == modelImage.getID())
+                        {
+                            modelImageList.remove(i);
+                            joinModelWithImagenew();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+
+        ref.addChildEventListener(childEventListener);
+        ref2.addChildEventListener(childEventListener2);
+    }
+    private void joinModelWithImagenew() {
+        for (ProductModel model : modelList){
+            int id = model.getID();
+            List<String> urls = new ArrayList<>();
+            for (ModelImage modelImage : modelImageList){
+                if (modelImage.getModelID() == id)
+                {
+                    urls.add(modelImage.getUrl());
+                }
+            }
+            model.setImages(urls);
+        }
+    }
+    private void getCategoryDatanew() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Category");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                categories.clear();
+                for (DataSnapshot child1: snapshot1.getChildren())
+                {
+                    ProductCategory category = child1.getValue(ProductCategory.class);
+                    categories.add(category);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Toast.makeText(context, "Failed to get data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -27,7 +27,7 @@ public class CheckboxItemAdapter extends ArrayAdapter<ProductCategory> {
         super(context, resource, items);
         this.items = items;
         checked = new boolean[items.size()];
-        Arrays.fill(checked, false);
+        Arrays.fill(checked, true);
         id = new int[items.size()];
         for (int i = 0; i < items.size(); i++)
         {
