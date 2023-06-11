@@ -44,7 +44,7 @@ import Model.ProductVariant;
 
 public class OrderActivity extends AppCompatActivity{
 
-    TextView UserName, Address, totalTxt;
+    TextView UserName, Address, totalTxt, shippingCost, totalCost;
     EditText note;
     RecyclerView.Adapter adapter;
     RecyclerView OrderItemList;
@@ -87,7 +87,10 @@ public class OrderActivity extends AppCompatActivity{
         UserName = findViewById(R.id.tvUserName);
         Address = findViewById(R.id.address);
         totalTxt = findViewById(R.id.totalTxt);
-        totalTxt.setText(Double.toString(total));
+        totalTxt.setText(Double.toString(total + 1));
+        shippingCost = findViewById(R.id.shippingCost);
+        totalCost = findViewById(R.id.totalCost);
+        totalCost.setText("$" + Double.toString(total));
         FirebaseAuth.getInstance().getUid();
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
@@ -157,7 +160,7 @@ public class OrderActivity extends AppCompatActivity{
                 String formattedDate = currentDate.format(formatter);
                 order.setDate(formattedDate);
 
-                order.setTotal(total);
+                order.setTotal(total + 1);
 
                 currentOrder = order;
                 ref2.child(String.valueOf(order.getID())).setValue(order,
