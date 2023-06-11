@@ -121,6 +121,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(context, SearchActivity.class);
                 intent.putExtra("model_list_key", new Gson().toJson(modelList));
+                intent.putExtra("categories_list_key", new Gson().toJson(categories));
                 startActivity(intent);
                 //Log.v("Hi", "Works perfectly");
             }

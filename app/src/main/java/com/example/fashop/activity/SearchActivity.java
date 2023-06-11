@@ -1,8 +1,11 @@
 package com.example.fashop.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -20,6 +23,7 @@ import java.util.List;
 import Adapter.CheckboxItemAdapter;
 import Adapter.ModelAdapter;
 import Model.ModelImage;
+import Model.ProductCategory;
 import Model.ProductModel;
 
 
@@ -27,24 +31,52 @@ public class SearchActivity extends AppCompatActivity {
     EditText edtSearch2;
     private List<ProductModel> modelList2;
     private List<ProductModel> searchModel2 = new ArrayList<>();
-    private List<ModelImage> modelImageList = new ArrayList<>();
+    private List<ProductModel> loadModel = new ArrayList<>();
+    private List<ProductCategory> categories = new ArrayList<>();
     private RecyclerView rcModels2;
     private ModelAdapter modelAdapter2;
-
     private ListView listView;
-    
+    CheckboxItemAdapter adapter;
+    boolean isListViewVisible = false;
+    private int page;
+    private int size;
+    boolean checked[];
+    int id[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        listView = (ListView) findViewById(R.id.filter_list);
-        String[] items = {"Item 1", "Item 2", "Item 3", "Item 4"};
-        CheckboxItemAdapter adapter = new CheckboxItemAdapter(this, R.layout.viewholder_checkbox_item, items);
-        listView.setAdapter(adapter);
+        Button showListViewButton = findViewById(R.id.filter);
 
+        showListViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isListViewVisible) {
+                    // hide the ListView if it is currently visible
+                    listView.setVisibility(View.GONE);
+                    isListViewVisible = false;
+                } else {
+                    // show the ListView if it is currently hidden
+                    listView.setVisibility(View.VISIBLE);
+                    isListViewVisible = true;
+                }
+            }
+        });
+        // Load Model
         String modelListJson = getIntent().getStringExtra("model_list_key");
         modelList2 = new Gson().fromJson(modelListJson, new TypeToken<List<ProductModel>>(){}.getType());
+
+        // Load categories
+        String categoriesListJson = getIntent().getStringExtra("categories_list_key");
+        categories = new Gson().fromJson(categoriesListJson, new TypeToken<List<ProductCategory>>(){}.getType());
+
+        //make listview
+        listView = (ListView) findViewById(R.id.filter_list);
+        listView.setBackgroundColor(Color.WHITE);
+        adapter = new CheckboxItemAdapter(this, R.layout.viewholder_checkbox_item, categories);
+        listView.setAdapter(adapter);
 
         rcModels2 = findViewById(R.id.rcModels2);
 
@@ -53,6 +85,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
                 // This method will be invoked before the text is changed.
+                id = adapter.getIDItems();
+                checked = adapter.getCheckedItems();
             }
 
             @Override
@@ -76,12 +110,17 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                 }
-                GridLayoutManager manager = new GridLayoutManager(SearchActivity.this, 2);
 
-                // Adapter Category
-                rcModels2.setLayoutManager(manager);
-                modelAdapter2 = new ModelAdapter(searchModel2);
-                rcModels2.setAdapter(modelAdapter2);
+                loadModel.clear();
+
+                for (ProductModel model : searchModel2) {
+                    for (int i = 0; i < id.length; i++){
+                        if (model.getCategoryID() == id[i]){
+                            if (checked[i]) loadModel.add(model);
+                        }
+                    }
+                }
+                loadModelList();
             }
         });
         loadModel();
@@ -94,6 +133,16 @@ public class SearchActivity extends AppCompatActivity {
         modelAdapter2 = new ModelAdapter(modelList2);
         rcModels2.setAdapter(modelAdapter2);
         //getModelData();
+    }
+
+    private void loadModelList()
+    {
+        GridLayoutManager manager = new GridLayoutManager(SearchActivity.this, 2);
+
+        // Adapter Category
+        rcModels2.setLayoutManager(manager);
+        modelAdapter2 = new ModelAdapter(loadModel);
+        rcModels2.setAdapter(modelAdapter2);
     }
 
     /*private void getModelData() {
