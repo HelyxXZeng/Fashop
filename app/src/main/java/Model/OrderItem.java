@@ -14,6 +14,16 @@ public class OrderItem implements Serializable {
     private float rate;
     private int variantID;
 
+    public OrderItem(){}
+    public OrderItem(OrderItem item) {
+        this.ID = item.getID();
+        this.orderID = item.getOrderID();
+        this.comment = item.getComment();
+        this.quantity = item.getQuantity();
+        this.rate = item.getRate();
+        this.variantID = item.getVariantID();
+    }
+
 
     @Exclude
     public double getPrice() {

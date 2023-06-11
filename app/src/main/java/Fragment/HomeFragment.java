@@ -1,8 +1,11 @@
 package Fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,6 +44,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -68,7 +72,7 @@ public class HomeFragment extends Fragment {
     private TextView tvHi;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
-
+    SharedPreferences sharedPreferences;
     private ImageView imgAvt;
     //
 
@@ -119,6 +123,16 @@ public class HomeFragment extends Fragment {
         edtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sharedPreferences = getActivity().getSharedPreferences("Data", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                String json = new Gson().toJson(modelList);
+                editor.putString("model_list_key", json);
+
+                String json2 = new Gson().toJson(categories);
+                editor.putString("categories_list_key", json2);
+
+                editor.apply();
                 Intent intent = new Intent(context, SearchActivity.class);
                 intent.putExtra("model_list_key", new Gson().toJson(modelList));
                 intent.putExtra("categories_list_key", new Gson().toJson(categories));

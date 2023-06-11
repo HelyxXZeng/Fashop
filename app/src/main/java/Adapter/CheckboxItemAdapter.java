@@ -42,7 +42,7 @@ public class CheckboxItemAdapter extends ArrayAdapter<ProductCategory> {
         }
 
         CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
-        checkbox.setText(items.get(position).getName() + " " + items.get(position).getID() + " ");
+        checkbox.setText(items.get(position).getName());
         boolean isChecked = checked[position];
 
         // set a tag on the checkbox to store the current position

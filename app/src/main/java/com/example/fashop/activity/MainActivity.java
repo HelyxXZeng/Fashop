@@ -12,6 +12,7 @@ import android.os.Bundle;
 import com.example.fashop.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import Fragment.HomeFragment;
 import Fragment.MeFragment;
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.search) {
                 //startActivity(new Intent(MainActivity.this, SearchActivity.class));
-                searchLauncher.launch(new Intent(MainActivity.this, SearchActivity.class));
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                searchLauncher.launch(intent);
                 //return true;
             }
             else if (item.getItemId() == R.id.cart) {

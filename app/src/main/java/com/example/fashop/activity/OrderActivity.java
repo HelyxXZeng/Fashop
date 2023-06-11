@@ -206,11 +206,13 @@ public class OrderActivity extends AppCompatActivity{
                     }
                 }
 
-                for (OrderItem item : orderItems){
+                for (OrderItem item : orderItems) {
                     item.setOrderID(currentOrder.getID());
                     item.setID(++maxOrderItemID);
 
-                    ref.child(String.valueOf(item.getID())).setValue(item,
+                    OrderItem newOrderItem = new OrderItem(item);
+
+                    ref.child(String.valueOf(newOrderItem.getID())).setValue(newOrderItem,
                             new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
