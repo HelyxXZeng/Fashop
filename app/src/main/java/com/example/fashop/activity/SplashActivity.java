@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
                     checkUserType();
                 }
             }
-        }, 300);
+        }, 100);
 
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
@@ -76,9 +76,10 @@ public class SplashActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             String accountType = ""+ds.child("accountType");
-                            if (accountType.equals("Seller")){
+                            if (accountType.contains("Admin")){
                                 //user is seller
-                                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
+                                startActivity(new Intent(SplashActivity.this, AdminMainActivity.class));
 //                                Intent intent = new Intent(SplashActivity.this, MainUserActivity.class);
 //                                intent.putExtra("navigateToHomeFragment", true);
 //                                startActivity(intent);

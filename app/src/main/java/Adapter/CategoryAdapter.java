@@ -1,5 +1,6 @@
 package Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.ListModelOfCategoryActivity;
+import com.example.fashop.activity.ShowDetailActivity;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -41,6 +45,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         Picasso.get().load(category.getImg()).placeholder(R.drawable.error).into(holder.imgCategory);
 
         holder.tvCategory.setText(category.getName());
+        holder.itemView.setOnClickListener(v->{
+            Intent intent = new Intent(holder.itemView.getContext(), ListModelOfCategoryActivity.class);
+            intent.putExtra("category", category);
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
     @Override

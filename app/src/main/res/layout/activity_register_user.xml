@@ -92,27 +92,29 @@ tools:context=".activity.RegisterUserActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/phoneEt"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:drawablePadding="5dp"
             android:drawableStart="@drawable/location_orange"
+            android:drawablePadding="5dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:padding="10dp"
-            android:text="City"/>
+            android:text="City" />
 
         <Spinner
             android:id="@+id/spinner_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/distInfor"

@@ -1,4 +1,4 @@
-package fragment;
+package Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -122,6 +122,8 @@ public class SettingsFragment extends Fragment {
                 //sign out
                 // go to login activity
                 makeMeOffline();
+
+                getActivity().finish();
             }
         });
     }

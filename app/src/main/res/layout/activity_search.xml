@@ -8,16 +8,14 @@
 
     <EditText
         android:id="@+id/edtSearch2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
         android:background="@drawable/rounded_corner"
         android:drawableLeft="@drawable/search"
         android:drawablePadding="5dp"
         android:hint="Search"
         android:padding="5dp"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,13 +26,24 @@
         android:clipToPadding="false"
         android:paddingBottom="200dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/edtSearch2"
-        app:layout_constraintTop_toBottomOf="@+id/filter_list" />
+        app:layout_constraintTop_toBottomOf="@+id/edtSearch2" />
 
     <ListView
         android:id="@+id/filter_list"
-        android:layout_width="107dp"
-        android:layout_height="137dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtSearch2" />
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/filter" />
+
+    <Button
+        android:id="@+id/filter"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Filter"
+        app:layout_constraintEnd_toEndOf="@+id/rcModels2"
+        app:layout_constraintStart_toEndOf="@+id/edtSearch2"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
