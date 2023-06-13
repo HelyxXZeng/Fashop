@@ -18,7 +18,6 @@
         android:textSize="30sp"/>
 
     <ImageView
-        android:id="@+id/imgMessage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvNotification"
         android:layout_width="50dp"

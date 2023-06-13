@@ -20,11 +20,14 @@
         android:theme="@style/Theme.Fashop"
         tools:targetApi="31">
         <activity
-            android:name=".activity.OrderActivity"
+            android:name=".activity.OrderDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AdminOderManagement"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ListModelOfCategoryActivity"
+            android:name=".activity.OrderActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
