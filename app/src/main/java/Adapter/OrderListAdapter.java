@@ -43,7 +43,7 @@ public class OrderListAdapter  extends RecyclerView.Adapter<OrderListAdapter.Vie
         if (oder == null)
             return;
         //get quantity
-        holder.id.setText(oder.getID());
+        holder.id.setText(String.valueOf(oder.getID()));
         holder.datecreated.setText(oder.getDate());
         holder.priceTxt.setText(String.valueOf(oder.getTotal()));
         holder.status.setText(oder.getStatus());
@@ -51,18 +51,22 @@ public class OrderListAdapter  extends RecyclerView.Adapter<OrderListAdapter.Vie
         switch (holder.status.getText().toString())
         {
             case "PENDING":
-                holder.status.setTextColor(Color.WHITE);
+                holder.status.setTextColor(Color.BLACK);
                 holder.status.setBackgroundColor(Color.YELLOW);
                 break;
-            case "IN_DELIVERY":
+            case "SHIPPING":
                 holder.status.setTextColor(Color.WHITE);
                 holder.status.setBackgroundColor(Color.BLUE);
                 break;
-            case "DELIVERED":
+            case "COMPLETED":
                 holder.status.setTextColor(Color.WHITE);
                 holder.status.setBackgroundColor(Color.GREEN);
                 break;
-            case "CANCEL":
+            case "DECLINED":
+                holder.status.setTextColor(Color.RED);
+                holder.status.setBackgroundColor(Color.WHITE);
+                break;
+            case "CANCELLED":
                 holder.status.setTextColor(Color.WHITE);
                 holder.status.setBackgroundColor(Color.RED);
                 break;
