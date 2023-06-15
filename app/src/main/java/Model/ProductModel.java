@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductModel implements Serializable  {
-//    @PropertyName("ID")
+    //    @PropertyName("ID")
     private int ID;
     private String name;
     private int categoryID;
@@ -16,7 +16,7 @@ public class ProductModel implements Serializable  {
     private String description;
     private List<String> images;
 
-//    private int numberInCart;
+    //    private int numberInCart;
 //
 //    public int getNumberInCart() {
 //        return numberInCart;
@@ -27,6 +27,33 @@ public class ProductModel implements Serializable  {
 //    }
     private List<String> colorList = new ArrayList<>();
     private List<String> sizeList = new ArrayList<>();
+    private long quantity;
+    private float rate;
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
 
     public List<String> getColorList() {
         return colorList;
