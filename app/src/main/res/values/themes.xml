@@ -25,12 +25,4 @@
         <item name="android:background">@drawable/bottem_sheet_bg</item>
     </style>
 
-    <style name="Theme.Fashop.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.Fashop.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Fashop.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

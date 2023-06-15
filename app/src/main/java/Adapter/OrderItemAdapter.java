@@ -20,7 +20,7 @@ import java.util.List;
 import Model.CartItem;
 import Model.OrderItem;
 
-public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.ViewHolder> {
+public class    OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.ViewHolder> {
 
     private List<OrderItem> orderItemList;
 
