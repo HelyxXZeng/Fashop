@@ -176,6 +176,7 @@ public class SearchActivity extends AppCompatActivity {
     public void onBackPressed() {
         setResult(RESULT_OK);
         finish();
+
     }
 
     /*private void getModelData() {

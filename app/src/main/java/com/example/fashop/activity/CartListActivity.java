@@ -1,8 +1,10 @@
 package com.example.fashop.activity;
 
 import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -49,6 +52,7 @@ public class CartListActivity extends AppCompatActivity {
     TextView totalTxt, emptyTxt;
 
     ImageButton backBtn;
+    Button checkoutBtn;
     private ScrollView scrollView;
 
     private double totalOrder = 0;
@@ -66,6 +70,7 @@ public class CartListActivity extends AppCompatActivity {
         initView();
         LoadCartItems();
         BackEvent();
+        CheckoutEvent();
         //bottomNavigation();
     }
 
@@ -75,6 +80,19 @@ public class CartListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+    }
+
+    private void CheckoutEvent(){
+        checkoutBtn = findViewById(R.id.checkoutBtn);
+        checkoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartListActivity.this, OrderActivity.class);
+                intent.putExtra("cart_items_list_key", new Gson().toJson(cartItemList));
+                intent.putExtra("total_key", totalOrder);
+                startActivity(intent);
             }
         });
     }
