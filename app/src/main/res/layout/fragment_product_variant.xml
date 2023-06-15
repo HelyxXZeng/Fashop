@@ -157,7 +157,7 @@
         android:layout_height="45dp"
         android:background="@drawable/orangebutton2"
         android:gravity="center"
-        android:text="Add to Cart"
+        android:text="Confirm"
         android:textColor="@color/white"
         android:textSize="15sp"/>
 

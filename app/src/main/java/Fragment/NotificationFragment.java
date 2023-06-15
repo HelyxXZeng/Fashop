@@ -2,13 +2,30 @@ package Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fashop.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import Model.NotificationModel;
+import Model.ProductVariant;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +42,8 @@ public class NotificationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView notifContent;
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -61,6 +80,32 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+        View view = inflater.inflate(R.layout.fragment_notification, container, false);
+        initUI(view);
+        return view;
+    }
+
+    private void initUI(View view){
+        notifContent = view.findViewById(R.id.notifContent);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notification");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    NotificationModel notifModel = dataSnapshot.getValue(NotificationModel.class);
+                    if (notifModel != null && notifModel.getCustomerID().equals(FirebaseAuth.getInstance().getUid())){
+                        notifContent.setText(notifModel.getContent());
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

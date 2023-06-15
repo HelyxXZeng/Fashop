@@ -2,6 +2,7 @@ package com.example.fashop.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.viewPage2Adapter;
+import Fragment.ReturnPolicyFragment;
 import Model.ProductModel;
 import Fragment.ProductVariantFragment;
 import me.relex.circleindicator.CircleIndicator3;
@@ -28,6 +30,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     private CircleIndicator3 mCircleIndicator3;
     private List<String> mListPhoto;
 
+    private LinearLayout openReturnPolicyBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +87,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         titleTxt=findViewById(R.id.titleTxt);
         feeTxt=findViewById(R.id.priceTxt);
         descriptionTxt=findViewById(R.id.descriptionTxt);
+        openReturnPolicyBtn = findViewById(R.id.openReturnPolicyBtn);
 //        numberOrderTxt=findViewById(R.id.numberOrderTxt);
 //        plusBtn=findViewById(R.id.plusBtn);
 //        minusBtn=findViewById(R.id.minusBtn);
@@ -97,6 +101,15 @@ public class ShowDetailActivity extends AppCompatActivity {
         mViewPager2.setAdapter(adapter);
 
         mCircleIndicator3.setViewPager(mViewPager2);
+
+        openReturnPolicyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReturnPolicyFragment bottomSheetFragment = new ReturnPolicyFragment();
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
+
     }
 
     private List<String> getListPhoto() {

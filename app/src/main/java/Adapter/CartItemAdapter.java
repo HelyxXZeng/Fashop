@@ -1,37 +1,49 @@
 package Adapter;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.CartListActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import Fragment.EditProductVariantFragment;
+import Fragment.ProductVariantFragment;
 import Interface.ChangNumberItemsListener;
 import Model.CartItem;
+import Model.ModelImage;
 import Model.ProductModel;
 import Model.ProductVariant;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHolder> {
     private List<CartItem> cartItemList;
 
-    public CartItemAdapter(List<CartItem> cartItemList) {
+    private AppCompatActivity activity;
+
+
+    public CartItemAdapter(List<CartItem> cartItemList, AppCompatActivity activity) {
         this.cartItemList = cartItemList;
+        this.activity = activity;
     }
 
     @NonNull
@@ -41,6 +53,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
         return new CartItemAdapter.ViewHolder(inflate);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -86,6 +99,18 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
         holder.titleTxt.setText(cartItem.getProductName());
         holder.priceTxt.setText(String.valueOf(cartItem.getPrice()));
+
+        holder.editSizeColorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("cartItem", cartItem);
+                EditProductVariantFragment bottomSheetFragment = new EditProductVariantFragment();
+                bottomSheetFragment.setArguments(bundle);
+                bottomSheetFragment.show(activity.getSupportFragmentManager(), bottomSheetFragment.getTag());
+
+            }
+        });
 
 
 //        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference("Variant" + "/" + cartItem.getVariantID());
@@ -172,6 +197,42 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
     }
 
+    private void getOtherData(CartItem cartItem){
+        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference("Variant" + "/" + cartItem.getVariantID());
+        ref1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ProductVariant productVariant = snapshot.getValue(ProductVariant.class);
+
+                if (productVariant != null){
+                    DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Model" + "/" + productVariant.getModelID());
+                    ref2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            ProductModel productModel = snapshot.getValue(ProductModel.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("object", productModel);
+                            EditProductVariantFragment bottomSheetFragment = new EditProductVariantFragment();
+                            bottomSheetFragment.setArguments(bundle);
+                            bottomSheetFragment.show(activity.getSupportFragmentManager(), bottomSheetFragment.getTag());
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     @Override
     public int getItemCount() {
         return cartItemList.size();
@@ -183,6 +244,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         ImageView productImg;
         ImageButton plusBtn, minusBtn;
         TextView numberOrderTxt;
+        LinearLayout editSizeColorBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -193,6 +255,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             plusBtn = itemView.findViewById(R.id.plusBtn);
             minusBtn = itemView.findViewById(R.id.minusBtn);
             sizeColorTxt = itemView.findViewById(R.id.sizeColorTxt);
+            editSizeColorBtn = itemView.findViewById(R.id.editSizeColorBtn);
         }
     }
 }

@@ -28,6 +28,7 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
 
     public void setSelectedColorPosition(int selectedColorPosition) {
         this.selectedColorPosition = selectedColorPosition;
+
     }
 
     int selectedColorPosition;

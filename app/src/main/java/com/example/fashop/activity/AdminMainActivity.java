@@ -28,7 +28,7 @@ import java.util.HashMap;
 public class AdminMainActivity extends AppCompatActivity {
 
     private ImageButton logoutBtn;
-    ImageButton buttonPedit,buttonPadd,btnAddCategory, btnEditCategory;
+    ImageButton buttonPedit,buttonPadd,btnAddCategory, btnEditCategory, btnOrderMngm, btnStatistics;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     @Override
@@ -52,7 +52,8 @@ public class AdminMainActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         btnAddCategory = findViewById(R.id.buttonaddCa);
         btnEditCategory = findViewById(R.id.buttoneditCa);
-
+        btnOrderMngm = findViewById(R.id.buttonOrderMngm);
+        btnStatistics = findViewById(R.id.buttonStatistics);
         initListener();
     }
 
@@ -90,6 +91,15 @@ public class AdminMainActivity extends AppCompatActivity {
 
                 makeMeOffline();
             }
+        });
+        btnOrderMngm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity((new Intent(AdminMainActivity.this, AdminOderManagement.class)));
+            }
+        });
+        btnStatistics.setOnClickListener(v->{
+            startActivity(new Intent(AdminMainActivity.this, StatisticsActivity.class));
         });
     }
     private void makeMeOffline() {

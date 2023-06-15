@@ -27,6 +27,11 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
 
     private OnSizeClickListener onSizeClickListener;
 
+    public void setSelectedSizePosition(int position) {
+        selectedSizePosition = position;
+        //notifyDataSetChanged();
+    }
+
     public void setOnSizeClickListener(OnSizeClickListener listener) {
         this.onSizeClickListener = listener;
     }

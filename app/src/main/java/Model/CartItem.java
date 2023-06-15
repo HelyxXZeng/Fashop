@@ -2,7 +2,9 @@ package Model;
 
 import com.google.firebase.database.Exclude;
 
-public class CartItem {
+import java.io.Serializable;
+
+public class CartItem implements Serializable {
     private int ID;
 
     private int variantID;
@@ -12,6 +14,7 @@ public class CartItem {
     private String customerID;
 
     private String productName;
+
 
     @Exclude
     public double getPrice() {

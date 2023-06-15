@@ -133,22 +133,29 @@
 
 
         <LinearLayout
-            android:id="@+id/checkoutBtn"
             android:layout_width="150dp"
             android:layout_height="45dp"
             android:layout_margin="7dp"
             android:layout_alignParentEnd="true"
-            android:padding="10dp"
+            android:padding="0dp"
             android:gravity="center_horizontal"
             android:background="@drawable/orangebutton2"
             android:orientation="horizontal">
 
-            <TextView
+            <!--<TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Check out"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp" />-->
+            <Button
+                android:id="@+id/checkoutBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Checkout"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@android:color/transparent"/>
 
 <!--            <TextView-->
 <!--                android:id="@+id/quantityPaidItemTxt"-->
