@@ -1,5 +1,6 @@
 package Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class    OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.V
         holder.numberOrderTxt.setText(String.valueOf(orderItem.getQuantity()));
 
         holder.sizeColorTxt.setText(orderItem.getSize() + ", " + orderItem.getColor());
-
+        //Log.v("test",""+orderItem.getSize().toString());
         try {
             Picasso.get().load(orderItem.getImage()).placeholder(R.drawable.error).into(holder.productImg);
 
