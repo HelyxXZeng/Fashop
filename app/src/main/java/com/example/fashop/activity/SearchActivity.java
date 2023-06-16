@@ -172,6 +172,13 @@ public class SearchActivity extends AppCompatActivity {
         rcModels2.setAdapter(modelAdapter2);
     }
 
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
+
+    }
+
     /*private void getModelData() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Model");
         ChildEventListener childEventListener = new ChildEventListener() {

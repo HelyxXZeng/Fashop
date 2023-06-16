@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity{
                 //return true;
             }
             else if (item.getItemId() == R.id.cart) {
-                startActivity(new Intent(MainActivity.this, CartListActivity.class));
+                //startActivity(new Intent(MainActivity.this, CartListActivity.class));
+                cartLauncher.launch(new Intent(MainActivity.this, CartListActivity.class));
                 //return true;
             }
             else {
@@ -131,6 +132,16 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private ActivityResultLauncher<Intent> searchLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    bottomNavigationView.setSelectedItemId(R.id.home);
+                    replaceFragment(new HomeFragment());
+                }
+            }
+    );
+
+    private ActivityResultLauncher<Intent> cartLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK) {
