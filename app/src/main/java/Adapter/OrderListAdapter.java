@@ -54,6 +54,9 @@ public class OrderListAdapter  extends RecyclerView.Adapter<OrderListAdapter.Vie
                 holder.status.setTextColor(Color.BLACK);
                 holder.status.setBackgroundColor(Color.YELLOW);
                 break;
+            case "CONFIRMED":
+                holder.status.setTextColor(Color.BLACK);
+                holder.status.setBackgroundColor(0xFF8BC34A);
             case "SHIPPING":
                 holder.status.setTextColor(Color.WHITE);
                 holder.status.setBackgroundColor(Color.BLUE);
@@ -70,6 +73,7 @@ public class OrderListAdapter  extends RecyclerView.Adapter<OrderListAdapter.Vie
                 holder.status.setTextColor(Color.WHITE);
                 holder.status.setBackgroundColor(Color.RED);
                 break;
+
         }
 
         holder.itemView.setOnClickListener(v->{
