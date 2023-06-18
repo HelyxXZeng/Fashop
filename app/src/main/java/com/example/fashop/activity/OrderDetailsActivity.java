@@ -193,6 +193,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         status.add("SHIPPING");
         status.add("COMPLETED");
         status.add("DECLINED");
+        status.add("CANCELLED");
         ArrayAdapter<String> statusadapter = new ArrayAdapter<>(OrderDetailsActivity.this,
                 R.layout.spinner_gray_layout, status);
         spinner.setAdapter(statusadapter);
