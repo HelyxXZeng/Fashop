@@ -316,6 +316,7 @@
                             android:src="@drawable/shopping_orange"/>
 
                         <TextView
+                            android:id="@+id/order_history"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="15dp"
                             android:layout_width="match_parent"
