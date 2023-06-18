@@ -21,6 +21,7 @@ import com.example.fashop.R;
 import com.example.fashop.activity.AboutUsActivity;
 import com.example.fashop.activity.LegalInformationActivity;
 import com.example.fashop.activity.LoginActivity;
+import com.example.fashop.activity.OrderHistoryActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
 import com.example.fashop.activity.ProfileEditUserActivity;
 import com.example.fashop.activity.QuestionsActivity;
@@ -49,6 +50,7 @@ public class MeFragment extends Fragment {
     private TextView tvAboutUs;
     private TextView tvLegalInformation;
     private TextView tvQuestions;
+    private TextView orderHistory;
 
     //
     private FirebaseAuth firebaseAuth;
@@ -98,6 +100,7 @@ public class MeFragment extends Fragment {
         tvPhone = view.findViewById(R.id.tvPhone);
         editBtn = view.findViewById(R.id.editBtn);
         logoutBtn = view.findViewById(R.id.logoutBtn);
+        orderHistory = view.findViewById(R.id.order_history);
         //
         checkUser();
         initListener();
@@ -218,8 +221,11 @@ public class MeFragment extends Fragment {
         editBtn.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProfileEditUserActivity.class);
             startActivity(intent);
-        } );
-
+        });
+        orderHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            startActivity(intent);
+        });
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
