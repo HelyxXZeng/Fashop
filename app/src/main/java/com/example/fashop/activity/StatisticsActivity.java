@@ -24,6 +24,7 @@ import java.util.List;
 import Adapter.EditModelAdapter;
 import Adapter.ModelStatisticsAdapter;
 import Model.ModelImage;
+import Model.Order;
 import Model.OrderItem;
 import Model.ProductCategory;
 import Model.ProductModel;
@@ -36,7 +37,6 @@ public class StatisticsActivity extends AppCompatActivity {
     private TextView tvNumberOfCustomers;
     private TextView tvNumberOfModels;
     private TextView tvRevenue;
-    private float totalRevenue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,6 @@ public class StatisticsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot1) {
                 modelList.clear();
-                totalRevenue = 0;
                 for (DataSnapshot child1: snapshot1.getChildren())
                 {
                     ProductModel model = child1.getValue(ProductModel.class);
@@ -95,9 +94,9 @@ public class StatisticsActivity extends AppCompatActivity {
                                     }
                                     model.setQuantity(quantity);
                                     model.setRate(rate/count);
-                                    totalRevenue += model.getQuantity() * model.getPrice();
-                                    String formattedNumber = String.format("%.1f", totalRevenue);
-                                    tvRevenue.setText(formattedNumber);
+//                                    totalRevenue += model.getQuantity() * model.getPrice();
+//                                    String formattedNumber = String.format("%.1f", totalRevenue);
+//                                    tvRevenue.setText(formattedNumber);
                                     adapter.notifyDataSetChanged();
                                 }
 
@@ -177,6 +176,26 @@ public class StatisticsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 tvNumberOfCustomers.setText(String.valueOf(snapshot.getChildrenCount()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference orderRef = database.getReference("Order");
+        Query queryOrder = orderRef.orderByChild("status").equalTo("COMPLETED");
+        queryOrder.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                float totalRevenue = 0;
+                for (DataSnapshot orderSnapshot : snapshot.getChildren()){
+                    Order order = orderSnapshot.getValue(Order.class);
+                    totalRevenue += order.getTotal() - 1;
+                }
+                String formattedNumber = String.format("%.1f", totalRevenue);
+                tvRevenue.setText(formattedNumber);
             }
 
             @Override
