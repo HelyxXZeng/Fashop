@@ -208,10 +208,7 @@ public class OrderDetailActivity extends AppCompatActivity{
         ConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //pushOrder();
-                //pushOrderItems();
-                //Toast.makeText(getApplicationContext(), "Create Order Completed", Toast.LENGTH_LONG).show();
-                //onBackPressed();
+                
             }
         });
     }
