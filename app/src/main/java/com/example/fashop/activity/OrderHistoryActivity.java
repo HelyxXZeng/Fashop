@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.fashop.R;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.OrderAdapter;
+import Fragment.OrdersPagerAdapter;
 import Model.Order;
 
 public class OrderHistoryActivity extends AppCompatActivity {
@@ -30,14 +34,49 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private List<Order> orders = new ArrayList<>();
     private List<Order> loading = new ArrayList<>();
     private RecyclerView OrderView;
-    Button pending, confirmed, shipping, completed, declined, canceled;
     OrderAdapter adapter;
-    private Button selectedButton;
+    OrdersPagerAdapter adapter2;
+    ViewPager2 viewPager2;
+    TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
+        adapter2 = new OrdersPagerAdapter(this);
+
+        viewPager2 = findViewById(R.id.viewPager);
+        viewPager2.setAdapter(adapter2);
+
+        tabLayout = findViewById(R.id.tabLayout);
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+
+                switch (position){
+                    case 0:
+                        tab.setText("Pending");
+                        break;
+                    case 1:
+                        tab.setText("Confirmed");
+                        break;
+                    case 2:
+                        tab.setText("Shipping");
+                        break;
+                    case 3:
+                        tab.setText("Completed");
+                        break;
+                    case 4:
+                        tab.setText("Declined");
+                        break;
+                    case 5:
+                        tab.setText("Canceled");
+                        break;
+                }
+            }
+        });
+        tabLayoutMediator.attach();
+        /*
         OrderView = findViewById(R.id.recycler_view_order_history);
 
         pending = findViewById(R.id.button_pending);
@@ -137,7 +176,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         });
 
         getOrderData();
-        loadOrder();
+        loadOrder();*/
     }
 
     private void getOrderData(){

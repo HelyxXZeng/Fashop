@@ -29,111 +29,19 @@
                 android:textStyle="bold"
                 android:text="Order History" />
 
-            <HorizontalScrollView
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                app:tabPaddingTop="10dp"
+                app:tabPaddingBottom="10dp"
+                android:background="@android:color/transparent"
+                app:tabMode="scrollable" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/button_pending"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pending"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:background="@android:color/transparent"
-                        android:layout_marginStart="10dp"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black" />
-
-                    <Button
-                        android:id="@+id/button_confirmed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Confirmed"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:background="@android:color/transparent"
-                        android:layout_marginStart="10dp"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black" />
-
-                    <Button
-                        android:id="@+id/button_shipping"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Shipping"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:background="@android:color/transparent"
-                        android:layout_marginStart="10dp"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black" />
-
-                    <Button
-                        android:id="@+id/button_completed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:background="@android:color/transparent"
-                        android:text="Completed"
-                        android:textSize="12sp"
-                        android:textColor="@color/black" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black" />
-
-                    <Button
-                        android:id="@+id/button_declined"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Declined"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:background="@android:color/transparent"
-                        android:layout_marginStart="10dp"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black" />
-
-                    <Button
-                        android:id="@+id/button_canceled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Canceled"
-                        android:textSize="12sp"
-                        android:textColor="@color/black"
-                        android:background="@android:color/transparent"
-                        android:layout_marginStart="10dp"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black" />
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_order_history"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="12dp"
-                android:nestedScrollingEnabled="false" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

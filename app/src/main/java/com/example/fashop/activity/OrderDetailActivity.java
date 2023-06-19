@@ -208,7 +208,7 @@ public class OrderDetailActivity extends AppCompatActivity{
         ConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                //currentOrder.setStatus("COMPLETED");
             }
         });
     }
