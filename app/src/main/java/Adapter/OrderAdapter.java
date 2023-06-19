@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.OrderDetailActivity;
 import com.example.fashop.activity.OrderDetailsActivity;
 import com.google.firebase.database.ValueEventListener;
 
@@ -80,7 +81,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                         // Perform any action on item click here
                         Order clickedItem = orders.get(position);
 
-                        Intent intent = new Intent(context, OrderDetailsActivity.class);
+                        Intent intent = new Intent(context, OrderDetailActivity.class);
                         intent.putExtra("order", clickedItem);
                         context.startActivity(intent);
                     }
