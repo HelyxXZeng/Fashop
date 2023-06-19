@@ -44,7 +44,7 @@ public class DeclinedFragment extends Fragment {
     private List<Order> orders = new ArrayList<>();
     private List<Order> loading = new ArrayList<>();
     private RecyclerView OrderView;
-    OrderAdapter adapter;
+    private OrderAdapter adapter;
 
     public DeclinedFragment() {
         // Required empty public constructor
@@ -92,6 +92,7 @@ public class DeclinedFragment extends Fragment {
         adapter = new OrderAdapter(getContext(), loading);
         OrderView.setAdapter(adapter);
         getOrderData();
+        loadOrder();
     }
     private void getOrderData(){
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();

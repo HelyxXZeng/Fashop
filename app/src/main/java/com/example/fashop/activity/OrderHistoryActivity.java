@@ -35,20 +35,19 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private List<Order> loading = new ArrayList<>();
     private RecyclerView OrderView;
     OrderAdapter adapter;
-    OrdersPagerAdapter adapter2;
-    ViewPager2 viewPager2;
-    TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
-        adapter2 = new OrdersPagerAdapter(this);
+        OrdersPagerAdapter adapter2 = new OrdersPagerAdapter(this);
 
-        viewPager2 = findViewById(R.id.viewPager);
+        ViewPager2 viewPager2 = findViewById(R.id.viewPager);
         viewPager2.setAdapter(adapter2);
+        viewPager2.setOffscreenPageLimit(adapter2.getItemCount());
 
-        tabLayout = findViewById(R.id.tabLayout);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
