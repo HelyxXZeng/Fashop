@@ -32,6 +32,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private RecyclerView OrderView;
     Button pending, confirmed, shipping, completed, declined, canceled;
     OrderAdapter adapter;
+    private Button selectedButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
         pending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (selectedButton != null) {
+                    selectedButton.setSelected(false);
+                }
+
+                // select current button
+                pending.setSelected(true);
+                selectedButton = pending;
                 currentStatus = "PENDING";
                 loadOrder();
             }
@@ -52,6 +60,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
         confirmed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (selectedButton != null) {
+                    selectedButton.setSelected(false);
+                }
+
+                // select current button
+                confirmed.setSelected(true);
+                selectedButton = confirmed;
                 currentStatus = "CONFIRMED";
                 loadOrder();
             }
@@ -61,6 +76,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
         shipping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (selectedButton != null) {
+                    selectedButton.setSelected(false);
+                }
+
+                // select current button
+                shipping.setSelected(true);
+                selectedButton = shipping;
                 currentStatus = "SHIPPING";
                 loadOrder();
             }
@@ -70,6 +92,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
         completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (selectedButton != null) {
+                    selectedButton.setSelected(false);
+                }
+
+                // select current button
+                completed.setSelected(true);
+                selectedButton = completed;
                 currentStatus = "COMPLETED";
                 loadOrder();
             }
@@ -79,6 +108,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
         declined.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (selectedButton != null) {
+                    selectedButton.setSelected(false);
+                }
+
+                // select current button
+                declined.setSelected(true);
+                selectedButton = declined;
                 currentStatus = "DECLINED";
                 loadOrder();
             }
@@ -88,6 +124,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
         canceled.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (selectedButton != null) {
+                    selectedButton.setSelected(false);
+                }
+
+                // select current button
+                canceled.setSelected(true);
+                selectedButton = canceled;
                 currentStatus = "CANCELED";
                 loadOrder();
             }

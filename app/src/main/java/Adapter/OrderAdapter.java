@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.OrderDetailsActivity;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
@@ -44,7 +46,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         if (order.getStatus().equals("PENDING")) {
             holder.orderStatusTextView.setText(order.getStatus());
             holder.orderStatusTextView.setTextColor(Color.GREEN);
-        } else {
+        }
+        else {
             holder.orderStatusTextView.setText(order.getStatus());
             holder.orderStatusTextView.setTextColor(Color.RED);
         }
@@ -76,6 +79,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                     if (position != RecyclerView.NO_POSITION) {
                         // Perform any action on item click here
                         Order clickedItem = orders.get(position);
+
+                        Intent intent = new Intent(context, OrderDetailsActivity.class);
+                        intent.putExtra("order", clickedItem);
+                        context.startActivity(intent);
                     }
                 }
             });

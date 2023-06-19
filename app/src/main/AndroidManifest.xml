@@ -20,6 +20,10 @@
         android:theme="@style/Theme.Fashop"
         tools:targetApi="31">
         <activity
+            android:name=".activity.ListModelOfCategoryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activity.OrderHistoryActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>

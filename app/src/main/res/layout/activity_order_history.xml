@@ -48,6 +48,10 @@
                         android:textColor="@color/black"
                         android:background="@android:color/transparent"
                         android:layout_marginStart="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black" />
 
                     <Button
                         android:id="@+id/button_confirmed"
@@ -58,6 +62,10 @@
                         android:textColor="@color/black"
                         android:background="@android:color/transparent"
                         android:layout_marginStart="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black" />
 
                     <Button
                         android:id="@+id/button_shipping"
@@ -68,6 +76,10 @@
                         android:textColor="@color/black"
                         android:background="@android:color/transparent"
                         android:layout_marginStart="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black" />
 
                     <Button
                         android:id="@+id/button_completed"
@@ -78,6 +90,10 @@
                         android:text="Completed"
                         android:textSize="12sp"
                         android:textColor="@color/black" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black" />
 
                     <Button
                         android:id="@+id/button_declined"
@@ -88,6 +104,10 @@
                         android:textColor="@color/black"
                         android:background="@android:color/transparent"
                         android:layout_marginStart="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black" />
 
                     <Button
                         android:id="@+id/button_canceled"
@@ -98,6 +118,10 @@
                         android:textColor="@color/black"
                         android:background="@android:color/transparent"
                         android:layout_marginStart="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black" />
 
                 </LinearLayout>
 

@@ -41,7 +41,7 @@ import Model.ProductModel;
 
 public class SearchActivity extends AppCompatActivity {
     EditText edtSearch2;
-    private List<ProductModel> modelList2;
+    private List<ProductModel> modelList2 = new ArrayList<>();
     private List<ModelImage> modelImageList = new ArrayList<>();
     private List<ProductModel> searchModel2 = new ArrayList<>();
     private List<ProductModel> loadModel = new ArrayList<>();
@@ -86,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
         categories = new Gson().fromJson(categoriesListJson, new TypeToken<List<ProductCategory>>(){}.getType());*/
 
         SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
-        String json = sharedPreferences.getString("model_list_key", "");
+        /*String json = sharedPreferences.getString("model_list_key", "");
         modelList2 = new ArrayList<>();
         if (!json.isEmpty()) {
             Type type = new TypeToken<List<ProductModel>>(){}.getType();
@@ -97,14 +97,14 @@ public class SearchActivity extends AppCompatActivity {
         if (!json2.isEmpty()) {
             Type type = new TypeToken<List<ProductCategory>>(){}.getType();
             categories = new Gson().fromJson(json2, type);
-        }
+        }*/
+        getCategoryData();
+        getModelData();
 
 
         //make listview
         listView = (ListView) findViewById(R.id.filter_list);
         listView.setBackgroundColor(Color.WHITE);
-        adapter = new CheckboxItemAdapter(this, R.layout.viewholder_checkbox_item, categories);
-        listView.setAdapter(adapter);
 
         rcModels2 = findViewById(R.id.rcModels2);
 
@@ -151,7 +151,6 @@ public class SearchActivity extends AppCompatActivity {
                 loadModelList();
             }
         });
-        loadModel();
     }
     private void loadModel() {
         GridLayoutManager manager = new GridLayoutManager(SearchActivity.this, 2);
@@ -179,7 +178,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    /*private void getModelData() {
+    private void getModelData() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Model");
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
@@ -188,7 +187,6 @@ public class SearchActivity extends AppCompatActivity {
                 if (model != null)
                 {
                     modelList2.add(model);
-                    modelAdapter2.notifyDataSetChanged();
                 }
             }
 
@@ -205,7 +203,6 @@ public class SearchActivity extends AppCompatActivity {
                         {
                             model.setImages(modelList2.get(i).getImages());
                             modelList2.set(i, model);
-                            modelAdapter2.notifyDataSetChanged();
                             break;
                         }
                     }
@@ -223,7 +220,6 @@ public class SearchActivity extends AppCompatActivity {
                         if (modelList2.get(i).getID() == model.getID())
                         {
                             modelList2.remove(i);
-                            modelAdapter2.notifyDataSetChanged();
                             break;
                         }
                     }
@@ -312,7 +308,7 @@ public class SearchActivity extends AppCompatActivity {
             }
             model.setImages(urls);
         }
-        modelAdapter2.notifyDataSetChanged();
+        loadModel();
     }
 
     private void getCategoryData() {
@@ -326,6 +322,8 @@ public class SearchActivity extends AppCompatActivity {
                     ProductCategory category = child1.getValue(ProductCategory.class);
                     categories.add(category);
                 }
+                adapter = new CheckboxItemAdapter(SearchActivity.this, R.layout.viewholder_checkbox_item, categories);
+                listView.setAdapter(adapter);
             }
 
             @Override
@@ -334,5 +332,5 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(SearchActivity.this, "Failed to get data", Toast.LENGTH_SHORT).show();
             }
         });
-    }*/
+    }
 }
