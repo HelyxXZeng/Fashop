@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="80dp">
+
+    <TextView
+        android:id="@+id/order_number_text_view"
+        android:text="ID #01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/order_date_text_view"
+        android:text="17/06/2023"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="16dp"
+        android:layout_below="@id/order_number_text_view"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/order_status_text_view"
+        android:text="PENDING"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="end"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

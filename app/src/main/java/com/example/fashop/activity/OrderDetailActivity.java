@@ -6,16 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Spinner;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +26,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.ListIterator;
 
 import Adapter.OrderItemAdapter;
 import Model.CartItem;
@@ -39,48 +44,60 @@ import Model.ModelImage;
 import Model.Order;
 import Model.OrderItem;
 import Model.ProductModel;
+import Model.ProductVariant;
 
-public class OrderDetailsActivity extends AppCompatActivity {
-    TextView un, orderid, cd, address, nob, ordervalue;
-    OrderItemAdapter adapter;
+public class OrderDetailActivity extends AppCompatActivity{
+
+    TextView UserName, Address, totalTxt, shippingCost, totalCost;
+    EditText note;
+    RecyclerView.Adapter adapter;
     RecyclerView OrderItemList;
     List<OrderItem> orderItems = new ArrayList<>();
-    Button confirmbtn;
-    ImageButton backbtn;
-    Spinner spinner;
-    ProgressDialog progressDialog;
-    String selectedItem;
-    Order order;
+    Order currentOrder = null;
+    Button ConfirmBtn;
+    LinearLayout button_layout;
+    private int orderID;
+    private int maxOrderID;
+    private int maxOrderItemID;
+    private double total;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_details);
+        setContentView(R.layout.activity_order_detail);
 
-        un = findViewById(R.id.usernameTv);
-        orderid = findViewById(R.id.orderidTv);
-        cd = findViewById(R.id.createdDateTv);
-        address =findViewById(R.id.address);
-        nob = findViewById(R.id.note);
-        ordervalue = findViewById(R.id.totalCost);
-        OrderItemList = findViewById(R.id.order_item_rcv);
-        spinner = findViewById(R.id.statusSpinner);
-        confirmbtn = findViewById(R.id.confirm_button);
-        backbtn = findViewById(R.id.backBtn);
+        String cartItemsListKey = getIntent().getStringExtra("order");
+        currentOrder = (Order) getIntent().getSerializableExtra("order");
 
-        backbtn.setOnClickListener(v -> { finish();});
+        total = currentOrder.getTotal();
 
-        getDetailOrderData();
+        initView();
+        ConfirmEvent();
     }
-    void getDetailOrderData()
-    {
-        order = (Order) getIntent().getSerializableExtra("order");
+    private void initView(){
+        OrderItemList = findViewById(R.id.cart_item_rcv);
+
         orderItems.clear();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OrderDetailsActivity.this, LinearLayoutManager.VERTICAL, false);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         OrderItemList.setLayoutManager(linearLayoutManager);
         adapter = new OrderItemAdapter(orderItems);
         OrderItemList.setAdapter(adapter);
+
+
+        UserName = findViewById(R.id.tvUserName);
+        Address = findViewById(R.id.address);
+
+        totalTxt = findViewById(R.id.totalTxt);
+        totalTxt.setText(Double.toString(total));
+
+        shippingCost = findViewById(R.id.shippingCost);
+
+        totalCost = findViewById(R.id.totalCost);
+        totalCost.setText("$" + Double.toString(total - 1));
+
+        FirebaseAuth.getInstance().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("uid").equalTo(order.getCustomerID()).addValueEventListener(new ValueEventListener() {
+        ref.orderByChild("uid").equalTo(currentOrder.getCustomerID()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds: snapshot.getChildren()) {
@@ -88,28 +105,22 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     String district = "" + ds.child("district").getValue();
                     String ward = "" + ds.child("ward").getValue();
                     String street = "" + ds.child("streetAddress").getValue();
-                    address.setText("Address: " + street + ", " + ward + ", " + district + ", " + city);
+                    Address.setText("Address: " + street + ", " + ward + ", " + district + ", " + city);
 
                     String name = "User Name: " + ds.child("name").getValue();
-                    un.setText(name);
+                    UserName.setText(name);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(OrderDetailsActivity.this,"Failed to load user data. Try again later", Toast.LENGTH_LONG).show();
+                Toast.makeText(OrderDetailActivity.this,"Failed to load user data. Try again later", Toast.LENGTH_LONG).show();
             }
         });
 
-        String nt = "Note of buyer: " + order.getNote();
-        nob.setText(nt);
-        orderid.setText("Order ID: " + order.getID());
-        cd.setText("Created Date: "+order.getDate());
-        ordervalue.setText("$" + order.getTotal());
-
         DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("OrderItem");
         DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference("Variant");
-        ref2.orderByChild("orderID").equalTo(order.getID()).addValueEventListener(new ValueEventListener() {
+        ref2.orderByChild("orderID").equalTo(currentOrder.getID()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds: snapshot.getChildren()){
@@ -176,9 +187,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     orderItems.add(orderItem);
                     adapter.notifyDataSetChanged();
                 }
-
-
-
             }
 
             @Override
@@ -186,48 +194,21 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void ConfirmEvent(){
+        ConfirmBtn = findViewById(R.id.checkoutBtn);
+        ConfirmBtn.setText("RECEIVED");
+        button_layout = findViewById(R.id.button_layout);
 
-        ArrayList<String> status = new ArrayList<>();
-        status.add("PENDING");
-        status.add("CONFIRMED");
-        status.add("SHIPPING");
-        status.add("COMPLETED");
-        status.add("DECLINED");
-        status.add("CANCELLED");
-      
-        ArrayAdapter<String> statusadapter = new ArrayAdapter<>(OrderDetailsActivity.this,
-                R.layout.spinner_gray_layout, status);
-        spinner.setAdapter(statusadapter);
-        spinner.setSelection(statusadapter.getPosition(order.getStatus()));
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        if(!currentOrder.getStatus().equals("SHIPPING")) {
+            ConfirmBtn.setEnabled(false);
+            button_layout.setBackgroundColor(Color.GRAY);
+        }
+
+        ConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedItem = spinner.getSelectedItem().toString();
-                statusadapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        confirmbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DatabaseReference setref = FirebaseDatabase.getInstance().getReference("Order");
-                order.setStatus(selectedItem);
-                setref.child(String.valueOf(order.getID())).setValue(order,
-                        new DatabaseReference.CompletionListener(){
-                            @Override
-                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref)
-                            {
-                                Toast.makeText(getApplicationContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-
-                        });
+            public void onClick(View view) {
+                //currentOrder.setStatus("COMPLETED");
             }
         });
     }
