@@ -76,7 +76,7 @@ public class SplashActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             String accountType = ""+ds.child("accountType");
-                            if (accountType.contains("Admin")){
+                            if (accountType.contains("Admin") || accountType.contains("Staff")){
                                 //user is seller
 
                                 startActivity(new Intent(SplashActivity.this, AdminMainActivity.class));

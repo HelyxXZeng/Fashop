@@ -460,6 +460,58 @@
                         android:layout_marginLeft="10dp"
                         android:textStyle="bold"/>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/notification"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-12dp"
+                            android:layout_marginLeft="10dp">
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/fcmSwitch"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:text="Push Notifications"
+                                android:textSize="17sp"/>
+
+                            <TextView
+                                android:layout_marginTop="-13dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/notificationStatusTv"
+                                android:background="@color/white"
+                                android:layout_below="@id/fcmSwitch"
+                                android:textSize="13sp"
+                                android:text="Notifications are disabled"
+                                android:textColor="@color/colorGray01"/>
+
+                        </RelativeLayout>
+
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.6dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/lightgray"/>
+
 
 
                     <LinearLayout
@@ -487,7 +539,6 @@
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:textSize="17sp"/>
-
                     </LinearLayout>
 
                     <View

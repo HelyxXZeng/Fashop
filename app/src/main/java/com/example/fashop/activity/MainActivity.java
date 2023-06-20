@@ -9,8 +9,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.fashop.R;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -39,6 +44,10 @@ public class MainActivity extends AppCompatActivity{
         replaceFragment(new HomeFragment());
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
+
+        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.cart);
+        badgeDrawable.setVisible(true);
+        badgeDrawable.setNumber(8);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.search) {
@@ -71,6 +80,8 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
+        invalidateOptionsMenu();
+
 
         //
 //        floatingActionButton = findViewById(R.id.cartBtn);
@@ -82,6 +93,23 @@ public class MainActivity extends AppCompatActivity{
 //        });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.bottom_menu, menu);
+//        MenuItem menuItem = menu.findItem(R.id.cart);
+//        View actionView = menuItem.getActionView();
+//        TextView cartBadgeTextView = actionView.findViewById(R.id.cart_badge_tv);
+//        cartBadgeTextView.setText("2");
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        // Xử lý sự kiện khi menu được chọn
+        return super.onOptionsItemSelected(item);
+    }
 
     private Fragment itemIdToFragment(int id)
     {
@@ -116,6 +144,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         saveState();
+
     }
 
     @Override

@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -96,6 +97,18 @@ public class RegisterUserActivity extends AppCompatActivity{
 
     String selectedDistrict, selectedCity, selectedWard;
 
+    //
+
+    String intentValue;
+    TextView titleActivity;
+
+    String accountType;
+
+    String onlineStatus;
+
+    Class<?> activityAfterRegister;
+    //
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +146,24 @@ public class RegisterUserActivity extends AppCompatActivity{
         wardSpinner = findViewById(R.id.spinner_ward);
         spinnerRef = FirebaseDatabase.getInstance().getReference();
 
+        //
+        titleActivity = findViewById(R.id.titleActivity);
+        Intent intent = getIntent();
+        intentValue = intent.getStringExtra("userType");
+        if (intentValue.equals("Staff")){
+            titleActivity.setText("Register Staff");
+            accountType = "Staff";
+            onlineStatus = "false";
+            activityAfterRegister = StaffManagemantActivity.class;
+
+        }
+        else if (intentValue.equals("User")){
+            titleActivity.setText("Register User");
+            accountType = "User";
+            onlineStatus = "true";
+            activityAfterRegister = MainActivity.class;
+        }
+        //
 
 
         ShowData();
@@ -360,8 +391,8 @@ public class RegisterUserActivity extends AppCompatActivity{
             hashMap.put("ward", ""+selectedWard);
             hashMap.put("streetAddress", ""+streetAddress);
             hashMap.put("timestamp", ""+timestamp);
-            hashMap.put("accountType", "User");
-            hashMap.put("online", "true");
+            hashMap.put("accountType", accountType);
+            hashMap.put("online", onlineStatus);
             hashMap.put("profileImage", "");
 
             //save to db
@@ -372,7 +403,7 @@ public class RegisterUserActivity extends AppCompatActivity{
                         public void onSuccess(Void unused) {
                             //db updated
                             progressDialog.dismiss();
-                            startActivity(new Intent(RegisterUserActivity.this, MainActivity.class));
+                            startActivity(new Intent(RegisterUserActivity.this, activityAfterRegister));
                             finish();
                         }
                     })
@@ -381,7 +412,7 @@ public class RegisterUserActivity extends AppCompatActivity{
                         public void onFailure(@NonNull Exception e) {
                             //failed updating db
                             progressDialog.dismiss();
-                            startActivity(new Intent(RegisterUserActivity.this, MainActivity.class));
+                            startActivity(new Intent(RegisterUserActivity.this, activityAfterRegister));
                             finish();
                         }
                     });
@@ -415,8 +446,8 @@ public class RegisterUserActivity extends AppCompatActivity{
                                 hashMap.put("ward", ""+selectedWard);
                                 hashMap.put("streetAddress", ""+streetAddress);
                                 hashMap.put("timestamp", ""+timestamp);
-                                hashMap.put("accountType", "User");
-                                hashMap.put("online", "true");
+                                hashMap.put("accountType", accountType);
+                                hashMap.put("online", onlineStatus);
                                 hashMap.put("profileImage", ""+downloadImageUri);//url of uploaded image
 
                                 //save to db
@@ -427,7 +458,7 @@ public class RegisterUserActivity extends AppCompatActivity{
                                             public void onSuccess(Void unused) {
                                                 //db updated
                                                 progressDialog.dismiss();
-                                                startActivity(new Intent(RegisterUserActivity.this, MainActivity.class));
+                                                startActivity(new Intent(RegisterUserActivity.this, activityAfterRegister));
                                                 finish();
                                             }
                                         })
@@ -436,7 +467,7 @@ public class RegisterUserActivity extends AppCompatActivity{
                                             public void onFailure(@NonNull Exception e) {
                                                 //failed updating db
                                                 progressDialog.dismiss();
-                                                startActivity(new Intent(RegisterUserActivity.this, MainActivity.class));
+                                                startActivity(new Intent(RegisterUserActivity.this, activityAfterRegister));
                                                 finish();
                                             }
                                         });

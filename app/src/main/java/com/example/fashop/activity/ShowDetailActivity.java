@@ -62,6 +62,7 @@ public class ShowDetailActivity extends AppCompatActivity {
 //                managementCart.insertFood(object);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("object", object);
+                bundle.putSerializable("typeButton", "addToCart");
 
                 ProductVariantFragment bottomSheetFragment = new ProductVariantFragment();
                 bottomSheetFragment.setArguments(bundle);
@@ -72,9 +73,13 @@ public class ShowDetailActivity extends AppCompatActivity {
         buyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(ShowDetailActivity.this, ProductVariantActivity.class));
-//                ProductVariantFragment bottomSheetFragment = new ProductVariantFragment();
-//                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("object", object);
+                bundle.putSerializable("typeButton", "buyNow");
+
+                ProductVariantFragment bottomSheetFragment = new ProductVariantFragment();
+                bottomSheetFragment.setArguments(bundle);
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
             }
         });
 
