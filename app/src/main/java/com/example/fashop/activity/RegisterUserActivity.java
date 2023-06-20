@@ -359,6 +359,7 @@ public class RegisterUserActivity extends AppCompatActivity{
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         //account created
+                        Log.e("currentUser", FirebaseAuth.getInstance().getUid());
                         saverFirebaseData();
                     }
                 })
@@ -403,7 +404,48 @@ public class RegisterUserActivity extends AppCompatActivity{
                         public void onSuccess(Void unused) {
                             //db updated
                             progressDialog.dismiss();
+                            if (intentValue.equals("Staff")){
+                                firebaseAuth.signOut();
+
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+
+                                ref.orderByChild("accountType").equalTo("Admin")
+                                        .addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for (DataSnapshot ds: snapshot.getChildren()){
+
+                                                    String email = "" + ds.child("email").getValue();
+                                                    String password = "" + ds.child("password").getValue();
+
+                                                    firebaseAuth.signInWithEmailAndPassword(email, password)
+                                                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                                                @Override
+                                                                public void onSuccess(AuthResult authResult) {
+                                                                    //logged in successfully
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    //failed logging in
+                                                                }
+                                                            });
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+
+                            }
+
                             startActivity(new Intent(RegisterUserActivity.this, activityAfterRegister));
+
                             finish();
                         }
                     })
