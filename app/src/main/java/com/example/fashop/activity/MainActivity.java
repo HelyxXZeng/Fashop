@@ -2,7 +2,9 @@ package com.example.fashop.activity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -18,6 +20,13 @@ import com.example.fashop.R;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -44,10 +53,6 @@ public class MainActivity extends AppCompatActivity{
         replaceFragment(new HomeFragment());
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
-
-        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.cart);
-        badgeDrawable.setVisible(true);
-        badgeDrawable.setNumber(8);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.search) {
@@ -82,6 +87,8 @@ public class MainActivity extends AppCompatActivity{
 
         invalidateOptionsMenu();
 
+        cartCounter();
+
 
         //
 //        floatingActionButton = findViewById(R.id.cartBtn);
@@ -91,6 +98,29 @@ public class MainActivity extends AppCompatActivity{
 //                startActivity(new Intent(MainActivity.this, CartListActivity.class));
 //            }
 //        });
+    }
+
+    private void cartCounter() {
+        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.cart);
+        badgeDrawable.setVisible(true);
+        badgeDrawable.setMaxCharacterCount(2);
+        badgeDrawable.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.redBadge));
+
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CartItem");
+        Query cartItems = ref.orderByChild("customerID").equalTo(FirebaseAuth.getInstance().getUid());
+                cartItems.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int quantityCartItem = (int) snapshot.getChildrenCount();
+                        badgeDrawable.setNumber(quantityCartItem);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     @Override

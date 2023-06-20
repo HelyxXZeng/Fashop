@@ -4,12 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +74,7 @@ public class MeFragment extends Fragment {
     //
 
     private SwitchCompat fcmSwitch;
-    TextView notificationStatusTv, delBtn;
+    TextView notificationStatusTv;
 
     private static final String enableMessage = "Notification are enabled";
     private static final String disabledMessage = "Notification are disable";
@@ -81,6 +83,11 @@ public class MeFragment extends Fragment {
 
     private SharedPreferences sp;
     private SharedPreferences.Editor spEditor;
+
+    private LinearLayout hotlineBtn;
+    private TextView hotlineNumber;
+
+    private String hotline;
 
     public MeFragment() {
         // Required empty public constructor
@@ -122,7 +129,8 @@ public class MeFragment extends Fragment {
 
         fcmSwitch = view.findViewById(R.id.fcmSwitch);
         notificationStatusTv = view.findViewById(R.id.notificationStatusTv);
-        delBtn = view.findViewById(R.id.delBtn);
+        hotlineBtn = view.findViewById(R.id.hotlineBtn);
+        hotlineNumber = view.findViewById(R.id.hotlineNumber);
         //init shared preferences
         sp = context.getSharedPreferences("SETTINGS_SP", context.MODE_PRIVATE);
         //check last selected option; true/false
@@ -136,14 +144,31 @@ public class MeFragment extends Fragment {
         }
         //
         checkUser();
+        loadHotLine();
         initListener();
-        pushNotification();
     }
 
-    private void pushNotification() {
+    private void loadHotLine() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.orderByChild("accountType").equalTo("Admin")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds: snapshot.getChildren()){
 
+                            hotline = "" + ds.child("phone").getValue();
+                            hotlineNumber.setText(hotline);
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
-
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -286,6 +311,22 @@ public class MeFragment extends Fragment {
                 else {
                     //uncheck, disable notifications
                     unSubscribeToTopic();
+                }
+            }
+        });
+
+        hotlineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String phoneNumber = hotline; // Replace with your desired phone number
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNumber));
+
+                Context context = view.getContext(); // Get the context from the button view
+
+                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(intent);
                 }
             }
         });
