@@ -89,8 +89,10 @@ public class StatisticsActivity extends AppCompatActivity {
 
                                         // Do something with the retrieved OrderItem objects
                                         quantity += orderItem.getQuantity();
-                                        rate += orderItem.getRate();
-                                        ++count;
+                                        if (orderItem.getRate() != 0){
+                                            rate += orderItem.getRate();
+                                            ++count;
+                                        }
                                     }
                                     model.setQuantity(quantity);
                                     model.setRate(rate/count);
