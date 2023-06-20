@@ -124,7 +124,7 @@ public class CanceledFragment extends Fragment {
     private void loadOrder(){
         loading.clear();
         for (Order order : orders){
-            if(order.getStatus().equals("CANCELED")) loading.add(order);
+            if(order.getStatus().equals("CANCELLED")) loading.add(order);
         }
         adapter.notifyDataSetChanged();
     }

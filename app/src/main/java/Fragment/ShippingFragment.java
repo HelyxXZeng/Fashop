@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.OrderHistoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +29,7 @@ import Model.Order;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ShippingFragment#newInstance} factory method to
+ * Use the {@link PendingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ShippingFragment extends Fragment {
@@ -56,11 +57,11 @@ public class ShippingFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ShippingFragment.
+     * @return A new instance of fragment PendingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ShippingFragment newInstance(String param1, String param2) {
-        ShippingFragment fragment = new ShippingFragment();
+    public static PendingFragment newInstance(String param1, String param2) {
+        PendingFragment fragment = new PendingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,7 +82,9 @@ public class ShippingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shipping, container, false);
+        View view = inflater.inflate(R.layout.fragment_pending, container, false);
+        initUI(view);
+        return view;
     }
     public void initUI(View view){
         OrderView = view.findViewById(R.id.recycler_view_order_history);
@@ -125,6 +128,5 @@ public class ShippingFragment extends Fragment {
             if(order.getStatus().equals("SHIPPING")) loading.add(order);
         }
         adapter.notifyDataSetChanged();
-
     }
 }

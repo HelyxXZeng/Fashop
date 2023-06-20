@@ -46,6 +46,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
         if (order.getStatus().equals("PENDING")) {
             holder.orderStatusTextView.setText(order.getStatus());
+            holder.orderStatusTextView.setTextColor(Color.YELLOW);
+        }
+        else if (order.getStatus().equals("CONFIRMED")) {
+            holder.orderStatusTextView.setText(order.getStatus());
+            holder.orderStatusTextView.setTextColor(Color.BLUE);
+        }
+        else if (order.getStatus().equals("SHIPPING")) {
+            holder.orderStatusTextView.setText(order.getStatus());
+            holder.orderStatusTextView.setTextColor(Color.GRAY);
+        }
+        else if (order.getStatus().equals("COMPLETED")) {
+            holder.orderStatusTextView.setText(order.getStatus());
             holder.orderStatusTextView.setTextColor(Color.GREEN);
         }
         else {

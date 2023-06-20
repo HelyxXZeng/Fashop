@@ -200,7 +200,7 @@ public class OrderDetailActivity extends AppCompatActivity{
         ConfirmBtn.setText("RECEIVED");
         button_layout = findViewById(R.id.button_layout);
 
-        if(currentOrder.getStatus() != "SHIPPING") {
+        if(!currentOrder.getStatus().equals("SHIPPING")) {
             ConfirmBtn.setEnabled(false);
             button_layout.setBackgroundColor(Color.GRAY);
         }
