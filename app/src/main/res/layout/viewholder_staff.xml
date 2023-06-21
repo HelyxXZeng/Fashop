@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/outline_user"
+    android:longClickable="true"
+    android:id="@+id/staff_viewholder">
+
+
+
+    <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+        android:id="@+id/imgAvt"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:src="@drawable/avt"
+        app:c_border="true"
+        app:c_border_width="1dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"/>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: "
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvUid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="idString"
+                android:textSize="15sp"
+                android:lines="2"
+                android:ellipsize="end"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Staff 1"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone: "
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="92380283"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: "
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Staff@gm.com"
+                android:textSize="15sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address: "
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="4"
+                android:ellipsize="end"
+                android:textSize="15sp"
+                android:text="110 Nguyen Trai, Thi tran Ngai Giao Huyen Chau Duc, Tinh Ba Ria Vung Tau"/>
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -19,6 +19,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fashop.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +47,7 @@ import Model.ModelImage;
 import Model.Order;
 import Model.OrderItem;
 import Model.ProductModel;
+import MyClass.Constants;
 
 public class OrderDetailsActivity extends AppCompatActivity {
     TextView un, orderid, cd, address, nob, ordervalue;
@@ -51,6 +60,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     String selectedItem;
     Order order;
+
+    String shopAccountType = "AdminAndStaff";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,11 +235,77 @@ public class OrderDetailsActivity extends AppCompatActivity {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref)
                             {
                                 Toast.makeText(getApplicationContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
+                                //send notification to customer
+                                String message = "Order " + selectedItem;
+                                prepareNotificationMessage(String.valueOf(order.getID()), message);
                                 finish();
                             }
 
                         });
             }
         });
+    }
+
+    private void prepareNotificationMessage(String orderId, String message){
+
+
+        String NOTIFICATION_TOPIC = "/topics/" + Constants.FCM_TOPIC;
+        String  NOTIFICATION_TITLE = "Your Order " + orderId;
+        String NOTIFICATION_MESSAGE = "" + message;
+        String NOTIFICATION_TYPE = "OrderStatusChanged";
+
+        JSONObject notificationJo = new JSONObject();
+        JSONObject notificationBodyJo = new JSONObject();
+
+        try {
+            //content
+            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
+            notificationBodyJo.put("buyerUid", order.getCustomerID());
+            Log.e("buyerUid", order.getCustomerID());
+            notificationBodyJo.put("shopAccountType", shopAccountType);
+            notificationBodyJo.put("orderId", orderId);
+            notificationBodyJo.put("notificationTitle", NOTIFICATION_TITLE);
+            notificationBodyJo.put("notificationMessage", NOTIFICATION_MESSAGE);
+
+            //where to send
+            notificationJo.put("to", NOTIFICATION_TOPIC); // to all
+            notificationJo.put("data", notificationBodyJo);
+
+
+        } catch (JSONException e) {
+            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        sendFcmNotification(notificationJo);
+    }
+
+    private void sendFcmNotification(JSONObject notificationJo) {
+        //send volley request
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send",
+                notificationJo, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //notification sent
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //notification failed
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "key=" + Constants.FCM_KEY);
+
+                return headers;
+            }
+        };
+
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
+
     }
 }
