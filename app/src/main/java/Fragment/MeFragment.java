@@ -58,6 +58,7 @@ public class MeFragment extends Fragment {
 
     private ImageView imgAvt;
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
+    private LinearLayout PendingLayout, ConfirmedLayout, ShippingLayout, CompletedLayout;
 
     private ImageButton editBtn;
 
@@ -101,6 +102,11 @@ public class MeFragment extends Fragment {
         editBtn = view.findViewById(R.id.editBtn);
         logoutBtn = view.findViewById(R.id.logoutBtn);
         orderHistory = view.findViewById(R.id.order_history);
+
+        PendingLayout = view.findViewById(R.id.PendingLayout);
+        ConfirmedLayout = view.findViewById(R.id.ConfirmedLayout);
+        ShippingLayout = view.findViewById(R.id.ShippingLayout);
+        CompletedLayout = view.findViewById(R.id.CompletedLayout);
         //
         checkUser();
         initListener();
@@ -199,6 +205,38 @@ public class MeFragment extends Fragment {
     }
 
     private void initListener() {
+        PendingLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 0);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        CompletedLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 3);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        ConfirmedLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 1);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        ShippingLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 2);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
         tvPrivacyPolicy.setOnClickListener(v->{
             Intent intent = new Intent(context, PrivacyPolicyActivity.class);
             startActivity(intent);
@@ -224,6 +262,9 @@ public class MeFragment extends Fragment {
         });
         orderHistory.setOnClickListener(v -> {
             Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 0);
+            intent.putExtras(args);
             startActivity(intent);
         });
         logoutBtn.setOnClickListener(new View.OnClickListener() {

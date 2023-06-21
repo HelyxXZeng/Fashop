@@ -1,4 +1,5 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="80dp"
-        android:id="@+id/adapter">
+        android:id="@+id/adapter"
+        android:clickable="false"
+        android:focusable="false">
 
         <TextView
             android:id="@+id/order_number_text_view"
@@ -44,22 +47,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/black"
+            android:textColor="@color/orangeshopee"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:gravity="end"
             android:layout_alignParentEnd="true"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cart_item_rcv"
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_below="@id/order_date_text_view">
+            android:layout_below="@id/order_date_text_view"
+            android:clickable="false"
+            android:focusable="false">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cart_item_rcv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="false"
+                android:focusable="false">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/total"
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +82,7 @@
             android:layout_marginTop="16dp"
             android:layout_centerVertical="true"
             android:orientation="horizontal"
-            android:layout_below="@id/cart_item_rcv"
+            android:layout_below="@id/container"
             android:gravity="end"
             android:layout_alignParentEnd="true">
 
@@ -88,6 +103,31 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_margin="7dp"
+            android:layout_alignParentEnd="true"
+            android:padding="0dp"
+            android:gravity="center_horizontal"
+            android:background="@drawable/orangebutton2"
+            android:layout_below="@id/total"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/reviewBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Review"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@android:color/transparent"
+                android:clickable="true"/>
 
         </LinearLayout>
 

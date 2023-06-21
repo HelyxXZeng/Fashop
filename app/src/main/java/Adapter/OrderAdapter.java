@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,6 +63,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         ref2.orderByChild("orderID").equalTo(order.getID()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (holder.orderItems != null){
+                    holder.orderItems.clear();
+                }
                 for(DataSnapshot ds: snapshot.getChildren()){
                     OrderItem orderItem =  ds.getValue(OrderItem.class);
 
@@ -134,25 +139,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             }
         });
 
+        holder.orderStatusTextView.setText(order.getStatus());
         if (order.getStatus().equals("PENDING")) {
-            holder.orderStatusTextView.setText(order.getStatus());
-            holder.orderStatusTextView.setTextColor(Color.YELLOW);
+
         }
         else if (order.getStatus().equals("CONFIRMED")) {
-            holder.orderStatusTextView.setText(order.getStatus());
-            holder.orderStatusTextView.setTextColor(Color.BLUE);
+
         }
         else if (order.getStatus().equals("SHIPPING")) {
-            holder.orderStatusTextView.setText(order.getStatus());
-            holder.orderStatusTextView.setTextColor(Color.GRAY);
+
         }
         else if (order.getStatus().equals("COMPLETED")) {
-            holder.orderStatusTextView.setText(order.getStatus());
-            holder.orderStatusTextView.setTextColor(Color.GREEN);
+            holder.button_layout.setVisibility(View.VISIBLE);
         }
         else {
-            holder.orderStatusTextView.setText(order.getStatus());
-            holder.orderStatusTextView.setTextColor(Color.RED);
+
         }
     }
 
@@ -170,6 +171,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         RecyclerView OrderItemList;
         OrderItemAdapter adapter;
         List<OrderItem> orderItems = new ArrayList<>();
+        CardView card;
+        LinearLayout button_layout;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -178,6 +181,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             orderDateTextView = itemView.findViewById(R.id.order_date_text_view);
             orderStatusTextView = itemView.findViewById(R.id.order_status_text_view);
             totalTxt = itemView.findViewById(R.id.totalTxt);
+            button_layout = itemView.findViewById(R.id.button_layout);
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             OrderItemList.setLayoutManager(linearLayoutManager);
@@ -187,6 +191,23 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int position = getAdapterPosition();
+
+                    // Check if the position is valid (i.e. not -1)
+                    if (position != RecyclerView.NO_POSITION) {
+                        // Perform any action on item click here
+                        Order clickedItem = orders.get(position);
+
+                        Intent intent = new Intent(context, OrderDetailActivity.class);
+                        intent.putExtra("order", clickedItem);
+                        context.startActivity(intent);
+                    }
+                }
+            });
+            card = itemView.findViewById(R.id.card);
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     int position = getAdapterPosition();
 
                     // Check if the position is valid (i.e. not -1)

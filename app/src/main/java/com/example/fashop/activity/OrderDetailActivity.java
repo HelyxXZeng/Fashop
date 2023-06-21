@@ -83,6 +83,8 @@ public class OrderDetailActivity extends AppCompatActivity{
         adapter = new OrderItemAdapter(orderItems);
         OrderItemList.setAdapter(adapter);
 
+        note = findViewById(R.id.note);
+        note.setText(currentOrder.getNote());
 
         UserName = findViewById(R.id.tvUserName);
         Address = findViewById(R.id.address);

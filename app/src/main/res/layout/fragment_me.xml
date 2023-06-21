@@ -344,6 +344,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/PendingLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -368,6 +369,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/ConfirmedLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="40dp"
@@ -391,6 +393,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/ShippingLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="40dp"
@@ -414,6 +417,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/CompletedLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="0dp"

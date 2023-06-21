@@ -203,7 +203,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:hint="Note for seller"/>
+                android:hint="Note for seller"
+                android:enabled="false"/>
 
         </LinearLayout>
 
