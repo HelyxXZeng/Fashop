@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.fashop.R;
 import com.example.fashop.activity.AddModelActivity;
+import com.example.fashop.activity.CartListActivity;
+import com.example.fashop.activity.OrderActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -104,6 +108,8 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
 
     private int selectedColorPosition = -1;
 
+    private String typeButton;
+
     public ProductVariantFragment() {
         // Required empty public constructor
     }
@@ -143,6 +149,11 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
         Bundle bundle = getArguments();
         if (bundle != null) {
             object = (ProductModel) bundle.getSerializable("object");
+            typeButton = bundle.getString("typeButton");
+
+            if (typeButton.equals("buyNow")){
+                addtoCartBtn.setText("Buy Now");
+            }
             // Sử dụng đối tượng object trong Fragment
         }
 
@@ -359,54 +370,64 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
 //        managementCart.insertVariantProduct(object);
 //        Log.e("ProductVariantFragment", "Selected variant: " + selectedProductVariant.getID());
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CartItem");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+        if (typeButton.equals("addToCart")){
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CartItem");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    CartItem cartItem = categorySnapshot.getValue(CartItem.class);
-                    if (cartItem != null && cartItem.getVariantID() == selectedProductVariant.getID()) {
-                        int newQuantity = cartItem.getQuantity() + numberOrder;
-                        ref.child(String.valueOf(cartItem.getID())).child("quantity").setValue(newQuantity,
-                                new DatabaseReference.CompletionListener() {
-                                    @Override
-                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                        Toast.makeText(context, "Added To Your Cart", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                        return;
+                    for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                        CartItem cartItem = categorySnapshot.getValue(CartItem.class);
+                        if (cartItem != null && cartItem.getVariantID() == selectedProductVariant.getID()) {
+                            int newQuantity = cartItem.getQuantity() + numberOrder;
+                            ref.child(String.valueOf(cartItem.getID())).child("quantity").setValue(newQuantity,
+                                    new DatabaseReference.CompletionListener() {
+                                        @Override
+                                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                            Toast.makeText(context, "Added To Your Cart", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                            return;
+                        }
                     }
+
+                    int maxId = 0;
+                    for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                        CartItem cartItem = categorySnapshot.getValue(CartItem.class);
+                        if (cartItem != null && cartItem.getID() > maxId) {
+                            maxId = cartItem.getID();
+                        }
+                    }
+
+                    CartItem newCartItem = new CartItem();
+                    newCartItem.setID(maxId + 1);
+                    newCartItem.setQuantity(numberOrder);
+                    newCartItem.setVariantID(selectedProductVariant.getID());
+                    newCartItem.setCustomerID(FirebaseAuth.getInstance().getUid());
+
+                    ref.child(String.valueOf(newCartItem.getID())).setValue(newCartItem,
+                            new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                    Toast.makeText(context, "Added To Your Cart", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
 
-                int maxId = 0;
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    CartItem cartItem = categorySnapshot.getValue(CartItem.class);
-                    if (cartItem != null && cartItem.getID() > maxId) {
-                        maxId = cartItem.getID();
-                    }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-                CartItem newCartItem = new CartItem();
-                newCartItem.setID(maxId + 1);
-                newCartItem.setQuantity(numberOrder);
-                newCartItem.setVariantID(selectedProductVariant.getID());
-                newCartItem.setCustomerID(FirebaseAuth.getInstance().getUid());
-
-                ref.child(String.valueOf(newCartItem.getID())).setValue(newCartItem,
-                        new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                Toast.makeText(context, "Added To Your Cart", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+        }
+        else if (typeButton.equals("buyNow")){
+//            Thông tin cần lấy cho đơn hàng:
+//            Quantity(numberOrder);
+//            VariantID(selectedProductVariant.getID());
+//            CustomerID(FirebaseAuth.getInstance().getUid());
+//            Intent intent = new Intent(context, OrderActivity.class);
+//            startActivity(intent);
+        }
     }
 }

@@ -57,7 +57,9 @@ public class LoginActivity extends AppCompatActivity {
         noAccountTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterUserActivity.class));
+                Intent intent = new Intent(LoginActivity.this, RegisterUserActivity.class);
+                intent.putExtra("userType", "User");
+                startActivity(intent);
             }
         });
 
@@ -147,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             String accountType = ""+ds.child("accountType");
-                            if (accountType.contains("Admin")){
+                            if (accountType.contains("Admin") || accountType.contains("Staff")){
                                 progressDialog.dismiss();
                                 //user is seller
                                 startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
@@ -156,7 +158,8 @@ public class LoginActivity extends AppCompatActivity {
 //                                startActivity(intent);
                                 finish();
                             }
-                            else{
+                            else
+                            {
                                 progressDialog.dismiss();
                                 //user is buyer
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -165,6 +168,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                startActivity(intent);
                                 finish();
                             }
+
                         }
                     }
 
