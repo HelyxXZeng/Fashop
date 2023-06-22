@@ -43,35 +43,42 @@ public class OrderListAdapter  extends RecyclerView.Adapter<OrderListAdapter.Vie
         if (oder == null)
             return;
         //get quantity
-        holder.id.setText(String.valueOf(oder.getID()));
+        holder.id.setText("Order ID: " + String.valueOf(oder.getID()));
         holder.datecreated.setText(oder.getDate());
-        holder.priceTxt.setText(String.valueOf(oder.getTotal()));
+        holder.priceTxt.setText("Total Price: $"+String.valueOf(oder.getTotal()));
         holder.status.setText(oder.getStatus());
+
+        String noted;
+        if(oder.getNote().equals("")) {
+            noted="No note!";
+            holder.note.setTextColor(Color.BLUE);
+        }
+        else {
+            noted="With a note!";
+            holder.note.setTextColor(Color.GREEN);
+        }
+        holder.note.setText(noted);
 
         switch (holder.status.getText().toString())
         {
             case "PENDING":
-                holder.status.setTextColor(Color.BLACK);
-                holder.status.setBackgroundColor(Color.YELLOW);
+                holder.status.setTextColor(Color.YELLOW);
                 break;
             case "CONFIRMED":
-                holder.status.setTextColor(Color.BLACK);
-                holder.status.setBackgroundColor(0xFF8BC34A);
+                holder.status.setTextColor(0xFF8BC34A);
             case "SHIPPING":
-                holder.status.setTextColor(Color.WHITE);
-                holder.status.setBackgroundColor(Color.BLUE);
+                holder.status.setTextColor(Color.BLUE);
                 break;
             case "COMPLETED":
-                holder.status.setTextColor(Color.WHITE);
-                holder.status.setBackgroundColor(Color.GREEN);
+                holder.status.setTextColor(Color.GREEN);
                 break;
             case "DECLINED":
                 holder.status.setTextColor(Color.RED);
-                holder.status.setBackgroundColor(Color.WHITE);
+
                 break;
             case "CANCELLED":
-                holder.status.setTextColor(Color.WHITE);
-                holder.status.setBackgroundColor(Color.RED);
+                holder.status.setTextColor(Color.BLACK);
+
                 break;
 
         }
@@ -88,7 +95,7 @@ public class OrderListAdapter  extends RecyclerView.Adapter<OrderListAdapter.Vie
         return orderList.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView id, datecreated, priceTxt, status;
+        TextView id, datecreated, priceTxt, status, note;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +103,7 @@ public class OrderListAdapter  extends RecyclerView.Adapter<OrderListAdapter.Vie
             datecreated = itemView.findViewById(R.id.tvcreated);
             priceTxt = itemView.findViewById(R.id.tvOrderPrice);
             status = itemView.findViewById(R.id.statusText);
+            note = itemView.findViewById(R.id.tvNote);
         }
     }
 }
