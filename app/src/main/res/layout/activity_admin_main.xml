@@ -127,7 +127,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add Model" />
+                        android:text="Add Model"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -151,7 +152,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Edit Model" />
+                        android:text="Edit Model"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -175,7 +177,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add Category" />
+                        android:text="Add Category"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -206,7 +209,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Edit Category" />
+                        android:text="Edit Category"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -231,7 +235,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Order Management"
-                        android:textSize="13sp"/>
+                        android:textSize="13sp"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -244,17 +249,19 @@
                     android:orientation="vertical">
 
                     <ImageButton
+                        android:id="@+id/csmmnbtn"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/square_button_background"
                         android:contentDescription="Customer Manage"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/lock_orange" />
+                        android:src="@drawable/customer_mngm_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Customer Manage" />
+                        android:text="Customer Manage"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -276,16 +283,17 @@
                     <ImageButton
                         android:id="@+id/settingBtn"
                         android:layout_width="80dp"
-                        android:layout_height="82dp"
+                        android:layout_height="80dp"
                         android:background="@drawable/square_button_background"
                         android:contentDescription="Item 2"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/lock_orange" />
+                        android:src="@drawable/settings_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Settings" />
+                        android:text="Settings"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -310,7 +318,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Staff Management" />
+                        android:text="Staff Management"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -358,7 +367,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Statistics" />
+                        android:text="Statistics"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
