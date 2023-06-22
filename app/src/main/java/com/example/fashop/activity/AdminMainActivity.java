@@ -32,10 +32,12 @@ import com.squareup.picasso.Picasso;
 import java.util.Collections;
 import java.util.HashMap;
 
+import Adapter.CustomerAdapter;
+
 public class AdminMainActivity extends AppCompatActivity {
 
     private ImageButton logoutBtn;
-    ImageButton buttonPedit,buttonPadd,btnAddCategory, btnEditCategory, btnOrderMngm, btnStatistics, editInforBtn, staffManaBtn, settingBtn;
+    ImageButton buttonPedit,buttonPadd,btnAddCategory, btnEditCategory, btnOrderMngm, btnStatistics, editInforBtn, staffManaBtn, settingBtn,csmManaBtn;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
@@ -67,6 +69,7 @@ public class AdminMainActivity extends AppCompatActivity {
         btnAddCategory = findViewById(R.id.buttonaddCa);
         btnEditCategory = findViewById(R.id.buttoneditCa);
         btnOrderMngm = findViewById(R.id.buttonOrderMngm);
+        csmManaBtn = findViewById(R.id.csmmnbtn);
         btnStatistics = findViewById(R.id.buttonStatistics);
         editInforBtn = findViewById(R.id.editInfoBtn);
         //
@@ -157,7 +160,12 @@ public class AdminMainActivity extends AppCompatActivity {
         btnStatistics.setOnClickListener(v->{
             startActivity(new Intent(AdminMainActivity.this, StatisticsActivity.class));
         });
-
+        csmManaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminMainActivity.this, CustomerManagement.class));
+            }
+        });
         //
         editInforBtn.setOnClickListener(new View.OnClickListener() {
             @Override
