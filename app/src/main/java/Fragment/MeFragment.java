@@ -145,7 +145,7 @@ public class MeFragment extends Fragment {
                         for (DataSnapshot ds: snapshot.getChildren()){
 
                             hotline = "" + ds.child("phone").getValue();
-                            hotlineNumber.setText(hotline);
+                            /*hotlineNumber.setText(hotline);*/
 
                         }
 
@@ -313,7 +313,7 @@ public class MeFragment extends Fragment {
             startActivity(intent);
         });
 
-        hotlineBtn.setOnClickListener(new View.OnClickListener() {
+        /*hotlineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String phoneNumber = hotline; // Replace with your desired phone number
@@ -327,7 +327,7 @@ public class MeFragment extends Fragment {
                     context.startActivity(intent);
                 }
             }
-        });
+        });*/
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
