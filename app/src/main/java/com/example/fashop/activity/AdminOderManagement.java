@@ -16,7 +16,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import Adapter.OrderListAdapter;
@@ -54,7 +60,7 @@ public class AdminOderManagement extends AppCompatActivity {
                     Order dataModel = snapshot.getValue(Order.class);
                     orderList.add(dataModel);
                 }
-
+                Collections.sort(orderList,new DateComparator());
                 orderListAdapter.notifyDataSetChanged();
             }
 
@@ -65,7 +71,26 @@ public class AdminOderManagement extends AppCompatActivity {
         });
     }
 }
+class DateComparator implements Comparator<Order> {
 
+    private DateFormat dateFormat;
+
+    public DateComparator() {
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    }
+
+    @Override
+    public int compare(Order order1, Order order2) {
+        try {
+            Date d1 = dateFormat.parse(order1.getDate());
+            Date d2 = dateFormat.parse(order2.getDate());
+            return d2.compareTo(d1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+}
 
 
 

@@ -16,7 +16,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -348,6 +350,32 @@ public class ProfileEditUserActivity extends AppCompatActivity {
         email = emailEt.getText().toString().trim();
         password = passwordEt.getText().toString().trim();
         streetAddress = addressEt.getText().toString().trim();
+
+        //
+        if (TextUtils.isEmpty(fullName)){
+            Toast.makeText(this, "Enter Name...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(phoneNumber)){
+            Toast.makeText(this, "Enter Phone Number...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(streetAddress)){
+            Toast.makeText(this, "Enter Street Address...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            Toast.makeText(this, "Invalid email pattern...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.length() < 6){
+            Toast.makeText(this, "Password must be at least 6 characters long...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //
         updateProfile();
     }
 

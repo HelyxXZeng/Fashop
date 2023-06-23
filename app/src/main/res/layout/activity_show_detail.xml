@@ -144,10 +144,20 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/shopAddressTv"
                     android:layout_marginTop="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="From Thu Duc To Go Vap"
+                    android:text="From Thu Duc"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray1"/>
+
+                <TextView
+                    android:id="@+id/buyerAddressTv"
+                    android:layout_marginTop="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To Go Vap"
                     android:textSize="12sp"
                     android:textColor="@color/gray1"/>
 
@@ -155,17 +165,17 @@
                     android:layout_marginTop="3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shipping fee: 2$ - 4$"
+                    android:text="Shipping fee: 1$"
                     android:textSize="12sp"
                     android:textColor="@color/gray1"/>
 
-                <TextView
-                    android:layout_marginTop="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Free shipping for orders over $50"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray1"/>
+<!--                <TextView-->
+<!--                    android:layout_marginTop="3dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Free shipping for orders over $50"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:textColor="@color/gray1"/>-->
 
 
             </LinearLayout>

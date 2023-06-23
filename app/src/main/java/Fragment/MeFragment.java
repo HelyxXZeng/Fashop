@@ -3,14 +3,19 @@ package Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +30,7 @@ import com.example.fashop.activity.OrderHistoryActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
 import com.example.fashop.activity.ProfileEditUserActivity;
 import com.example.fashop.activity.QuestionsActivity;
+import com.example.fashop.activity.SettingActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,9 +40,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+
+import MyClass.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,6 +73,22 @@ public class MeFragment extends Fragment {
 
     private LinearLayout logoutBtn;
     //
+
+    private SwitchCompat fcmSwitch;
+    TextView notificationStatusTv;
+
+    private static final String enableMessage = "Notification are enabled";
+    private static final String disabledMessage = "Notification are disable";
+
+    private boolean isChecked = false;
+
+    private SharedPreferences sp;
+    private SharedPreferences.Editor spEditor;
+
+    private LinearLayout hotlineBtn;
+    private TextView hotlineNumber;
+
+    private String hotline;
 
     public MeFragment() {
         // Required empty public constructor
@@ -103,15 +128,33 @@ public class MeFragment extends Fragment {
         logoutBtn = view.findViewById(R.id.logoutBtn);
         orderHistory = view.findViewById(R.id.order_history);
 
-        PendingLayout = view.findViewById(R.id.PendingLayout);
-        ConfirmedLayout = view.findViewById(R.id.ConfirmedLayout);
-        ShippingLayout = view.findViewById(R.id.ShippingLayout);
-        CompletedLayout = view.findViewById(R.id.CompletedLayout);
         //
         checkUser();
+        loadHotLine();
         initListener();
     }
 
+    private void loadHotLine() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.orderByChild("accountType").equalTo("Admin")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds: snapshot.getChildren()){
+
+                            hotline = "" + ds.child("phone").getValue();
+                            hotlineNumber.setText(hotline);
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -278,6 +321,80 @@ public class MeFragment extends Fragment {
                 //getActivity().finish();
             }
         });
+
+        fcmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    //checked, enable notifications
+                    subscribeToTopic();
+                }
+                else {
+                    //uncheck, disable notifications
+                    unSubscribeToTopic();
+                }
+            }
+        });
+
+        hotlineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String phoneNumber = hotline; // Replace with your desired phone number
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNumber));
+
+                Context context = view.getContext(); // Get the context from the button view
+
+                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(intent);
+                }
+            }
+        });
+    }
+
+    private void subscribeToTopic(){
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.FCM_TOPIC)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //save setting in shared preferences
+                        spEditor = sp.edit();
+                        spEditor.putBoolean("FCM_ENABLED", true);
+                        spEditor.apply();
+
+                        Toast.makeText(context, ""+enableMessage, Toast.LENGTH_SHORT).show();
+                        notificationStatusTv.setText(enableMessage);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void unSubscribeToTopic(){
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FCM_TOPIC)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //save setting in shared preferences
+                        spEditor = sp.edit();
+                        spEditor.putBoolean("FCM_ENABLED", false);
+                        spEditor.apply();
+
+                        Toast.makeText(context, ""+disabledMessage, Toast.LENGTH_SHORT).show();
+                        notificationStatusTv.setText(disabledMessage);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
