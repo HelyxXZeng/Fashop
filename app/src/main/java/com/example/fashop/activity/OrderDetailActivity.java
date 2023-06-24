@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fashop.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -116,7 +118,7 @@ public class OrderDetailActivity extends AppCompatActivity{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(OrderDetailActivity.this,"Failed to load user data. Try again later", Toast.LENGTH_LONG).show();
+                Toast.makeText(OrderDetailActivity.this,"Failed to load order data. Try again later", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -223,7 +225,34 @@ public class OrderDetailActivity extends AppCompatActivity{
         ConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //currentOrder.setStatus("COMPLETED");
+                if(currentOrder.getStatus().equals("PENDING")){
+                    Order updatedOrder = currentOrder;
+                    updatedOrder.setStatus("CANCELLED");
+                    DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Order");
+                    ordersRef.child(String.valueOf(currentOrder.getID())).child("status").setValue("CANCELLED")
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // The order was successfully updated
+                                    // Do something here (e.g. show a success message)
+                                    Log.v("Status Updated", "Completed");
+                                    Toast.makeText(OrderDetailActivity.this, "Order Cancelled", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // There was an error updating the order
+                                    // Handle the error here (e.g. show an error message)
+                                }
+                            });
+                    Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+                    Bundle args = new Bundle();
+                    args.putInt("tabIndex", 0);
+                    intent.putExtras(args);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
