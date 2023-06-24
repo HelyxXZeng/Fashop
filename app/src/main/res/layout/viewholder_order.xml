@@ -1,136 +1,43 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
-    android:elevation="3dp"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="16dp">
+    android:minHeight="80dp">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/order_number_text_view"
+        android:text="ID #01"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="80dp"
-        android:id="@+id/adapter"
-        android:clickable="false"
-        android:focusable="false">
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_alignParentStart="true"/>
 
-        <TextView
-            android:id="@+id/order_number_text_view"
-            android:text="ID #01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:layout_alignParentStart="true"/>
+    <TextView
+        android:id="@+id/order_date_text_view"
+        android:text="17/06/2023"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="16dp"
+        android:layout_below="@id/order_number_text_view"
+        android:layout_alignParentStart="true"/>
 
-        <TextView
-            android:id="@+id/order_date_text_view"
-            android:text="17/06/2023"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="16dp"
-            android:layout_below="@id/order_number_text_view"
-            android:layout_alignParentStart="true"/>
+    <TextView
+        android:id="@+id/order_status_text_view"
+        android:text="PENDING"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="end"
+        android:layout_alignParentEnd="true"/>
 
-        <TextView
-            android:id="@+id/order_status_text_view"
-            android:text="PENDING"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/orangeshopee"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:gravity="end"
-            android:layout_alignParentEnd="true"/>
-
-        <LinearLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/order_date_text_view"
-            android:clickable="false"
-            android:focusable="false">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cart_item_rcv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:clickable="false"
-                android:focusable="false">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/total"
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal"
-            android:layout_below="@id/container"
-            android:gravity="end"
-            android:layout_alignParentEnd="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total  $"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/totalTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:text="0"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/button_layout"
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:layout_margin="7dp"
-            android:layout_alignParentEnd="true"
-            android:padding="0dp"
-            android:gravity="center_horizontal"
-            android:background="@drawable/orangebutton2"
-            android:layout_below="@id/total"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/reviewBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:background="@android:color/transparent"
-                android:clickable="true"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

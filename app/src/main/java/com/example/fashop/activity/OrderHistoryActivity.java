@@ -35,7 +35,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private List<Order> loading = new ArrayList<>();
     private RecyclerView OrderView;
     OrderAdapter adapter;
-    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         viewPager2.setAdapter(adapter2);
         viewPager2.setOffscreenPageLimit(adapter2.getItemCount());
 
-        tabLayout = findViewById(R.id.tabLayout);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -76,13 +75,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
             }
         });
         tabLayoutMediator.attach();
-
-        Bundle args = getIntent().getExtras();
-        int tabIndex = args.getInt("tabIndex", 0);
-
-        // Get a reference to the TabLayout and select the desired tab
-        selectTab(tabIndex);
-
         /*
         OrderView = findViewById(R.id.recycler_view_order_history);
 
@@ -184,13 +176,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
         getOrderData();
         loadOrder();*/
-    }
-
-    private void selectTab(int tabIndex) {
-        TabLayout.Tab tab = tabLayout.getTabAt(tabIndex);
-        if (tab != null) {
-            tab.select();
-        }
     }
 
     private void getOrderData(){

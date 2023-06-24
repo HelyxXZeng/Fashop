@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,8 +55,10 @@ public class OrderDetailActivity extends AppCompatActivity{
     List<OrderItem> orderItems = new ArrayList<>();
     Order currentOrder = null;
     Button ConfirmBtn;
-    ImageButton backBtn;
     LinearLayout button_layout;
+    private int orderID;
+    private int maxOrderID;
+    private int maxOrderItemID;
     private double total;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,6 @@ public class OrderDetailActivity extends AppCompatActivity{
 
         initView();
         ConfirmEvent();
-        BackEvent();
     }
     private void initView(){
         OrderItemList = findViewById(R.id.cart_item_rcv);
@@ -83,8 +83,6 @@ public class OrderDetailActivity extends AppCompatActivity{
         adapter = new OrderItemAdapter(orderItems);
         OrderItemList.setAdapter(adapter);
 
-        note = findViewById(R.id.note);
-        note.setText(currentOrder.getNote());
 
         UserName = findViewById(R.id.tvUserName);
         Address = findViewById(R.id.address);
@@ -197,27 +195,14 @@ public class OrderDetailActivity extends AppCompatActivity{
             }
         });
     }
-    private void BackEvent(){
-        backBtn = findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-    }
     private void ConfirmEvent(){
         ConfirmBtn = findViewById(R.id.checkoutBtn);
         ConfirmBtn.setText("RECEIVED");
         button_layout = findViewById(R.id.button_layout);
 
-        if(!currentOrder.getStatus().equals("SHIPPING") && !currentOrder.getStatus().equals("PENDING")) {
+        if(!currentOrder.getStatus().equals("SHIPPING")) {
             ConfirmBtn.setEnabled(false);
-            ConfirmBtn.setClickable(false);
             button_layout.setBackgroundColor(Color.GRAY);
-        }
-        if(currentOrder.getStatus().equals("PENDING")) {
-            ConfirmBtn.setText("CANCEL");
         }
 
         ConfirmBtn.setOnClickListener(new View.OnClickListener() {
