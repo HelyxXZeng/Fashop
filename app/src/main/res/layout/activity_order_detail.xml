@@ -203,7 +203,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:hint="Note for seller"/>
+                android:hint="Note for seller"
+                android:enabled="false"/>
 
         </LinearLayout>
 
@@ -284,7 +285,8 @@
                 android:text="Confirm"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:clickable="true"/>
 
             <!--            <TextView-->
             <!--                android:id="@+id/quantityPaidItemTxt"-->

@@ -30,7 +30,7 @@ import com.example.fashop.activity.OrderHistoryActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
 import com.example.fashop.activity.ProfileEditUserActivity;
 import com.example.fashop.activity.QuestionsActivity;
-import com.example.fashop.activity.SettingActivity;
+/*import com.example.fashop.activity.SettingActivity;*/
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,11 +45,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
-import MyClass.Constants;
+/*import MyClass.Constants;*/
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
+ * Use the {@link MeFragment# newInstance} factory method to
  * create an instance of this fragment.
  */
 public class MeFragment extends Fragment {
@@ -67,6 +67,7 @@ public class MeFragment extends Fragment {
 
     private ImageView imgAvt;
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
+    private LinearLayout PendingLayout, ConfirmedLayout, ShippingLayout, CompletedLayout;
 
     private ImageButton editBtn;
 
@@ -127,7 +128,7 @@ public class MeFragment extends Fragment {
         logoutBtn = view.findViewById(R.id.logoutBtn);
         orderHistory = view.findViewById(R.id.order_history);
 
-        fcmSwitch = view.findViewById(R.id.fcmSwitch);
+        /*fcmSwitch = view.findViewById(R.id.fcmSwitch);
         notificationStatusTv = view.findViewById(R.id.notificationStatusTv);
         hotlineBtn = view.findViewById(R.id.hotlineBtn);
         hotlineNumber = view.findViewById(R.id.hotlineNumber);
@@ -141,7 +142,13 @@ public class MeFragment extends Fragment {
         }
         else {
             notificationStatusTv.setText(disabledMessage);
-        }
+        }*/
+
+        PendingLayout = view.findViewById(R.id.PendingLayout);
+        ConfirmedLayout = view.findViewById(R.id.ConfirmedLayout);
+        CompletedLayout = view.findViewById(R.id.CompletedLayout);
+        ShippingLayout = view.findViewById(R.id.ShippingLayout);
+
         //
         checkUser();
         loadHotLine();
@@ -157,7 +164,7 @@ public class MeFragment extends Fragment {
                         for (DataSnapshot ds: snapshot.getChildren()){
 
                             hotline = "" + ds.child("phone").getValue();
-                            hotlineNumber.setText(hotline);
+                            /*hotlineNumber.setText(hotline);*/
 
                         }
 
@@ -262,6 +269,38 @@ public class MeFragment extends Fragment {
     }
 
     private void initListener() {
+        PendingLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 0);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        CompletedLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 3);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        ConfirmedLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 1);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        ShippingLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 2);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
         tvPrivacyPolicy.setOnClickListener(v->{
             Intent intent = new Intent(context, PrivacyPolicyActivity.class);
             startActivity(intent);
@@ -287,8 +326,12 @@ public class MeFragment extends Fragment {
         });
         orderHistory.setOnClickListener(v -> {
             Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 0);
+            intent.putExtras(args);
             startActivity(intent);
         });
+
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -301,7 +344,7 @@ public class MeFragment extends Fragment {
             }
         });
 
-        fcmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*fcmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
@@ -313,9 +356,9 @@ public class MeFragment extends Fragment {
                     unSubscribeToTopic();
                 }
             }
-        });
+        });*/
 
-        hotlineBtn.setOnClickListener(new View.OnClickListener() {
+        /*hotlineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String phoneNumber = hotline; // Replace with your desired phone number
@@ -329,10 +372,10 @@ public class MeFragment extends Fragment {
                     context.startActivity(intent);
                 }
             }
-        });
+        });*/
     }
 
-    private void subscribeToTopic(){
+    /*private void subscribeToTopic(){
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.FCM_TOPIC)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -374,8 +417,7 @@ public class MeFragment extends Fragment {
                         Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
+    }*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -56,7 +56,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:5.2.0'
 
     //login
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.github.AtifSayings:CircularImageView:1.0.2'
 
     implementation 'com.squareup.picasso:picasso:2.8'
@@ -71,5 +71,5 @@ dependencies {
 
 
     implementation 'me.relex:circleindicator:2.1.6'
-    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.android.volley:volley:1.2.1'
 }
