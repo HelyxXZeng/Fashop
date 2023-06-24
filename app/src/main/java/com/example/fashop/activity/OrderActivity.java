@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +63,7 @@ public class OrderActivity extends AppCompatActivity{
     List<OrderItem> orderItems = new ArrayList<>();
     Order currentOrder = null;
     Button ConfirmBtn;
+    ImageButton BackBtn;
     private int orderID;
     private int maxOrderID;
     private int maxOrderItemID;
@@ -80,6 +82,7 @@ public class OrderActivity extends AppCompatActivity{
 
         initView();
         ConfirmEvent();
+        BackEvent();
     }
     private void initView(){
         OrderItemList = findViewById(R.id.cart_item_rcv);
@@ -140,6 +143,15 @@ public class OrderActivity extends AppCompatActivity{
                 Toast.makeText(getApplicationContext(), "Create Order Completed", Toast.LENGTH_LONG).show();
                 onBackPressed();
 
+            }
+        });
+    }
+    private void BackEvent(){
+        BackBtn = findViewById(R.id.backBtn);
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }
