@@ -9,9 +9,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.example.fashop.R;
 import com.example.fashop.activity.AboutUsActivity;
 import com.example.fashop.activity.LegalInformationActivity;
 import com.example.fashop.activity.LoginActivity;
+import com.example.fashop.activity.MainActivity;
 import com.example.fashop.activity.OrderHistoryActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
 import com.example.fashop.activity.ProfileEditUserActivity;
@@ -33,12 +36,14 @@ import com.example.fashop.activity.QuestionsActivity;
 import com.example.fashop.activity.SettingActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
@@ -150,9 +155,36 @@ public class MeFragment extends Fragment {
         ShippingLayout = view.findViewById(R.id.ShippingLayout);
 
         //
+        pendingImage = view.findViewById(R.id.pendingImage);
+
         checkUser();
         loadHotLine();
+        loadBadger();
         initListener();
+    }
+
+    private ImageView pendingImage;
+    private void loadBadger(){
+        BadgeDrawable badgeDrawable = BadgeDrawable.create(context);
+        badgeDrawable.setVisible(true);
+        badgeDrawable.setMaxCharacterCount(2);
+        badgeDrawable.setBackgroundColor(ContextCompat.getColor(context, R.color.redBadge));
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Order");
+        Query cartItems = ref.orderByChild("customerID").equalTo(FirebaseAuth.getInstance().getUid());
+        cartItems.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int quantityCartItem = (int) snapshot.getChildrenCount();
+                badgeDrawable.setNumber(quantityCartItem);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        pendingImage.getOverlay().add(badgeDrawable);
     }
 
     private void loadHotLine() {

@@ -44,6 +44,7 @@ import Adapter.SizeAdapter;
 import Interface.OnColorClickListener;
 import Interface.OnSizeClickListener;
 import Model.CartItem;
+import Model.ModelImage;
 import Model.ProductModel;
 import Model.ProductVariant;
 //import MyClass.ManagementCart;
@@ -369,6 +370,7 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
 //        object.setNumberInCart(numberOrder);
 //        managementCart.insertVariantProduct(object);
 //        Log.e("ProductVariantFragment", "Selected variant: " + selectedProductVariant.getID());
+//        Log.v("ProductVariantFragment", "Selected variant: " + selectedProductVariant.getID());
 
         if (typeButton.equals("addToCart")){
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CartItem");
@@ -428,6 +430,63 @@ public class ProductVariantFragment extends BottomSheetDialogFragment implements
 //            CustomerID(FirebaseAuth.getInstance().getUid());
 //            Intent intent = new Intent(context, OrderActivity.class);
 //            startActivity(intent);
+
+            CartItem newCartItem = new CartItem();
+            newCartItem.setID(0);
+            newCartItem.setQuantity(numberOrder);
+            newCartItem.setVariantID(selectedProductVariant.getID());
+            newCartItem.setCustomerID(FirebaseAuth.getInstance().getUid());
+            newCartItem.setSize(selectedProductVariant.getSize());
+            newCartItem.setColor(selectedProductVariant.getColor());
+
+            DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("Model" + "/" + selectedProductVariant.getModelID());
+            ref2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ProductModel productModel = snapshot.getValue(ProductModel.class);
+
+                    if (productModel != null){
+                        //get color size
+                        Double price = productModel.getPrice();
+                        newCartItem.setPrice(price);
+
+                        String title = productModel.getName();
+                        newCartItem.setProductName(title);
+
+                        DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference("ModelImage");
+                        ref3.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                    ModelImage modelImage = dataSnapshot.getValue(ModelImage.class);
+                                    if (modelImage != null && modelImage.getModelID() == selectedProductVariant.getModelID()){
+                                        newCartItem.setImage(modelImage.getUrl());
+                                        break;
+                                    }
+                                }
+
+                                List<CartItem> cartItemList = new ArrayList<>();
+                                cartItemList.add(newCartItem);
+
+                                Intent intent = new Intent(context, OrderActivity.class);
+                                intent.putExtra("cart_items_list_key", new Gson().toJson(cartItemList));
+                                intent.putExtra("total_key", newCartItem.getPrice());
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(context, "get size list failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(context, "get size list failed", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
