@@ -9,9 +9,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.example.fashop.R;
 import com.example.fashop.activity.AboutUsActivity;
 import com.example.fashop.activity.LegalInformationActivity;
 import com.example.fashop.activity.LoginActivity;
+import com.example.fashop.activity.MainActivity;
 import com.example.fashop.activity.OrderHistoryActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
 import com.example.fashop.activity.ProfileEditUserActivity;
@@ -33,12 +36,14 @@ import com.example.fashop.activity.QuestionsActivity;
 import com.example.fashop.activity.SettingActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
@@ -49,7 +54,7 @@ import MyClass.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
+ * Use the {@link MeFragment# newInstance} factory method to
  * create an instance of this fragment.
  */
 public class MeFragment extends Fragment {
@@ -67,6 +72,7 @@ public class MeFragment extends Fragment {
 
     private ImageView imgAvt;
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
+    private LinearLayout PendingLayout, ConfirmedLayout, ShippingLayout, CompletedLayout;
 
     private ImageButton editBtn;
 
@@ -142,10 +148,47 @@ public class MeFragment extends Fragment {
         else {
             notificationStatusTv.setText(disabledMessage);
         }
+
+        PendingLayout = view.findViewById(R.id.PendingLayout);
+        ConfirmedLayout = view.findViewById(R.id.ConfirmedLayout);
+        CompletedLayout = view.findViewById(R.id.CompletedLayout);
+        ShippingLayout = view.findViewById(R.id.ShippingLayout);
+
         //
+
         checkUser();
         loadHotLine();
+        loadBadger();
         initListener();
+    }
+
+    private void loadBadger(){
+
+// Set the badge on the LinearLayout
+        BadgeDrawable badgeDrawable = BadgeDrawable.create(context);
+        badgeDrawable.setVisible(true);
+        badgeDrawable.setMaxCharacterCount(2);
+        badgeDrawable.setBackgroundColor(ContextCompat.getColor(context, R.color.redBadge));
+        badgeDrawable.setBounds(0, 0, badgeDrawable.getIntrinsicWidth(), badgeDrawable.getIntrinsicHeight());
+        badgeDrawable.setNumber(0);
+
+        PendingLayout.setForeground(badgeDrawable);
+        PendingLayout.setPadding(0, 0, 10, 0); // Add padding for the badge
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Order");
+        Query cartItems = ref.orderByChild("customerID").equalTo(FirebaseAuth.getInstance().getUid());
+        cartItems.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int quantityCartItem = (int) snapshot.getChildrenCount();
+                badgeDrawable.setNumber(quantityCartItem);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void loadHotLine() {
@@ -262,6 +305,38 @@ public class MeFragment extends Fragment {
     }
 
     private void initListener() {
+        PendingLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 0);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        CompletedLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 3);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        ConfirmedLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 1);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        ShippingLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 2);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
         tvPrivacyPolicy.setOnClickListener(v->{
             Intent intent = new Intent(context, PrivacyPolicyActivity.class);
             startActivity(intent);
@@ -287,8 +362,12 @@ public class MeFragment extends Fragment {
         });
         orderHistory.setOnClickListener(v -> {
             Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 0);
+            intent.putExtras(args);
             startActivity(intent);
         });
+
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -375,7 +454,6 @@ public class MeFragment extends Fragment {
                     }
                 });
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

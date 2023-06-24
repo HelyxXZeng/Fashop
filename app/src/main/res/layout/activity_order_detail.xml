@@ -203,7 +203,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:hint="Note for seller"/>
+                android:hint="Note for seller"
+                android:enabled="false"/>
 
         </LinearLayout>
 
@@ -264,12 +265,16 @@
             android:id="@+id/button_layout"
             android:layout_width="150dp"
             android:layout_height="45dp"
-            android:layout_margin="7dp"
             android:layout_alignParentEnd="true"
-            android:padding="0dp"
-            android:gravity="center_horizontal"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginBottom="7dp"
             android:background="@drawable/orangebutton2"
-            android:orientation="horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="0dp"
+            android:visibility="gone">
 
             <!--<TextView
                 android:layout_height="wrap_content"
@@ -281,10 +286,11 @@
                 android:id="@+id/checkoutBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:clickable="true"
                 android:text="Confirm"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:background="@android:color/transparent" />
+                android:textSize="16sp" />
 
             <!--            <TextView-->
             <!--                android:id="@+id/quantityPaidItemTxt"-->

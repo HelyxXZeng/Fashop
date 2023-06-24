@@ -35,19 +35,21 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private List<Order> loading = new ArrayList<>();
     private RecyclerView OrderView;
     OrderAdapter adapter;
+    OrdersPagerAdapter adapter2;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
-        OrdersPagerAdapter adapter2 = new OrdersPagerAdapter(this);
+        adapter2 = new OrdersPagerAdapter(this);
 
         ViewPager2 viewPager2 = findViewById(R.id.viewPager);
         viewPager2.setAdapter(adapter2);
         viewPager2.setOffscreenPageLimit(adapter2.getItemCount());
 
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout = findViewById(R.id.tabLayout);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -75,6 +77,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
             }
         });
         tabLayoutMediator.attach();
+
+        Bundle args = getIntent().getExtras();
+        int tabIndex = args.getInt("tabIndex", 0);
+
+        // Get a reference to the TabLayout and select the desired tab
+        selectTab(tabIndex);
+
         /*
         OrderView = findViewById(R.id.recycler_view_order_history);
 
@@ -177,7 +186,20 @@ public class OrderHistoryActivity extends AppCompatActivity {
         getOrderData();
         loadOrder();*/
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter2.notifyDataSetChanged();
+        // Reload any data that needs to be updated
+    }
 
+    private void selectTab(int tabIndex) {
+        TabLayout.Tab tab = tabLayout.getTabAt(tabIndex);
+        if (tab != null) {
+            tab.select();
+        }
+    }
+/*
     private void getOrderData(){
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Order");
@@ -214,5 +236,5 @@ public class OrderHistoryActivity extends AppCompatActivity {
         OrderView.setLayoutManager(manager);
         adapter = new OrderAdapter(OrderHistoryActivity.this, loading);
         OrderView.setAdapter(adapter);
-    }
+    }*/
 }
