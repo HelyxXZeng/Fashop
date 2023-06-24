@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +61,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     String selectedItem;
     Order order;
-
+    LinearLayout button_background;
     String shopAccountType = "AdminAndStaff";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         spinner = findViewById(R.id.statusSpinner);
         confirmbtn = findViewById(R.id.confirm_button);
         backbtn = findViewById(R.id.backBtn);
-
+        button_background = findViewById(R.id.confirm_button_background);
         backbtn.setOnClickListener(v -> { finish();});
 
         getDetailOrderData();
@@ -86,6 +87,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
     {
         order = (Order) getIntent().getSerializableExtra("order");
         orderItems.clear();
+        /*if(!order.getStatus().equals("SHIPPING") && !order.getStatus().equals("PENDING") && !order.getStatus().equals("CONFIRMED")) {
+            confirmbtn.setEnabled(false);
+            button_background.setBackgroundColor(Color.GRAY);
+        }*/
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OrderDetailsActivity.this, LinearLayoutManager.VERTICAL, false);
         OrderItemList.setLayoutManager(linearLayoutManager);
         adapter = new OrderItemAdapter(orderItems);
@@ -226,22 +231,25 @@ public class OrderDetailsActivity extends AppCompatActivity {
         confirmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(order.getStatus().equals(selectedItem)) {
+                    Toast.makeText(OrderDetailsActivity.this, "Status is same, can't save!!!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    DatabaseReference setref = FirebaseDatabase.getInstance().getReference("Order");
+                    order.setStatus(selectedItem);
+                    setref.child(String.valueOf(order.getID())).setValue(order,
+                            new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                    Toast.makeText(getApplicationContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
+                                    //send notification to customer
+                                    String message = "Order " + selectedItem;
+                                    prepareNotificationMessage(String.valueOf(order.getID()), message);
+                                    finish();
+                                }
 
-                DatabaseReference setref = FirebaseDatabase.getInstance().getReference("Order");
-                order.setStatus(selectedItem);
-                setref.child(String.valueOf(order.getID())).setValue(order,
-                        new DatabaseReference.CompletionListener(){
-                            @Override
-                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref)
-                            {
-                                Toast.makeText(getApplicationContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
-                                //send notification to customer
-                                String message = "Order " + selectedItem;
-                                prepareNotificationMessage(String.valueOf(order.getID()), message);
-                                finish();
-                            }
-
-                        });
+                            });
+                }
             }
         });
     }
