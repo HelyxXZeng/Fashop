@@ -30,6 +30,7 @@ import com.example.fashop.activity.OrderHistoryActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
 import com.example.fashop.activity.ProfileEditUserActivity;
 import com.example.fashop.activity.QuestionsActivity;
+/*import com.example.fashop.activity.SettingActivity;*/
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,9 +45,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+/*import MyClass.Constants;*/
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
+ * Use the {@link MeFragment# newInstance} factory method to
  * create an instance of this fragment.
  */
 public class MeFragment extends Fragment {
@@ -124,6 +127,22 @@ public class MeFragment extends Fragment {
         editBtn = view.findViewById(R.id.editBtn);
         logoutBtn = view.findViewById(R.id.logoutBtn);
         orderHistory = view.findViewById(R.id.order_history);
+
+        /*fcmSwitch = view.findViewById(R.id.fcmSwitch);
+        notificationStatusTv = view.findViewById(R.id.notificationStatusTv);
+        hotlineBtn = view.findViewById(R.id.hotlineBtn);
+        hotlineNumber = view.findViewById(R.id.hotlineNumber);
+        //init shared preferences
+        sp = context.getSharedPreferences("SETTINGS_SP", context.MODE_PRIVATE);
+        //check last selected option; true/false
+        isChecked = sp.getBoolean("FCM_ENABLED", false);
+        fcmSwitch.setChecked(isChecked);
+        if (isChecked){
+            notificationStatusTv.setText(enableMessage);
+        }
+        else {
+            notificationStatusTv.setText(disabledMessage);
+        }*/
 
         PendingLayout = view.findViewById(R.id.PendingLayout);
         ConfirmedLayout = view.findViewById(R.id.ConfirmedLayout);
@@ -313,6 +332,32 @@ public class MeFragment extends Fragment {
             startActivity(intent);
         });
 
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //make offline
+                //sign out
+                // go to login activity
+                makeMeOffline();
+
+                //getActivity().finish();
+            }
+        });
+
+        /*fcmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    //checked, enable notifications
+                    subscribeToTopic();
+                }
+                else {
+                    //uncheck, disable notifications
+                    unSubscribeToTopic();
+                }
+            }
+        });*/
+
         /*hotlineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -329,6 +374,50 @@ public class MeFragment extends Fragment {
             }
         });*/
     }
+
+    /*private void subscribeToTopic(){
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.FCM_TOPIC)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //save setting in shared preferences
+                        spEditor = sp.edit();
+                        spEditor.putBoolean("FCM_ENABLED", true);
+                        spEditor.apply();
+
+                        Toast.makeText(context, ""+enableMessage, Toast.LENGTH_SHORT).show();
+                        notificationStatusTv.setText(enableMessage);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void unSubscribeToTopic(){
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FCM_TOPIC)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        //save setting in shared preferences
+                        spEditor = sp.edit();
+                        spEditor.putBoolean("FCM_ENABLED", false);
+                        spEditor.apply();
+
+                        Toast.makeText(context, ""+disabledMessage, Toast.LENGTH_SHORT).show();
+                        notificationStatusTv.setText(disabledMessage);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
