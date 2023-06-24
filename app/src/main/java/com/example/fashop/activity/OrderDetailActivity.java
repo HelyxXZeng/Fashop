@@ -219,6 +219,7 @@ public class OrderDetailActivity extends AppCompatActivity{
             button_layout.setBackgroundColor(Color.GRAY);
         }
         if(currentOrder.getStatus().equals("PENDING")) {
+            button_layout.setVisibility(View.VISIBLE);
             ConfirmBtn.setText("CANCEL");
         }
 
