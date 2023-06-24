@@ -50,8 +50,6 @@ import Adapter.OrderItemAdapter;
 import Model.CartItem;
 import Model.Order;
 import Model.OrderItem;
-import Model.ProductVariant;
-import MyClass.Constants;
 
 public class OrderActivity extends AppCompatActivity{
 
@@ -236,83 +234,11 @@ public class OrderActivity extends AppCompatActivity{
                 }
 
                 //send notification to admin
-                prepareNotificationMessage(String.valueOf(currentOrder.getID()));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-    }
-
-    private void prepareNotificationMessage(String orderId){
-        //send notification to admin
-
-        //data
-        String NOTIFICATION_TOPIC = "/topics/" + Constants.FCM_TOPIC;
-        String  NOTIFICATION_TITLE = "New Order " + orderId;
-        String NOTIFICATION_MESSAGE = "Congratulations...! You have new order.";
-        String NOTIFICATION_TYPE = "NewOrder";
-
-        JSONObject notificationJo = new JSONObject();
-        JSONObject notificationBodyJo = new JSONObject();
-
-
-        String currentCustomerUid = FirebaseAuth.getInstance().getUid();
-
-        try {
-            //content
-            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
-            notificationBodyJo.put("buyerUid", currentCustomerUid);
-            notificationBodyJo.put("shopAccountType", shopAccountType);
-            notificationBodyJo.put("orderId", orderId);
-            notificationBodyJo.put("notificationTitle", NOTIFICATION_TITLE);
-            notificationBodyJo.put("notificationMessage", NOTIFICATION_MESSAGE);
-
-            //where to send
-            notificationJo.put("to", NOTIFICATION_TOPIC);
-            notificationJo.put("data", notificationBodyJo);
-
-
-        } catch (JSONException e) {
-            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-        sendFcmNotification(notificationJo, orderId);
-    }
-
-    private void sendFcmNotification(JSONObject notificationJo, String orderId) {
-        //send volley request
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send",
-                notificationJo, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                //after sending fcm start order details activity
-                Intent intent = new Intent(OrderActivity.this, UserOrderDetailActivity.class);
-                intent.putExtra("orderTo", shopAccountType);
-                intent.putExtra("orderId", orderId);
-                startActivity(intent);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //if failed sending fcm, still start order details activity
-                Intent intent = new Intent(OrderActivity.this, UserOrderDetailActivity.class);
-                intent.putExtra("orderTo", shopAccountType);
-                intent.putExtra("orderId", orderId);
-                startActivity(intent);
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization", "key=" + Constants.FCM_KEY);
-
-                return headers;
-            }
-        };
-
-        Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 }
