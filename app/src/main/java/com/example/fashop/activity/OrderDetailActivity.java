@@ -2,10 +2,12 @@ package com.example.fashop.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -227,32 +229,47 @@ public class OrderDetailActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 if(currentOrder.getStatus().equals("PENDING")){
-                    Order updatedOrder = currentOrder;
-                    updatedOrder.setStatus("CANCELLED");
-                    DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Order");
-                    ordersRef.child(String.valueOf(currentOrder.getID())).child("status").setValue("CANCELLED")
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    // The order was successfully updated
-                                    // Do something here (e.g. show a success message)
-                                    Log.v("Status Updated", "Completed");
-                                    Toast.makeText(OrderDetailActivity.this, "Order Cancelled", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // There was an error updating the order
-                                    // Handle the error here (e.g. show an error message)
-                                }
-                            });
-                    Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
-                    Bundle args = new Bundle();
-                    args.putInt("tabIndex", 0);
-                    intent.putExtras(args);
-                    startActivity(intent);
-                    finish();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderDetailActivity.this);
+                    builder.setMessage("Are you sure you want to cancel this order?")
+                            .setTitle("Cancel Order");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User confirmed - cancel the order
+                            Order updatedOrder = currentOrder;
+                            updatedOrder.setStatus("CANCELLED");
+                            DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Order");
+                            ordersRef.child(String.valueOf(currentOrder.getID())).child("status").setValue("CANCELLED")
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // The order was successfully updated
+                                            // Do something here (e.g. show a success message)
+                                            Log.v("Status Updated", "Completed");
+                                            Toast.makeText(OrderDetailActivity.this, "Order Cancelled", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // There was an error updating the order
+                                            // Handle the error here (e.g. show an error message)
+                                        }
+                                    });
+                            Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+                            Bundle args = new Bundle();
+                            args.putInt("tabIndex", 0);
+                            intent.putExtras(args);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled - do nothing
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         });
