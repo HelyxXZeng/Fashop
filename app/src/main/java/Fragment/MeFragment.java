@@ -155,7 +155,6 @@ public class MeFragment extends Fragment {
         ShippingLayout = view.findViewById(R.id.ShippingLayout);
 
         //
-        pendingImage = view.findViewById(R.id.pendingImage);
 
         checkUser();
         loadHotLine();
@@ -163,12 +162,18 @@ public class MeFragment extends Fragment {
         initListener();
     }
 
-    private ImageView pendingImage;
     private void loadBadger(){
+
+// Set the badge on the LinearLayout
         BadgeDrawable badgeDrawable = BadgeDrawable.create(context);
         badgeDrawable.setVisible(true);
         badgeDrawable.setMaxCharacterCount(2);
         badgeDrawable.setBackgroundColor(ContextCompat.getColor(context, R.color.redBadge));
+        badgeDrawable.setBounds(0, 0, badgeDrawable.getIntrinsicWidth(), badgeDrawable.getIntrinsicHeight());
+        badgeDrawable.setNumber(0);
+
+        PendingLayout.setForeground(badgeDrawable);
+        PendingLayout.setPadding(0, 0, 10, 0); // Add padding for the badge
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Order");
         Query cartItems = ref.orderByChild("customerID").equalTo(FirebaseAuth.getInstance().getUid());
@@ -184,7 +189,6 @@ public class MeFragment extends Fragment {
 
             }
         });
-        pendingImage.getOverlay().add(badgeDrawable);
     }
 
     private void loadHotLine() {

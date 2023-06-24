@@ -210,10 +210,10 @@ public class OrderDetailActivity extends AppCompatActivity{
     }
     private void ConfirmEvent(){
         ConfirmBtn = findViewById(R.id.checkoutBtn);
-        ConfirmBtn.setText("RECEIVED");
+        ConfirmBtn.setText("CANCEL");
         button_layout = findViewById(R.id.button_layout);
 
-        if(!currentOrder.getStatus().equals("SHIPPING") && !currentOrder.getStatus().equals("PENDING")) {
+        if(!currentOrder.getStatus().equals("PENDING")) {
             ConfirmBtn.setEnabled(false);
             ConfirmBtn.setClickable(false);
             button_layout.setBackgroundColor(Color.GRAY);

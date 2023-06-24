@@ -103,7 +103,7 @@ public class CompletedFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                orders.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Get the Order object from Firebase
                     Order order = snapshot.getValue(Order.class);
