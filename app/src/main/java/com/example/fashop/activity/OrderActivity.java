@@ -50,6 +50,7 @@ import Adapter.OrderItemAdapter;
 import Model.CartItem;
 import Model.Order;
 import Model.OrderItem;
+import MyClass.Constants;
 
 public class OrderActivity extends AppCompatActivity{
 
@@ -235,7 +236,7 @@ public class OrderActivity extends AppCompatActivity{
 
                 //send notification to admin
 
-                /*prepareNotificationMessage(String.valueOf(currentOrder.getID()));*/
+                prepareNotificationMessage(String.valueOf(currentOrder.getID()));
             }
 
             @Override
@@ -244,7 +245,7 @@ public class OrderActivity extends AppCompatActivity{
         });
     }
 
-    /*private void prepareNotificationMessage(String orderId){
+    private void prepareNotificationMessage(String orderId){
         //send notification to admin
 
         //data
@@ -313,5 +314,5 @@ public class OrderActivity extends AppCompatActivity{
         };
 
         Volley.newRequestQueue(this).add(jsonObjectRequest);
-    }*/
+    }
 }
