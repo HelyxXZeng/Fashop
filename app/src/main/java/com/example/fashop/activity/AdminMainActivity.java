@@ -45,7 +45,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private TextView tvUserName, tvUserEmail;
     private ImageView imgAvt;
 
-    private LinearLayout staffFunction, statisticFunction;
+    private LinearLayout staffFunction, statisticFunction,cs;
     //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class AdminMainActivity extends AppCompatActivity {
         imgAvt = findViewById(R.id.imgAvt);
         staffManaBtn = findViewById(R.id.staffManaBtn);
         settingBtn = findViewById(R.id.settingBtn);
+        cs = findViewById(R.id.csmngmLayout);
         //
 
         functionalAuthor();
@@ -100,10 +101,12 @@ public class AdminMainActivity extends AppCompatActivity {
                             if (accountType.equals("Staff")){
                                 staffFunction.setVisibility(View.GONE);
                                 statisticFunction.setVisibility(View.GONE);
+                                cs.setVisibility(View.GONE);
                             }
                             else if (accountType.equals("Admin")){
                                 staffFunction.setVisibility(View.VISIBLE);
                                 statisticFunction.setVisibility(View.VISIBLE);
+                                cs.setVisibility(View.VISIBLE);
                             }
                         }
 
