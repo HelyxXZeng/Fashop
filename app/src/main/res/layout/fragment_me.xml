@@ -307,10 +307,14 @@
                         android:textStyle="bold"/>
 
                     <LinearLayout
+                        android:id="@+id/order_history"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
@@ -320,14 +324,10 @@
                             android:src="@drawable/shopping_orange"/>
 
                         <TextView
-                            android:id="@+id/order_history"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginRight="15dp"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="Order History"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
                             android:textSize="17sp"/>
 
                     </LinearLayout>
@@ -343,33 +343,59 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:id="@+id/PendingLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="12dp"
                             android:layout_marginRight="40dp"
                             android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/pendingImage"
-                                android:layout_marginBottom="10dp"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                            
+                            <RelativeLayout
+                                android:paddingTop="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:clipToPadding="false"
                                 android:layout_gravity="center"
-                                android:src="@drawable/pending_outline" />
+                                android:layout_marginBottom="10dp">
+
+                                <ImageView
+                                    android:id="@+id/pendingImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/pending_outline" />
+
+                                <TextView
+                                    android:id="@+id/pendingBadge"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/badge_shape"
+                                    android:gravity="center"
+                                    android:layout_marginTop="-5dp"
+                                    android:layout_marginLeft="25dp"
+                                    android:text="10"
+                                    android:textSize="9sp"/>
+
+
+                            </RelativeLayout>
+
+
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="Pending"
-                                android:background="?attr/selectableItemBackground"
-                                android:textSize="13sp"/>
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -380,20 +406,43 @@
                             android:layout_marginRight="40dp"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_marginBottom="10dp"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/confirm_outline"
-                                android:layout_gravity="center"/>
+
+                            <RelativeLayout
+                                android:paddingTop="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:clipToPadding="false"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/confirm_outline"
+                                    android:layout_gravity="center"/>
+
+                                <TextView
+                                    android:id="@+id/confirmedBadge"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/badge_shape"
+                                    android:gravity="center"
+                                    android:layout_marginTop="-5dp"
+                                    android:layout_marginLeft="25dp"
+                                    android:text="10"
+                                    android:textSize="9sp"/>
+
+
+                            </RelativeLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="Confirmed"
-                                android:background="?attr/selectableItemBackground"
-                                android:textSize="13sp"/>
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -404,20 +453,46 @@
                             android:layout_marginRight="40dp"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_marginBottom="10dp"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/shipping_outline"
-                                android:layout_gravity="center"/>
+
+                            <RelativeLayout
+                                android:paddingTop="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:clipToPadding="false"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp">
+
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/shipping_outline"
+                                    android:layout_gravity="center"/>
+
+                                <TextView
+                                    android:id="@+id/shippingBadge"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/badge_shape"
+                                    android:gravity="center"
+                                    android:layout_marginTop="-5dp"
+                                    android:layout_marginLeft="23dp"
+                                    android:text="10"
+                                    android:textSize="9sp"/>
+
+
+                            </RelativeLayout>
+
+
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="Shipping"
-                                android:background="?attr/selectableItemBackground"
-                                android:textSize="13sp"/>
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -425,23 +500,47 @@
                             android:id="@+id/CompletedLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="0dp"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_marginBottom="10dp"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/rate_outline"
-                                android:layout_gravity="center"/>
+                            <RelativeLayout
+                                android:paddingTop="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:clipToPadding="false"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp">
+
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/rate_outline"
+                                    android:layout_gravity="center"/>
+
+                                <TextView
+                                    android:id="@+id/completedBadge"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/badge_shape"
+                                    android:gravity="center"
+                                    android:layout_marginTop="-5dp"
+                                    android:layout_marginLeft="27dp"
+                                    android:text="10"
+                                    android:textSize="9sp"/>
+
+
+                            </RelativeLayout>
+
+
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="Completed"
-                                android:background="?attr/selectableItemBackground"
-                                android:textSize="13sp"/>
+                                android:textSize="12sp"/>
 
                         </LinearLayout>
 
@@ -470,11 +569,14 @@
                         android:textStyle="bold"/>
 
                     <LinearLayout
+                        android:background="?attr/selectableItemBackground"
                         android:id="@+id/hotlineBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
@@ -488,18 +590,16 @@
                         <TextView
                             android:layout_marginLeft="10dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="Hotline"
-                            android:background="?attr/selectableItemBackground"
                             android:textSize="17sp"/>
 
                         <TextView
                             android:id="@+id/hotlineNumber"
                             android:layout_marginLeft="5dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="19001235"
-                            android:background="?attr/selectableItemBackground"
                             android:textSize="17sp"/>
                     </LinearLayout>
 
@@ -565,11 +665,14 @@
 
 
                     <LinearLayout
+                        android:id="@+id/tvPrivacyPolicy"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:orientation="horizontal">
 
 
@@ -580,14 +683,11 @@
                             android:src="@drawable/lock"/>
 
                         <TextView
-                            android:id="@+id/tvPrivacyPolicy"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="15dp"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="Privacy Policy"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
                             android:textSize="17sp"/>
                     </LinearLayout>
 
@@ -598,11 +698,14 @@
                         android:background="@color/lightgray"/>
 
                     <LinearLayout
+                        android:id="@+id/tvQuestions"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -611,14 +714,11 @@
                             android:src="@drawable/question"/>
 
                         <TextView
-                            android:id="@+id/tvQuestions"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="15dp"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="Questions"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
                             android:textSize="17sp"/>
 
                     </LinearLayout>
@@ -630,11 +730,14 @@
                         android:background="@color/lightgray"/>
 
                     <LinearLayout
+                        android:id="@+id/tvLegalInformation"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -643,14 +746,12 @@
                             android:src="@drawable/info"/>
 
                         <TextView
-                            android:id="@+id/tvLegalInformation"
+
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="15dp"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="Legal Infomation"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
                             android:textSize="17sp"/>
 
                     </LinearLayout>
@@ -662,13 +763,15 @@
                         android:background="@color/lightgray"/>
 
                     <LinearLayout
+                        android:id="@+id/tvAboutUs"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:clickable="true">
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="25dp"
@@ -676,13 +779,12 @@
                             android:src="@drawable/group"/>
 
                         <TextView
-                            android:id="@+id/tvAboutUs"
+
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="15dp"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="About Us"
-                            android:background="?attr/selectableItemBackground"
                             android:textSize="17sp"/>
 
                     </LinearLayout>
@@ -705,14 +807,15 @@
 
 
                     <LinearLayout
+                        android:background="?attr/selectableItemBackground"
                         android:id="@+id/logoutBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
-                        android:clickable="true">
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:orientation="horizontal">
 
 
 
@@ -725,9 +828,8 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="15dp"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="wrap_content"
                             android:text="Logout"
-                            android:background="?attr/selectableItemBackground"
                             android:textSize="17sp"/>
 
                     </LinearLayout>

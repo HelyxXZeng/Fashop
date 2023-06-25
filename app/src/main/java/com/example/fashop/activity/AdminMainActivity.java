@@ -225,10 +225,14 @@ public class AdminMainActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                         for (DataSnapshot ds: datasnapshot.getChildren()){
                             String accountType = "" + ds.child("accountType").getValue();
-                            if (accountType.equals("Staff")){
                                 String name = "" + ds.child("name").getValue();
                                 String email = ""+ds.child("email").getValue();
                                 String profileImage = ""+ds.child("profileImage").getValue();
+
+                            if (accountType.equals("Admin"))
+                            {
+                                name += " (Administrator)";
+                            }
 
                                 tvUserName.setText(name);
                                 tvUserEmail.setText(email);
@@ -238,7 +242,6 @@ public class AdminMainActivity extends AppCompatActivity {
                                 catch (Exception e){
                                     imgAvt.setImageResource(R.drawable.person_gray);
                                 }
-                            }
                         }
                     }
 

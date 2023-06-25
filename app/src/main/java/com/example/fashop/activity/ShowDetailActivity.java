@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.fashop.R;
@@ -15,15 +17,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapter.ReviewAdapter;
 import Adapter.viewPage2Adapter;
 import Fragment.ReturnPolicyFragment;
+import Model.OrderItem;
 import Model.ProductModel;
 import Fragment.ProductVariantFragment;
+import Model.ProductVariant;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class ShowDetailActivity extends AppCompatActivity {
@@ -38,6 +46,20 @@ public class ShowDetailActivity extends AppCompatActivity {
     private List<String> mListPhoto;
 
     private LinearLayout openReturnPolicyBtn;
+
+    private TextView rating1Tv, rating2Tv, soldTv, reviewQuantityTv, seeMoreReviewsBtn;
+    private RecyclerView reviewRecycler;
+    private ReviewAdapter reviewAdapter;
+
+    private List<OrderItem> orderItemList = new ArrayList<>();
+
+    private List<Integer> variantIDList = new ArrayList<>();
+
+    private float ratingScore = 0;
+    private int soldProductQuantity = 0;
+    private int reviewCount = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +71,11 @@ public class ShowDetailActivity extends AppCompatActivity {
 
         initView();
         getBundle();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        reviewRecycler.setLayoutManager(linearLayoutManager);
+        reviewAdapter = new ReviewAdapter(orderItemList);
+        reviewRecycler.setAdapter(reviewAdapter);
+        loadFeedback_Stats();
     }
 
     private void getBundle(){
@@ -155,6 +182,12 @@ public class ShowDetailActivity extends AppCompatActivity {
         shopAddressTv = findViewById(R.id.shopAddressTv);
         buyerAddressTv = findViewById(R.id.buyerAddressTv);
 
+        rating1Tv = findViewById(R.id.rating1Tv);
+        rating2Tv = findViewById(R.id.rating2Tv);
+        soldTv = findViewById(R.id.soldTv);
+        reviewQuantityTv = findViewById(R.id.reviewQuantityTv);
+//        seeMoreReviewsBtn = findViewById(R.id.seeMoreReviewsBtn);
+        reviewRecycler = findViewById(R.id.reviewRecycler);
 
         mViewPager2 = findViewById(R.id.view_pager_2);
         mCircleIndicator3 = findViewById(R.id.circle_indicator_3);
@@ -180,5 +213,96 @@ public class ShowDetailActivity extends AppCompatActivity {
         object = (ProductModel)  getIntent().getSerializableExtra("object");
         list = object.getImages();
         return list;
+    }
+
+
+    private void loadFeedback_Stats(){
+        //get orderItemList
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Variant");
+        Query variantQuery = ref.orderByChild("modelID").equalTo(object.getID());
+        variantQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (variantIDList != null){
+                    variantIDList.clear();
+                }
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    ProductVariant variantItem = dataSnapshot.getValue(ProductVariant.class);
+                    variantIDList.add(variantItem.getID());
+                }
+
+                DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference("OrderItem");
+                ref1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (orderItemList != null)
+                        {
+                            orderItemList.clear();
+                        }
+                        for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                            OrderItem orderItem = dataSnapshot.getValue(OrderItem.class);
+                            for (Integer variantId : variantIDList){
+                                if (orderItem.getVariantID() == variantId)
+                                {
+                                    if (orderItem.getRate() != 0){
+                                        orderItemList.add(orderItem);
+                                        ratingScore += orderItem.getRate();
+                                        reviewCount++;
+                                    }
+                                    soldProductQuantity += orderItem.getQuantity();
+                                    break;
+                                }
+                            }
+                        }
+
+//                            Log.e("sizebeafter", String.valueOf(orderItemList.size()));
+                        reviewAdapter.notifyDataSetChanged();
+
+                        float averageRating = ratingScore / reviewCount;
+                        // Round the averageRating to one decimal place
+
+                        if (!Float.isNaN(averageRating) && !Float.isInfinite(averageRating))
+                        {
+                            BigDecimal roundedRating = new BigDecimal(averageRating).setScale(1, RoundingMode.HALF_UP);
+                            // Convert the roundedRating to a float
+                            averageRating = roundedRating.floatValue();
+                        }
+
+
+                        rating1Tv.setText(String.valueOf(averageRating));
+                        rating2Tv.setText(String.valueOf(averageRating));
+                        soldTv.setText(String.valueOf(soldProductQuantity) + " sold");
+                        reviewQuantityTv.setText(" (" + String.valueOf(reviewCount) + ')');
+
+
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+        //Load sold
+
+
+        //
     }
 }

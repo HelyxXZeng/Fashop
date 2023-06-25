@@ -37,7 +37,10 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +48,7 @@ import java.util.Map;
 import Adapter.OrderItemAdapter;
 import Model.CartItem;
 import Model.ModelImage;
+import Model.NotificationModel;
 import Model.Order;
 import Model.OrderItem;
 import Model.ProductModel;
@@ -254,6 +258,45 @@ public class OrderDetailsActivity extends AppCompatActivity {
         });
     }
 
+    private void pushMessageDB(String buyerUid, int orderID, String content, String title, String type){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notification");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                int maxId = 0;
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    NotificationModel model = categorySnapshot.getValue(NotificationModel.class);
+                    if (model != null && model.getID() > maxId) {
+                        maxId = model.getID();
+                    }
+                }
+
+                // Add the new category with the incremented ID
+                NotificationModel notif = new NotificationModel();
+                notif.setID(maxId + 1);
+                notif.setCustomerID(buyerUid);
+                notif.setOrderID(orderID);
+                notif.setContent(content);
+                notif.setTitle(title);
+                notif.setStatus("Unread");
+                notif.setType(type);
+                //
+                Date currentDate = Calendar.getInstance().getTime();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+                String formattedDate = dateFormat.format(currentDate);
+                notif.setDate(formattedDate);
+                ref.child(String.valueOf(notif.getID())).setValue(notif);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
     private void prepareNotificationMessage(String orderId, String message){
 
 
@@ -285,6 +328,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         }
 
         sendFcmNotification(notificationJo);
+        pushMessageDB(order.getCustomerID(), order.getID(), NOTIFICATION_MESSAGE, NOTIFICATION_TITLE, NOTIFICATION_TYPE);
     }
 
     private void sendFcmNotification(JSONObject notificationJo) {

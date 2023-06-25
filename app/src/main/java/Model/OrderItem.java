@@ -8,6 +8,11 @@ import java.io.Serializable;
 
 public class OrderItem implements Serializable {
     private int ID;
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     private String comment;
     private int orderID;
     private int quantity;

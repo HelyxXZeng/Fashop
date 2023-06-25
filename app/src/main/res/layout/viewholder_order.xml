@@ -106,30 +106,61 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/button_layout"
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:layout_margin="7dp"
-            android:layout_alignParentEnd="true"
-            android:padding="0dp"
-            android:gravity="center_horizontal"
-            android:background="@drawable/orangebutton2"
+<!--        <LinearLayout-->
+<!--            android:id="@+id/button_layout"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_margin="7dp"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:padding="0dp"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:background="@drawable/orangebutton2"-->
+<!--            android:layout_below="@id/total"-->
+<!--            android:orientation="horizontal"-->
+<!--            >-->
+
+<!--            <Button-->
+<!--                android:id="@+id/reviewBtn"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Rate"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="16sp"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:clickable="true"/>-->
+
+<!--        </LinearLayout>-->
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/reviewBtn"
             android:layout_below="@id/total"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_alignParentEnd="true"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:text="rate"
+            android:visibility="gone"
+            android:background="@drawable/orangebutton2"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:gravity="center"/>
 
-            <Button
-                android:id="@+id/reviewBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:background="@android:color/transparent"
-                android:clickable="true"/>
 
-        </LinearLayout>
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/buyNow"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/orangebutton2"
+            android:gravity="center"
+            android:text="Buy now"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
 
     </RelativeLayout>
 
