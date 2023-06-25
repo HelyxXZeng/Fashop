@@ -173,6 +173,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                         for (DataSnapshot modelSnapshot : dataSnapshot.getChildren()) {
                                             ProductModel m = modelSnapshot.getValue(ProductModel.class);
                                             orderItem.setPrice(m.getPrice());
+                                            orderItem.setProductName(m.getName());
                                             adapter.notifyDataSetChanged();
                                             break;
                                         }
