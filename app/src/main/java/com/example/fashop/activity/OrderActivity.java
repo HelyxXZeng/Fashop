@@ -142,7 +142,6 @@ public class OrderActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 pushOrder();
-                pushOrderItems();
                 Toast.makeText(getApplicationContext(), "Create Order Completed", Toast.LENGTH_LONG).show();
                 onBackPressed();
 
@@ -196,6 +195,7 @@ public class OrderActivity extends AppCompatActivity{
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 Log.v("OrderItem", "completed");
+                                pushOrderItems();
                             }
                         });
             }
@@ -343,19 +343,19 @@ public class OrderActivity extends AppCompatActivity{
             @Override
             public void onResponse(JSONObject response) {
                 //after sending fcm start order details activity
-                Intent intent = new Intent(OrderActivity.this, UserOrderDetailActivity.class);
-                intent.putExtra("orderTo", shopAccountType);
-                intent.putExtra("orderId", orderId);
-                startActivity(intent);
+//                Intent intent = new Intent(OrderActivity.this, UserOrderDetailActivity.class);
+//                intent.putExtra("orderTo", shopAccountType);
+//                intent.putExtra("orderId", orderId);
+//                startActivity(intent);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //if failed sending fcm, still start order details activity
-                Intent intent = new Intent(OrderActivity.this, UserOrderDetailActivity.class);
-                intent.putExtra("orderTo", shopAccountType);
-                intent.putExtra("orderId", orderId);
-                startActivity(intent);
+//                Intent intent = new Intent(OrderActivity.this, UserOrderDetailActivity.class);
+//                intent.putExtra("orderTo", shopAccountType);
+//                intent.putExtra("orderId", orderId);
+//                startActivity(intent);
             }
         }){
             @Override
