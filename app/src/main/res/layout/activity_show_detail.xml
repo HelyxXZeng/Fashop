@@ -303,12 +303,11 @@ tools:context=".activity.ShowDetailActivity">
 
         <LinearLayout
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -402,13 +401,36 @@ tools:context=".activity.ShowDetailActivity">
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/reviewRecycler"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+
 
         </LinearLayout>
+
+
+        <View
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/lightgray"/>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviewRecycler"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
 
 
 
