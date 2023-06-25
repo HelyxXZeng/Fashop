@@ -25,8 +25,11 @@ import java.util.List;
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHolder> {
     List<ProductModel> popularModel;
 
-    public PopularAdapter(List<ProductModel> popularModel) {
+    private int maxItems;
+
+    public PopularAdapter(List<ProductModel> popularModel , int maxItems) {
         this.popularModel = popularModel;
+        this.maxItems = maxItems;
     }
 
     @Override
@@ -71,7 +74,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return popularModel.size();
+        return Math.min(popularModel.size(), maxItems);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

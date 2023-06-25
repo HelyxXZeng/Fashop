@@ -420,8 +420,8 @@ public class HomeFragment extends Fragment {
     private void recyclerViewPopular(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recycleViewPopularList.setLayoutManager(linearLayoutManager);
-
-        popularAdapter = new PopularAdapter(modelList);
+        int maxItemsToShow = 7;
+        popularAdapter = new PopularAdapter(modelList, maxItemsToShow);
         recycleViewPopularList.setAdapter(popularAdapter);
     }
 

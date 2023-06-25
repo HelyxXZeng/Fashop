@@ -13,9 +13,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fashop.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,20 +33,28 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import Adapter.OrderItemAdapter;
 import Model.CartItem;
+import Model.NotificationModel;
 import Model.Order;
 import Model.OrderItem;
-import Model.ProductVariant;
+import MyClass.Constants;
 
 public class OrderActivity extends AppCompatActivity{
 
@@ -52,10 +66,13 @@ public class OrderActivity extends AppCompatActivity{
     List<OrderItem> orderItems = new ArrayList<>();
     Order currentOrder = null;
     Button ConfirmBtn;
+    ImageButton BackBtn;
     private int orderID;
     private int maxOrderID;
     private int maxOrderItemID;
     private double total;
+
+    String shopAccountType = "AdminAndStaff";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +85,7 @@ public class OrderActivity extends AppCompatActivity{
 
         initView();
         ConfirmEvent();
+        BackEvent();
     }
     private void initView(){
         OrderItemList = findViewById(R.id.cart_item_rcv);
@@ -124,8 +142,17 @@ public class OrderActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 pushOrder();
-                pushOrderItems();
                 Toast.makeText(getApplicationContext(), "Create Order Completed", Toast.LENGTH_LONG).show();
+                onBackPressed();
+
+            }
+        });
+    }
+    private void BackEvent(){
+        BackBtn = findViewById(R.id.backBtn);
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 onBackPressed();
             }
         });
@@ -168,6 +195,7 @@ public class OrderActivity extends AppCompatActivity{
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 Log.v("OrderItem", "completed");
+                                pushOrderItems();
                             }
                         });
             }
@@ -220,11 +248,126 @@ public class OrderActivity extends AppCompatActivity{
                                 }
                             });
                 }
+
+                //send notification to admin
+
+                prepareNotificationMessage(String.valueOf(currentOrder.getID()));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void pushMessageDB(String buyerUid, int orderID, String content, String title, String type){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notification");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                int maxId = 0;
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    NotificationModel model = categorySnapshot.getValue(NotificationModel.class);
+                    if (model != null && model.getID() > maxId) {
+                        maxId = model.getID();
+                    }
+                }
+
+                // Add the new category with the incremented ID
+                NotificationModel notif = new NotificationModel();
+                notif.setID(maxId + 1);
+                notif.setCustomerID(buyerUid);
+                notif.setOrderID(orderID);
+                notif.setContent(content);
+                notif.setTitle(title);
+                notif.setStatus("Unread");
+                notif.setType(type);
+                //
+                Date currentDate = Calendar.getInstance().getTime();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+                String formattedDate = dateFormat.format(currentDate);
+                notif.setDate(formattedDate);
+                ref.child(String.valueOf(notif.getID())).setValue(notif);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void prepareNotificationMessage(String orderId){
+        //send notification to admin
+
+        //data
+        String NOTIFICATION_TOPIC = "/topics/" + Constants.FCM_TOPIC;
+        String  NOTIFICATION_TITLE = "New Order " + orderId;
+        String NOTIFICATION_MESSAGE = "Congratulations...! You have new order.";
+        String NOTIFICATION_TYPE = "NewOrder";
+
+        JSONObject notificationJo = new JSONObject();
+        JSONObject notificationBodyJo = new JSONObject();
+
+
+        String currentCustomerUid = FirebaseAuth.getInstance().getUid();
+
+        try {
+            //content
+            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
+            notificationBodyJo.put("buyerUid", currentCustomerUid);
+            notificationBodyJo.put("shopAccountType", shopAccountType);
+            notificationBodyJo.put("orderId", orderId);
+            notificationBodyJo.put("notificationTitle", NOTIFICATION_TITLE);
+            notificationBodyJo.put("notificationMessage", NOTIFICATION_MESSAGE);
+
+            //where to send
+            notificationJo.put("to", NOTIFICATION_TOPIC);
+            notificationJo.put("data", notificationBodyJo);
+
+
+        } catch (JSONException e) {
+            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        sendFcmNotification(notificationJo, orderId);
+        pushMessageDB(currentCustomerUid, currentOrder.getID(), NOTIFICATION_MESSAGE, NOTIFICATION_TITLE, NOTIFICATION_TYPE);
+    }
+
+    private void sendFcmNotification(JSONObject notificationJo, String orderId) {
+        //send volley request
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send",
+                notificationJo, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //after sending fcm start order details activity
+//                Intent intent = new Intent(OrderActivity.this, UserOrderDetailActivity.class);
+//                intent.putExtra("orderTo", shopAccountType);
+//                intent.putExtra("orderId", orderId);
+//                startActivity(intent);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //if failed sending fcm, still start order details activity
+//                Intent intent = new Intent(OrderActivity.this, UserOrderDetailActivity.class);
+//                intent.putExtra("orderTo", shopAccountType);
+//                intent.putExtra("orderId", orderId);
+//                startActivity(intent);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "key=" + Constants.FCM_KEY);
+
+                return headers;
+            }
+        };
+
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 }

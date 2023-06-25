@@ -15,10 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fashop.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +34,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,9 +48,11 @@ import java.util.Map;
 import Adapter.OrderItemAdapter;
 import Model.CartItem;
 import Model.ModelImage;
+import Model.NotificationModel;
 import Model.Order;
 import Model.OrderItem;
 import Model.ProductModel;
+import MyClass.Constants;
 
 public class OrderDetailsActivity extends AppCompatActivity {
     TextView un, orderid, cd, address, nob, ordervalue;
@@ -51,6 +65,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     String selectedItem;
     Order order;
+    LinearLayout button_background;
+    String shopAccountType = "AdminAndStaff";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +82,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         spinner = findViewById(R.id.statusSpinner);
         confirmbtn = findViewById(R.id.confirm_button);
         backbtn = findViewById(R.id.backBtn);
-
+        button_background = findViewById(R.id.confirm_button_background);
         backbtn.setOnClickListener(v -> { finish();});
 
         getDetailOrderData();
@@ -75,6 +91,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
     {
         order = (Order) getIntent().getSerializableExtra("order");
         orderItems.clear();
+        /*if(!order.getStatus().equals("SHIPPING") && !order.getStatus().equals("PENDING") && !order.getStatus().equals("CONFIRMED")) {
+            confirmbtn.setEnabled(false);
+            button_background.setBackgroundColor(Color.GRAY);
+        }*/
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OrderDetailsActivity.this, LinearLayoutManager.VERTICAL, false);
         OrderItemList.setLayoutManager(linearLayoutManager);
         adapter = new OrderItemAdapter(orderItems);
@@ -153,6 +173,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                                         for (DataSnapshot modelSnapshot : dataSnapshot.getChildren()) {
                                             ProductModel m = modelSnapshot.getValue(ProductModel.class);
                                             orderItem.setPrice(m.getPrice());
+                                            orderItem.setProductName(m.getName());
                                             adapter.notifyDataSetChanged();
                                             break;
                                         }
@@ -215,20 +236,129 @@ public class OrderDetailsActivity extends AppCompatActivity {
         confirmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(order.getStatus().equals(selectedItem)) {
+                    Toast.makeText(OrderDetailsActivity.this, "Status is same, can't save!!!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    DatabaseReference setref = FirebaseDatabase.getInstance().getReference("Order");
+                    order.setStatus(selectedItem);
+                    setref.child(String.valueOf(order.getID())).setValue(order,
+                            new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                    Toast.makeText(getApplicationContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
+                                    //send notification to customer
+                                    String message = "Order " + selectedItem;
+                                    prepareNotificationMessage(String.valueOf(order.getID()), message);
+                                    finish();
+                                }
 
-                DatabaseReference setref = FirebaseDatabase.getInstance().getReference("Order");
-                order.setStatus(selectedItem);
-                setref.child(String.valueOf(order.getID())).setValue(order,
-                        new DatabaseReference.CompletionListener(){
-                            @Override
-                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref)
-                            {
-                                Toast.makeText(getApplicationContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-
-                        });
+                            });
+                }
             }
         });
+    }
+
+    private void pushMessageDB(String buyerUid, int orderID, String content, String title, String type){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notification");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                int maxId = 0;
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    NotificationModel model = categorySnapshot.getValue(NotificationModel.class);
+                    if (model != null && model.getID() > maxId) {
+                        maxId = model.getID();
+                    }
+                }
+
+                // Add the new category with the incremented ID
+                NotificationModel notif = new NotificationModel();
+                notif.setID(maxId + 1);
+                notif.setCustomerID(buyerUid);
+                notif.setOrderID(orderID);
+                notif.setContent(content);
+                notif.setTitle(title);
+                notif.setStatus("Unread");
+                notif.setType(type);
+                //
+                Date currentDate = Calendar.getInstance().getTime();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+                String formattedDate = dateFormat.format(currentDate);
+                notif.setDate(formattedDate);
+                ref.child(String.valueOf(notif.getID())).setValue(notif);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void prepareNotificationMessage(String orderId, String message){
+
+
+        String NOTIFICATION_TOPIC = "/topics/" + Constants.FCM_TOPIC;
+        String  NOTIFICATION_TITLE = "Your Order " + orderId;
+        String NOTIFICATION_MESSAGE = "" + message;
+        String NOTIFICATION_TYPE = "OrderStatusChanged";
+
+        JSONObject notificationJo = new JSONObject();
+        JSONObject notificationBodyJo = new JSONObject();
+
+        try {
+            //content
+            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
+            notificationBodyJo.put("buyerUid", order.getCustomerID());
+            Log.e("buyerUid", order.getCustomerID());
+            notificationBodyJo.put("shopAccountType", shopAccountType);
+            notificationBodyJo.put("orderId", orderId);
+            notificationBodyJo.put("notificationTitle", NOTIFICATION_TITLE);
+            notificationBodyJo.put("notificationMessage", NOTIFICATION_MESSAGE);
+
+            //where to send
+            notificationJo.put("to", NOTIFICATION_TOPIC); // to all
+            notificationJo.put("data", notificationBodyJo);
+
+
+        } catch (JSONException e) {
+            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        sendFcmNotification(notificationJo);
+        pushMessageDB(order.getCustomerID(), order.getID(), NOTIFICATION_MESSAGE, NOTIFICATION_TITLE, NOTIFICATION_TYPE);
+    }
+
+    private void sendFcmNotification(JSONObject notificationJo) {
+        //send volley request
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send",
+                notificationJo, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //notification sent
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //notification failed
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "key=" + Constants.FCM_KEY);
+
+                return headers;
+            }
+        };
+
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
+
     }
 }

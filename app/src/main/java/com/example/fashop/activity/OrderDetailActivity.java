@@ -2,10 +2,12 @@ package com.example.fashop.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,11 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fashop.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,10 +60,8 @@ public class OrderDetailActivity extends AppCompatActivity{
     List<OrderItem> orderItems = new ArrayList<>();
     Order currentOrder = null;
     Button ConfirmBtn;
+    ImageButton backBtn;
     LinearLayout button_layout;
-    private int orderID;
-    private int maxOrderID;
-    private int maxOrderItemID;
     private double total;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class OrderDetailActivity extends AppCompatActivity{
 
         initView();
         ConfirmEvent();
+        BackEvent();
     }
     private void initView(){
         OrderItemList = findViewById(R.id.cart_item_rcv);
@@ -83,6 +87,8 @@ public class OrderDetailActivity extends AppCompatActivity{
         adapter = new OrderItemAdapter(orderItems);
         OrderItemList.setAdapter(adapter);
 
+        note = findViewById(R.id.note);
+        note.setText(currentOrder.getNote());
 
         UserName = findViewById(R.id.tvUserName);
         Address = findViewById(R.id.address);
@@ -114,7 +120,7 @@ public class OrderDetailActivity extends AppCompatActivity{
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(OrderDetailActivity.this,"Failed to load user data. Try again later", Toast.LENGTH_LONG).show();
+                Toast.makeText(OrderDetailActivity.this,"Failed to load order data. Try again later", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -164,6 +170,7 @@ public class OrderDetailActivity extends AppCompatActivity{
                                         for (DataSnapshot modelSnapshot : dataSnapshot.getChildren()) {
                                             ProductModel m = modelSnapshot.getValue(ProductModel.class);
                                             orderItem.setPrice(m.getPrice());
+                                            orderItem.setProductName(m.getName());
                                             adapter.notifyDataSetChanged();
                                             break;
                                         }
@@ -195,20 +202,76 @@ public class OrderDetailActivity extends AppCompatActivity{
             }
         });
     }
+    private void BackEvent(){
+        backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
     private void ConfirmEvent(){
         ConfirmBtn = findViewById(R.id.checkoutBtn);
-        ConfirmBtn.setText("RECEIVED");
+        ConfirmBtn.setText("CANCEL");
         button_layout = findViewById(R.id.button_layout);
 
-        if(!currentOrder.getStatus().equals("SHIPPING")) {
+        if(!currentOrder.getStatus().equals("PENDING")) {
             ConfirmBtn.setEnabled(false);
+            ConfirmBtn.setClickable(false);
             button_layout.setBackgroundColor(Color.GRAY);
+        }
+        if(currentOrder.getStatus().equals("PENDING")) {
+            button_layout.setVisibility(View.VISIBLE);
+            ConfirmBtn.setText("CANCEL");
         }
 
         ConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //currentOrder.setStatus("COMPLETED");
+                if(currentOrder.getStatus().equals("PENDING")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(OrderDetailActivity.this);
+                    builder.setMessage("Are you sure you want to cancel this order?")
+                            .setTitle("Cancel Order");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User confirmed - cancel the order
+                            Order updatedOrder = currentOrder;
+                            updatedOrder.setStatus("CANCELLED");
+                            DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Order");
+                            ordersRef.child(String.valueOf(currentOrder.getID())).child("status").setValue("CANCELLED")
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // The order was successfully updated
+                                            // Do something here (e.g. show a success message)
+                                            Log.v("Status Updated", "Completed");
+                                            Toast.makeText(OrderDetailActivity.this, "Order Cancelled", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // There was an error updating the order
+                                            // Handle the error here (e.g. show an error message)
+                                        }
+                                    });
+                            Intent intent = new Intent(OrderDetailActivity.this, OrderHistoryActivity.class);
+                            Bundle args = new Bundle();
+                            args.putInt("tabIndex", 0);
+                            intent.putExtras(args);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled - do nothing
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
             }
         });
     }
