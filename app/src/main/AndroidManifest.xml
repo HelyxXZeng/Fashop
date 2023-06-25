@@ -21,9 +21,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fashop"
         tools:targetApi="31">
+
+        <activity
+            android:name=".activity.DetailReviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ReviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CustomerManagement"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.SellerOrderDetailActivity"
             android:exported="false"
@@ -42,7 +52,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.OrderDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ListModelOfCategoryActivity"
             android:exported="false"

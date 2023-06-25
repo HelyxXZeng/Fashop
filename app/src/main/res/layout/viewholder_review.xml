@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+            android:id="@+id/imgAvt"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/avt"
+            app:c_border="true"
+            app:c_border_width="1dp"
+            android:layout_gravity="center_vertical"/>
+
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bow Jaro"
+                android:textColor="@color/black"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item:"/>
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/sizeColorTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="36, yellow"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="-8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating"
+            android:layout_gravity="center_vertical"/>
+
+        <RatingBar
+            android:layout_marginLeft="-50dp"
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:numStars="5"
+            android:progressTint="@color/yellow"
+            android:stepSize="1"
+            android:scaleY="0.45"
+            android:scaleX="0.45"
+            android:isIndicator="true"/>
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_marginTop="-10dp"
+        android:id="@+id/commentTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="comment"
+        android:textColor="@color/black"/>
+
+</LinearLayout>

@@ -60,11 +60,11 @@ import MyClass.Constants;
 public class MeFragment extends Fragment {
 
     Context context;
-    private TextView tvPrivacyPolicy;
-    private TextView tvAboutUs;
-    private TextView tvLegalInformation;
-    private TextView tvQuestions;
-    private TextView orderHistory;
+    private LinearLayout tvPrivacyPolicy;
+    private LinearLayout tvAboutUs;
+    private LinearLayout tvLegalInformation;
+    private LinearLayout tvQuestions;
+    private LinearLayout orderHistory;
 
     //
     private FirebaseAuth firebaseAuth;

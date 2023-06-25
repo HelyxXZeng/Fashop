@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +19,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import Adapter.NotificationAdapter;
+import Adapter.WriteReviewAdapter;
 import Model.NotificationModel;
 import Model.ProductVariant;
 
@@ -43,7 +50,9 @@ public class NotificationFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private TextView notifContent;
+    private RecyclerView notifRecyclerView;
+    private NotificationAdapter notifAdapter;
+    private List<NotificationModel> notifList = new ArrayList<>();
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -86,20 +95,35 @@ public class NotificationFragment extends Fragment {
     }
 
     private void initUI(View view){
-        notifContent = view.findViewById(R.id.notifContent);
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notification");
+        notifRecyclerView = view.findViewById(R.id.notifRecyclerView);
 
-        ref.addValueEventListener(new ValueEventListener() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        notifRecyclerView.setLayoutManager(linearLayoutManager);
+        notifAdapter = new NotificationAdapter(notifList);
+        notifRecyclerView.setAdapter(notifAdapter);
+
+        loadData();
+    }
+
+    private void loadData() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notification");
+        Query notifQuery = ref.orderByChild("customerID").equalTo(FirebaseAuth.getInstance().getUid());
+
+        notifQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                if (notifList != null)
+                    notifList.clear();
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     NotificationModel notifModel = dataSnapshot.getValue(NotificationModel.class);
-                    if (notifModel != null && notifModel.getCustomerID().equals(FirebaseAuth.getInstance().getUid())){
-                        notifContent.setText(notifModel.getContent());
-                        break;
+                    if (notifModel != null && notifModel.getType() != null && notifModel.getType().equals("OrderStatusChanged")){
+                        notifList.add(0, notifModel);
                     }
                 }
+
+                notifAdapter.notifyDataSetChanged();
             }
 
             @Override

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fashop.R;
 import com.example.fashop.activity.OrderDetailActivity;
 import com.example.fashop.activity.OrderDetailsActivity;
+import com.example.fashop.activity.ReviewActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import Model.ModelImage;
 import Model.Order;
@@ -150,7 +152,47 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
         }
         else if (order.getStatus().equals("COMPLETED")) {
-            holder.button_layout.setVisibility(View.VISIBLE);
+
+            //
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("OrderItem");
+            ref2.orderByChild("orderID").equalTo(order.getID()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot ds: snapshot.getChildren()){
+                        OrderItem orderItem =  ds.getValue(OrderItem.class);
+
+                        //
+                        if (orderItem.getRate() != 0){
+                            holder.rateBtn.setVisibility(View.GONE);
+                        }
+                        else{
+                            holder.rateBtn.setVisibility(View.VISIBLE);
+                        }
+                        break;
+                        //
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            holder.rateBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+
+                    Intent intent = new Intent(context, ReviewActivity.class);
+                    intent.putExtra("order", order);
+                    context.startActivity(intent);
+                }
+            });
+
+
+            //
         }
         else {
 
@@ -172,7 +214,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         OrderItemAdapter adapter;
         List<OrderItem> orderItems = new ArrayList<>();
         CardView card;
-        LinearLayout button_layout;
+        TextView rateBtn;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -181,7 +223,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             orderDateTextView = itemView.findViewById(R.id.order_date_text_view);
             orderStatusTextView = itemView.findViewById(R.id.order_status_text_view);
             totalTxt = itemView.findViewById(R.id.totalTxt);
-            button_layout = itemView.findViewById(R.id.button_layout);
+            rateBtn = itemView.findViewById(R.id.reviewBtn);
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             OrderItemList.setLayoutManager(linearLayoutManager);

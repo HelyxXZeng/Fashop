@@ -34,6 +34,7 @@ import java.util.List;
 import Fragment.HomeFragment;
 import Fragment.MeFragment;
 import Fragment.NotificationFragment;
+import Model.NotificationModel;
 import Model.ProductCategory;
 import Model.ProductModel;
 
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity{
         invalidateOptionsMenu();
 
         cartCounter();
+        notifCounter();
 
 
         //
@@ -102,9 +104,11 @@ public class MainActivity extends AppCompatActivity{
 
     private void cartCounter() {
         BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.cart);
-        badgeDrawable.setVisible(true);
-        badgeDrawable.setMaxCharacterCount(2);
+        badgeDrawable.setMaxCharacterCount(3);
         badgeDrawable.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.redBadge));
+
+        badgeDrawable.setHorizontalOffset(0);
+        badgeDrawable.setVerticalOffset(5);
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CartItem");
@@ -113,7 +117,15 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int quantityCartItem = (int) snapshot.getChildrenCount();
-                        badgeDrawable.setNumber(quantityCartItem);
+                        if (quantityCartItem > 0)
+                        {
+                            badgeDrawable.setVisible(true);
+                            badgeDrawable.setNumber(quantityCartItem);
+                        }
+
+                        else {
+                            badgeDrawable.setVisible(false);
+                        }
                     }
 
                     @Override
@@ -121,6 +133,47 @@ public class MainActivity extends AppCompatActivity{
 
                     }
                 });
+    }
+
+    private void notifCounter() {
+        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.notification);
+        badgeDrawable.setMaxCharacterCount(3);
+        badgeDrawable.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.redBadge));
+
+        badgeDrawable.setHorizontalOffset(12);
+        badgeDrawable.setVerticalOffset(5);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notification");
+        Query notifQuery = ref.orderByChild("customerID").equalTo(FirebaseAuth.getInstance().getUid());
+        notifQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int quantityNotif = 0;
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    NotificationModel notifModel = dataSnapshot.getValue(NotificationModel.class);
+                    if (notifModel != null && notifModel.getType() != null
+                            && notifModel.getType().equals("OrderStatusChanged")
+                            && notifModel.getStatus().equals("Unread")){
+                        quantityNotif++;
+                    }
+                }
+
+                if (quantityNotif > 0)
+                {
+                    badgeDrawable.setVisible(true);
+                    badgeDrawable.setNumber(quantityNotif);
+                }
+                else {
+                    badgeDrawable.setVisible(false);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
