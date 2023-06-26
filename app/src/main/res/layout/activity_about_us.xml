@@ -67,49 +67,97 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tvFirstHelpTitle"
-                android:padding="10dp"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is the first title"
-                android:textSize="22sp"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground"
-                android:backgroundTint="@android:color/transparent"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:padding="10dp"
-                android:id="@+id/tvFirstHelpContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is the first content"
-                android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/tvFirstHelpTitle"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome to Fashop"
+                    android:textSize="18sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
 
-            <TextView
-                android:id="@+id/tvSecondHelpTitle"
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is the second title"
-                android:textSize="22sp"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground"
-                android:backgroundTint="@android:color/transparent"/>
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Established 20/6/2023"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
 
-            <TextView
-                android:padding="10dp"
-                android:id="@+id/tvSecondHelpContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is the second content"
-                android:visibility="gone"/>
-        </LinearLayout>
+                <TextView
+                    android:padding="10dp"
+                    android:id="@+id/tvFirstHelpContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This is the first content"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address "
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hotline "
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email "
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="At Fashop, we understand that fashion is more than just clothing; it's a form of self-expression. That's why our team is constantly curating a wide range of fashion-forward apparel to suit every taste and occasion. Whether you're looking for casual everyday wear, elegant evening attire, or statement pieces that make heads turn, we've got you covered. "
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:clickable="true"
+                    android:padding="10dp"
+                    android:text="We value your satisfaction and aim to exceed your expectations with our friendly customer service and hassle-free shopping experience. Your feedback is essential to us, as it helps us continuously improve and provide you with even better service." />
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Visit Fashop today and explore our collection of trendy clothing. We look forward to being a part of your fashion journey!" />
+            </LinearLayout>
+        </ScrollView>
+
+
 
     </LinearLayout>
 
