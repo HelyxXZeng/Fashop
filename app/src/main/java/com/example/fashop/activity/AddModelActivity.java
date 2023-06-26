@@ -299,6 +299,7 @@ public class AddModelActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         // Handle any errors here
+                        Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -315,6 +316,7 @@ public class AddModelActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         // Handle any errors here
+                        Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -350,7 +352,7 @@ public class AddModelActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
