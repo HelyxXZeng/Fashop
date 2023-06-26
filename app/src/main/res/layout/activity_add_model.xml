@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Model"
+        android:text="Product Model"
         android:gravity="center_horizontal"
         android:textSize="25sp"
         android:textStyle="bold"/>
