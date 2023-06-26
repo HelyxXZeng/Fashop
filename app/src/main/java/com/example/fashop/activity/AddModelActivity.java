@@ -148,7 +148,7 @@ public class AddModelActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Failed to read value
-                Toast.makeText(getApplicationContext(), "Failed to get category data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -299,6 +299,7 @@ public class AddModelActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         // Handle any errors here
+                        Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -315,6 +316,7 @@ public class AddModelActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         // Handle any errors here
+                        Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -350,7 +352,7 @@ public class AddModelActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -384,7 +386,7 @@ public class AddModelActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                                     progressDialog.dismiss();
-                                                    Toast.makeText(AddModelActivity.this, "Update Model Successfully!", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(AddModelActivity.this, "Task Completed!", Toast.LENGTH_SHORT).show();
 
                                                     sizeList.clear();
                                                     sizeAdapter.notifyDataSetChanged();
@@ -408,6 +410,7 @@ public class AddModelActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -431,7 +434,7 @@ public class AddModelActivity extends AppCompatActivity {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
+                                Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -466,6 +469,7 @@ public class AddModelActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(AddModelActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
     }
