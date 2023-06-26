@@ -8,16 +8,22 @@ import java.io.Serializable;
 
 public class OrderItem implements Serializable {
     private int ID;
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     private String comment;
     private int orderID;
     private int quantity;
     private float rate;
     private int variantID;
+
+    @Exclude
+    private double price;
+    @Exclude
+    private String color;
+    @Exclude
+    private String size;
+    @Exclude
+    private String image;
+    @Exclude
+    private String productName;
 
     public OrderItem(){}
     public OrderItem(OrderItem item) {
@@ -28,24 +34,6 @@ public class OrderItem implements Serializable {
         this.rate = item.getRate();
         this.variantID = item.getVariantID();
     }
-
-
-    @Exclude
-    public double getPrice() {
-        return price;
-    }
-
-    @Exclude
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    @Exclude
-    private double price;
-    private String color;
-    private String size;
-    private String image;
-    private String productName;
 
     public void setOrderItem(@NonNull CartItem cartItem) {
         quantity = cartItem.getQuantity();
@@ -59,32 +47,46 @@ public class OrderItem implements Serializable {
         color = cartItem.getColor();
     }
 
+    @Exclude
+    public double getPrice() {
+        return price;
+    }
+
+    @Exclude
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public void setRate(float rate) { this.rate = rate; }
 
     public float getRate() {return rate;}
 
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
     public String getComment() {return comment;}
 
+    @Exclude
     public String getColor() {
         return color;
     }
-
+    @Exclude
     public void setColor(String color) {
         this.color = color;
     }
-
+    @Exclude
     public String getSize() {
         return size;
     }
-
+    @Exclude
     public void setSize(String size) {
         this.size = size;
     }
-
+    @Exclude
     public String getProductName() {
         return productName;
     }
-
+    @Exclude
     public void setProductName(String productName) {
         this.productName = productName;
     }
@@ -94,11 +96,11 @@ public class OrderItem implements Serializable {
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
-
+    @Exclude
     public String getImage() {
         return image;
     }
-
+    @Exclude
     public void setImage(String image) {
         this.image = image;
     }
