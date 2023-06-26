@@ -32,11 +32,13 @@ import Model.ProductVariant;
 
 public class StatisticsActivity extends AppCompatActivity {
     private List<ProductModel> modelList = new ArrayList<>();
+    private List<OrderItem> orderItemList = new ArrayList<>();
     private RecyclerView rcStatistics;
     private ModelStatisticsAdapter adapter;
     private TextView tvNumberOfCustomers;
     private TextView tvNumberOfModels;
     private TextView tvRevenue;
+    private boolean isDoneOrderItem = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,30 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private void getData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref2 = database.getReference("OrderItem");
+
+
+        ref2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                orderItemList.clear();
+                for (DataSnapshot orderItemSnapshot : dataSnapshot.getChildren()) {
+                    OrderItem orderItem = orderItemSnapshot.getValue(OrderItem.class);
+
+                    // Do something with the retrieved OrderItem objects
+                    orderItemList.add(orderItem);
+                }
+                isDoneOrderItem = true;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+
+        //-----------
+
         DatabaseReference ref = database.getReference("Model");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,41 +98,62 @@ public class StatisticsActivity extends AppCompatActivity {
                                 variantIds.add(variant.getID());
                             }
 
-                            // Step 3: Query all OrderItem objects that reference any of the retrieved Variant objects.
-                            Query orderItemQuery = FirebaseDatabase.getInstance().getReference("OrderItem")
-                                    .orderByChild("variantID")
-                                    .startAt(variantIds.get(0))
-                                    .endAt(variantIds.get(variantIds.size() - 1) + "\uf8ff");
+                            long quantity = 0;
+                            float rate = 0;
+                            long count = 0;
 
-                            orderItemQuery.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    long quantity = 0;
-                                    float rate = 0;
-                                    long count = 0;
-                                    for (DataSnapshot orderItemSnapshot : dataSnapshot.getChildren()) {
-                                        OrderItem orderItem = orderItemSnapshot.getValue(OrderItem.class);
-
-                                        // Do something with the retrieved OrderItem objects
-                                        quantity += orderItem.getQuantity();
-                                        if (orderItem.getRate() != 0){
-                                            rate += orderItem.getRate();
-                                            ++count;
-                                        }
+                            while (isDoneOrderItem == false);
+                            for (OrderItem orderItem : orderItemList){
+                                if (variantIds.contains(orderItem.getVariantID())){
+                                    quantity += orderItem.getQuantity();
+                                    if (orderItem.getRate() != 0){
+                                        rate += orderItem.getRate();
+                                        ++count;
                                     }
-                                    model.setQuantity(quantity);
-                                    model.setRate(rate/count);
-//                                    totalRevenue += model.getQuantity() * model.getPrice();
-//                                    String formattedNumber = String.format("%.1f", totalRevenue);
-//                                    tvRevenue.setText(formattedNumber);
-                                    adapter.notifyDataSetChanged();
                                 }
+                            }
+                            model.setQuantity(quantity);
+                            model.setRate(rate/count);
+                            adapter.notifyDataSetChanged();
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    // Handle error
-                                }
-                            });
+//                            // Step 3: Query all OrderItem objects that reference any of the retrieved Variant objects.
+//                            DatabaseReference ref = database.getReference("OrderItem");
+//
+//
+//                            ref.addValueEventListener(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                    long quantity = 0;
+//                                    float rate = 0;
+//                                    long count = 0;
+//                                    for (DataSnapshot orderItemSnapshot : dataSnapshot.getChildren()) {
+//                                        OrderItem orderItem = orderItemSnapshot.getValue(OrderItem.class);
+//
+//                                        // Do something with the retrieved OrderItem objects
+//                                        for (int variantId : variantIds){
+//                                            if (variantId == orderItem.getVariantID()){
+//                                                quantity += orderItem.getQuantity();
+//                                                if (orderItem.getRate() != 0){
+//                                                    rate += orderItem.getRate();
+//                                                    ++count;
+//                                                }
+//                                                break;
+//                                            }
+//                                        }
+//                                    }
+//                                    model.setQuantity(quantity);
+//                                    model.setRate(rate/count);
+////                                    totalRevenue += model.getQuantity() * model.getPrice();
+////                                    String formattedNumber = String.format("%.1f", totalRevenue);
+////                                    tvRevenue.setText(formattedNumber);
+//                                    adapter.notifyDataSetChanged();
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                                    // Handle error
+//                                }
+//                            });
 
                         }
 
