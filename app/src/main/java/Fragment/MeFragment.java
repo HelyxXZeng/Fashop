@@ -347,10 +347,10 @@ public class MeFragment extends Fragment {
             startActivity(intent);
         });
 
-        tvLegalInformation.setOnClickListener(v->{
-            Intent intent = new Intent(context, LegalInformationActivity.class);
-            startActivity(intent);
-        });
+//        tvLegalInformation.setOnClickListener(v->{
+//            Intent intent = new Intent(context, LegalInformationActivity.class);
+//            startActivity(intent);
+//        });
 
         tvAboutUs.setOnClickListener(v->{
             Intent intent = new Intent(context, AboutUsActivity.class);

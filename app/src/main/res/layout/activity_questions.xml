@@ -67,49 +67,119 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tvFirstHelpTitle"
-                android:padding="10dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is the first title"
-                android:textSize="22sp"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground"
-                android:backgroundTint="@android:color/transparent"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:padding="10dp"
-                android:id="@+id/tvFirstHelpContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is the first content"
-                android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/tvFirstHelpTitle"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Frequently Asked Questions"
+                    android:textSize="17sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
 
-            <TextView
-                android:id="@+id/tvSecondHelpTitle"
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is the second title"
-                android:textSize="22sp"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground"
-                android:backgroundTint="@android:color/transparent"/>
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1. How can I place an order?"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
 
-            <TextView
-                android:padding="10dp"
-                android:id="@+id/tvSecondHelpContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="This is the second content"
-                android:visibility="gone"/>
-        </LinearLayout>
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="To place an order, simply browse through our collection and select the products you wish to purchase. Proceed to checkout, provide your shipping information, and select the COD payment method. Confirm your order, and we will deliver it to you.
+"
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2. What payment method do you accept?"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="We only accept cash on delivery (COD) as the payment method. You will pay in cash to the delivery personnel upon receiving your order."
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3. Is there a shipping fee for my order?"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="We provide free shipping for orders paid with the COD method. You won't be charged any additional shipping fees."
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4. When will I receive my order??"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="The delivery time depends on your location and the distance from our store. Typically, you can expect to receive your order within 3 to 7 days from the order confirmation."
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5. Can I cancel my order after placing it?"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="You can cancel your order before receiving it. Please contact us as soon as possible to request a cancellation and provide the reason. We will process your request and inform you of the cancellation status."
+                    android:textSize="15sp"
+                    android:clickable="true"
+                    android:backgroundTint="@android:color/transparent"/>
+
+
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 

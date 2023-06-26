@@ -19,7 +19,7 @@ public class LegalInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_legal_information);
 
-        initUI();
+//        initUI();
     }
 
     private void initUI() {
