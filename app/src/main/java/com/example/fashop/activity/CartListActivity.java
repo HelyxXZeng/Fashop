@@ -236,8 +236,11 @@ public class CartListActivity extends AppCompatActivity {
                     {
                         if (cartItemList.get(i).getID() == cartItem.getID())
                         {
+                            CartItem currentData = cartItemList.get(i);
                             cartItemList.remove(i);
                             adapter.notifyDataSetChanged();
+                            totalOrder = Math.round((totalOrder - currentData.getPrice() * currentData.getQuantity())  * 100.0) / 100.0;
+                            totalTxt.setText(String.format("%.2f", totalOrder));
                             break;
                         }
                     }
