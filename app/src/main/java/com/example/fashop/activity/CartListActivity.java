@@ -89,10 +89,14 @@ public class CartListActivity extends AppCompatActivity {
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CartListActivity.this, OrderActivity.class);
-                intent.putExtra("cart_items_list_key", new Gson().toJson(cartItemList));
-                intent.putExtra("total_key", totalOrder);
-                startActivity(intent);
+                if (totalOrder > 0){
+                    Intent intent = new Intent(CartListActivity.this, OrderActivity.class);
+                    intent.putExtra("cart_items_list_key", new Gson().toJson(cartItemList));
+                    intent.putExtra("total_key", totalOrder);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(CartListActivity.this, "Your cart is empty", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -107,19 +107,19 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         Intent intent = null;
         if (notificationType.equals("NewOrder")){
             //open OrderDetailsSellerActivity
-//            intent = new Intent(this, SellerOrderDetailActivity.class);
-//            intent.putExtra("orderId", orderId);
-//            intent.putExtra("orderBy", buyerUid);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent = new Intent(this, SellerOrderDetailActivity.class);
+            intent.putExtra("orderId", orderId);
+            intent.putExtra("orderBy", buyerUid);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         }
         else if (notificationType.equals("OrderStatusChanged")){
-//            intent = new Intent(this, UserOrderDetailActivity.class);
-//            intent.putExtra("orderId", orderId);
-//            intent.putExtra("orderTo", sellerUid);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent = new Intent(this, UserOrderDetailActivity.class);
+            intent.putExtra("orderId", orderId);
+            intent.putExtra("orderTo", sellerUid);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
 
         PendingIntent pendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{intent} , PendingIntent.FLAG_ONE_SHOT);
@@ -135,8 +135,8 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationDescription)
                 .setSound(notificationSoundUri)
-                .setAutoCancel(true)  // cancel/dismiss when clicked
-                .setContentIntent(pendingIntent); //add intent
+                .setAutoCancel(true);  // cancel/dismiss when clicked
+//                .setContentIntent(pendingIntent); //add intent
         //show notification
         notificationManager.notify(notificationID, notificationBuilder.build());
     }
