@@ -29,10 +29,10 @@ import Model.Order;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CanceledFragment#newInstance} factory method to
+ * Use the {@link CancelledFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CanceledFragment extends Fragment {
+public class CancelledFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,7 +47,7 @@ public class CanceledFragment extends Fragment {
     private RecyclerView OrderView;
     private OrderAdapter adapter;
 
-    public CanceledFragment() {
+    public CancelledFragment() {
         // Required empty public constructor
     }
 
@@ -60,8 +60,8 @@ public class CanceledFragment extends Fragment {
      * @return A new instance of fragment CanceledFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CanceledFragment newInstance(String param1, String param2) {
-        CanceledFragment fragment = new CanceledFragment();
+    public static CancelledFragment newInstance(String param1, String param2) {
+        CancelledFragment fragment = new CancelledFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

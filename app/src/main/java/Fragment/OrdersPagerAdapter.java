@@ -1,13 +1,9 @@
 package Fragment;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.google.common.hash.HashingOutputStream;
 
 public class OrdersPagerAdapter extends FragmentStateAdapter {
 
@@ -31,7 +27,7 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
             case 4:
                 return new DeclinedFragment();
             default:
-                return new CanceledFragment();
+                return new CancelledFragment();
         }
     }
 

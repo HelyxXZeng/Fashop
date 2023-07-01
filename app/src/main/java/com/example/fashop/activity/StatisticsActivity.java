@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +42,7 @@ public class StatisticsActivity extends AppCompatActivity {
     private TextView tvNumberOfModels;
     private TextView tvRevenue;
     private boolean isDoneOrderItem = false;
+    private Button btnGraph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,5 +268,10 @@ public class StatisticsActivity extends AppCompatActivity {
         rcStatistics.setLayoutManager(manager);
         adapter = new ModelStatisticsAdapter(this, modelList);
         rcStatistics.setAdapter(adapter);
+        btnGraph = findViewById(R.id.btnGraph);
+        btnGraph.setOnClickListener(v->{
+            Intent intent = new Intent(StatisticsActivity.this, StatisticsGraphActivity.class);
+            startActivity(intent);
+        });
     }
 }
