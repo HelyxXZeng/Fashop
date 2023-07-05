@@ -270,6 +270,7 @@ tools:context=".activity.ShowDetailActivity">
 
         <LinearLayout
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -329,23 +330,30 @@ tools:context=".activity.ShowDetailActivity">
                     android:textSize="15sp"
                     android:textColor="@color/black" />
 
-                <!--                    <TextView-->
-                <!--                        android:id="@+id/seeMoreReviewsBtn"-->
-                <!--                        android:layout_marginLeft="130dp"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:text="See more"-->
-                <!--                        android:textSize="15sp"-->
-                <!--                        android:textColor="@color/gray1"-->
-                <!--                        android:layout_alignParentEnd="true"-->
-                <!--                        android:layout_marginRight="20dp"/>-->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ratingListBtn"
+                    android:layout_marginLeft="130dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentEnd="true">
+                    <TextView
+                        android:id="@+id/seeMoreReviewsBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See more"
+                        android:textSize="15sp"
+                        android:textColor="@color/gray1"/>
 
-<!--                <ImageView-->
-<!--                    android:layout_marginTop="2dp"-->
-<!--                    android:layout_width="20dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:src="@drawable/baseline_keyboard_arrow_right_24"-->
-<!--                    android:layout_alignParentEnd="true"/>-->
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/baseline_keyboard_arrow_right_24"
+                        android:layout_alignParentEnd="true"/>
+                </LinearLayout>
+
+
             </RelativeLayout>
 
             <LinearLayout

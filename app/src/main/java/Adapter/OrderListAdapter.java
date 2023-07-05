@@ -1,6 +1,7 @@
 package Adapter;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -62,7 +63,8 @@ public class OrderListAdapter  extends RecyclerView.Adapter<OrderListAdapter.Vie
         switch (holder.status.getText().toString())
         {
             case "PENDING":
-                holder.status.setTextColor(Color.YELLOW);
+                int yellowColor = ContextCompat.getColor(context, R.color.yellow);
+                holder.status.setTextColor(yellowColor);
                 break;
             case "CONFIRMED":
                 holder.status.setTextColor(0xFF8BC34A);

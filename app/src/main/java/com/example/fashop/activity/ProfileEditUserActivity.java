@@ -98,7 +98,7 @@ public class ProfileEditUserActivity extends AppCompatActivity {
         nameEt = findViewById(R.id.nameEt);
         phoneEt = findViewById(R.id.phoneEt);
         emailEt = findViewById(R.id.emailEt);
-        passwordEt = findViewById(R.id.passwordEt);
+//        passwordEt = findViewById(R.id.passwordEt);
         addressEt = findViewById(R.id.addressEt);
         spinner_ward = findViewById(R.id.spinner_ward);
         spinner_city = findViewById(R.id.spinner_city);
@@ -314,13 +314,13 @@ public class ProfileEditUserActivity extends AppCompatActivity {
                             String profileImage = ""+ds.child("profileImage").getValue();
                             String timestamp = ""+ds.child("timestamp").getValue();
                             String uid = ""+ds.child("uid").getValue();
-                            oldPassword = password;
+//                            oldPassword = password;
                             oldEmail = email;
 
                             nameEt.setText(name);
                             phoneEt.setText(phone);
                             emailEt.setText(email);
-                            passwordEt.setText(password);
+//                            passwordEt.setText(password);
                             addressEt.setText(streetAddress);
 
                             try{
@@ -348,7 +348,7 @@ public class ProfileEditUserActivity extends AppCompatActivity {
         fullName = nameEt.getText().toString().trim();
         phoneNumber = phoneEt.getText().toString().trim();
         email = emailEt.getText().toString().trim();
-        password = passwordEt.getText().toString().trim();
+//        password = passwordEt.getText().toString().trim();
         streetAddress = addressEt.getText().toString().trim();
 
         //
@@ -371,10 +371,10 @@ public class ProfileEditUserActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid email pattern...", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (password.length() < 6){
-            Toast.makeText(this, "Password must be at least 6 characters long...", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (password.length() < 6){
+//            Toast.makeText(this, "Password must be at least 6 characters long...", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         //
         updateProfile();
     }
@@ -404,12 +404,12 @@ public class ProfileEditUserActivity extends AppCompatActivity {
                 updateEmail(newEmail);
             }
 
-            String newPassword = passwordEt.getText().toString().trim();
-            if (!newPassword.equals(oldPassword))
-            {
-                hashMap.put("password", ""+newPassword);
-                changePassword(newPassword);
-            }
+//            String newPassword = passwordEt.getText().toString().trim();
+//            if (!newPassword.equals(oldPassword))
+//            {
+//                hashMap.put("password", ""+newPassword);
+//                changePassword(newPassword);
+//            }
 
             //save to db
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
@@ -466,12 +466,12 @@ public class ProfileEditUserActivity extends AppCompatActivity {
                                     updateEmail(newEmail);
                                 }
 
-                                String newPassword = passwordEt.getText().toString().trim();
-                                if (!newPassword.equals(oldPassword))
-                                {
-                                    hashMap.put("password", ""+newPassword);
-                                    changePassword(newPassword);
-                                }
+//                                String newPassword = passwordEt.getText().toString().trim();
+//                                if (!newPassword.equals(oldPassword))
+//                                {
+//                                    hashMap.put("password", ""+newPassword);
+//                                    changePassword(newPassword);
+//                                }
 
 
                                 //save to db

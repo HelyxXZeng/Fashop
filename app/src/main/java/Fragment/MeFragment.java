@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.fashop.R;
 import com.example.fashop.activity.AboutUsActivity;
+import com.example.fashop.activity.ChangePasswordActivity;
 import com.example.fashop.activity.LegalInformationActivity;
 import com.example.fashop.activity.LoginActivity;
 import com.example.fashop.activity.MainActivity;
@@ -90,7 +91,7 @@ public class MeFragment extends Fragment {
     private SharedPreferences sp;
     private SharedPreferences.Editor spEditor;
 
-    private LinearLayout hotlineBtn;
+    private LinearLayout hotlineBtn, changPasswordBtn;
     private TextView hotlineNumber;
 
     private String hotline;
@@ -137,6 +138,7 @@ public class MeFragment extends Fragment {
         notificationStatusTv = view.findViewById(R.id.notificationStatusTv);
         hotlineBtn = view.findViewById(R.id.hotlineBtn);
         hotlineNumber = view.findViewById(R.id.hotlineNumber);
+        changPasswordBtn = view.findViewById(R.id.changPasswordBtn);
         //init shared preferences
         sp = context.getSharedPreferences("SETTINGS_SP", context.MODE_PRIVATE);
         //check last selected option; true/false
@@ -407,6 +409,13 @@ public class MeFragment extends Fragment {
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(intent);
                 }
+            }
+        });
+
+        changPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), ChangePasswordActivity.class));
             }
         });
     }
