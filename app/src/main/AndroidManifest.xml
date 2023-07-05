@@ -24,7 +24,7 @@
         <activity
             android:name=".activity.StatisticsGraphActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.DetailReviewActivity"
             android:exported="false"
