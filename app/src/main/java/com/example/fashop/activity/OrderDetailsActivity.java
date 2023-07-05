@@ -108,9 +108,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     String district = "" + ds.child("district").getValue();
                     String ward = "" + ds.child("ward").getValue();
                     String street = "" + ds.child("streetAddress").getValue();
-                    address.setText("Address: " + street + ", " + ward + ", " + district + ", " + city);
+                    address.setText(street + ", " + ward + ", " + district + ", " + city);
 
-                    String name = "User Name: " + ds.child("name").getValue();
+                    String name = "" + ds.child("name").getValue();
                     un.setText(name);
                 }
             }

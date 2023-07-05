@@ -74,6 +74,7 @@ public class MeFragment extends Fragment {
     private ImageView imgAvt;
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
     private LinearLayout PendingLayout, ConfirmedLayout, ShippingLayout, CompletedLayout;
+    TextView pendingBadge, confirmedBadge, shippingBadge, completedBadge;
 
     private ImageButton editBtn;
 
@@ -156,6 +157,11 @@ public class MeFragment extends Fragment {
         CompletedLayout = view.findViewById(R.id.CompletedLayout);
         ShippingLayout = view.findViewById(R.id.ShippingLayout);
 
+        pendingBadge = view.findViewById(R.id.pendingBadge);
+        shippingBadge = view.findViewById(R.id.shippingBadge);
+        confirmedBadge = view.findViewById(R.id.confirmedBadge);
+        completedBadge = view.findViewById(R.id.completedBadge);
+
         //
 
         checkUser();
@@ -167,23 +173,32 @@ public class MeFragment extends Fragment {
     private void loadBadger(){
 
 // Set the badge on the LinearLayout
-        BadgeDrawable badgeDrawable = BadgeDrawable.create(context);
-        badgeDrawable.setVisible(true);
-        badgeDrawable.setMaxCharacterCount(2);
-        badgeDrawable.setBackgroundColor(ContextCompat.getColor(context, R.color.redBadge));
-        badgeDrawable.setBounds(0, 0, badgeDrawable.getIntrinsicWidth(), badgeDrawable.getIntrinsicHeight());
-        badgeDrawable.setNumber(0);
-
-        PendingLayout.setForeground(badgeDrawable);
-        PendingLayout.setPadding(0, 0, 10, 0); // Add padding for the badge
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Order");
         Query cartItems = ref.orderByChild("customerID").equalTo(FirebaseAuth.getInstance().getUid());
         cartItems.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int quantityCartItem = (int) snapshot.getChildrenCount();
-                badgeDrawable.setNumber(quantityCartItem);
+                int pendingOrder = 0;
+                int shippingOrder = 0;
+                int confirmedOrder = 0;
+                int completedOrder = 0;
+                for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                    String status = orderSnapshot.child("status").getValue(String.class);
+                    if (status == null) continue;
+                    if (status.equals("PENDING")) {
+                        pendingOrder++;
+                    } else if (status.equals("SHIPPING")) {
+                        shippingOrder++;
+                    } else if (status.equals("CONFIRMED")) {
+                        confirmedOrder++;
+                    } else if (status.equals("COMPLETED")) {
+                        completedOrder++;
+                    }
+                }
+                pendingBadge.setText(Integer.toString(pendingOrder));
+                shippingBadge.setText(Integer.toString(shippingOrder));
+                completedBadge.setText(Integer.toString(completedOrder));
+                confirmedBadge.setText(Integer.toString(confirmedOrder));
             }
 
             @Override
