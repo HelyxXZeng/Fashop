@@ -33,6 +33,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import Model.ModelImage;
@@ -67,6 +69,7 @@ public class StatisticsGraphActivity extends AppCompatActivity {
         DatabaseReference ref2 = database.getReference("OrderItem");
         DatabaseReference orderRef = database.getReference("Order");
 
+        isDoneOrderItem = false;
         ref2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -169,8 +172,9 @@ public class StatisticsGraphActivity extends AppCompatActivity {
                     });
 
                     modelList.add(model);
-                    setData();
+
                 }
+                setData();
             }
 
             @Override
@@ -183,12 +187,22 @@ public class StatisticsGraphActivity extends AppCompatActivity {
     }
 
     private void setData() {
+        // Lấy 5 phần tử có quantity lớn nhất từ modelList
+        List<ProductModel> topFiveProducts = modelList;
+        Collections.sort(topFiveProducts, new Comparator<ProductModel>() {
+            @Override
+            public int compare(ProductModel p1, ProductModel p2) {
+                return Long.compare(p2.getQuantity(), p1.getQuantity());
+            }
+        });
+        topFiveProducts = topFiveProducts.subList(0, Math.min(topFiveProducts.size(), 5));
+
         ArrayList<String> modelNameList = new ArrayList<>();
         List<BarEntry> barEntries = new ArrayList<>();
-        for (int i = 0; i < modelList.size(); i++) {
-            float quantity = modelList.get(i).getQuantity();
+        for (int i = 0; i < topFiveProducts.size(); i++) {
+            float quantity = topFiveProducts.get(i).getQuantity();
             barEntries.add(new BarEntry(i, quantity));
-            modelNameList.add(modelList.get(i).getName());
+            modelNameList.add(topFiveProducts.get(i).getName());
         }
 
         chart.setDrawBarShadow(false);
@@ -204,8 +218,8 @@ public class StatisticsGraphActivity extends AppCompatActivity {
                 int index = (int) value;
                 if (index >= 0 && index < modelNameList.size()) {
                     String modelName = modelNameList.get(index);
-                    if (modelName.length() > 8) {
-                        return modelName.substring(0, 5) + "...";
+                    if (modelName.length() > 12) {
+                        return modelName.substring(0, 9) + "...";
                     } else {
                         return modelName;
                     }
@@ -214,13 +228,23 @@ public class StatisticsGraphActivity extends AppCompatActivity {
                 }
             }
         });
-        xAxis.setLabelRotationAngle(90); // Rotate the labels by 45 degrees
+        xAxis.setLabelRotationAngle(90); // Rotate the labels by 90 degrees
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Place the labels at the bottom of the chart
 
+
         YAxis yAxis = chart.getAxisLeft();
+        // Set the ValueFormatter for Y-axis
+        yAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                int intValue = (int) value;
+                return String.valueOf(intValue);
+            }
+        });
         yAxis.setGranularity(1f);
 
         chart.getAxisRight().setEnabled(false);
+
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Model Quantities");
 //        barDataSet.setColor(Color.BLUE); // Set your desired color for the bars
