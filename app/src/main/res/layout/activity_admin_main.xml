@@ -229,12 +229,12 @@
                         android:background="@drawable/square_button_background"
                         android:contentDescription="Item 2"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/order_management_icon" />
+                        android:src="@drawable/orderimg" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Order Management"
+                        android:text="Orders"
                         android:textSize="13sp"
                         android:gravity="center"/>
 
@@ -256,7 +256,7 @@
                         android:background="@drawable/square_button_background"
                         android:contentDescription="Item 2"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/settings_icon" />
+                        android:src="@drawable/engineer" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -291,12 +291,12 @@
                         android:background="@drawable/square_button_background"
                         android:contentDescription="Customer Manage"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/customer_mngm_icon" />
+                        android:src="@drawable/customerimg" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Customer Manage"
+                        android:text="Customers"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -319,12 +319,12 @@
                         android:background="@drawable/square_button_background"
                         android:contentDescription="Item 1"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/staff"/>
+                        android:src="@drawable/staffmanaimg"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Staff Management"
+                        android:text="Staffs"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -369,7 +369,7 @@
                         android:background="@drawable/square_button_background"
                         android:contentDescription="Statistics"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/statistics" />
+                        android:src="@drawable/data_statistic" />
 
                     <TextView
                         android:layout_width="wrap_content"

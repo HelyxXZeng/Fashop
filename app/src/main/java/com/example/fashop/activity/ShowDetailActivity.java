@@ -1,5 +1,7 @@
 package com.example.fashop.activity;
 
+import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -59,6 +61,8 @@ public class ShowDetailActivity extends AppCompatActivity {
     private int soldProductQuantity = 0;
     private int reviewCount = 0;
 
+    private LinearLayout ratingListBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +74,24 @@ public class ShowDetailActivity extends AppCompatActivity {
 //        managementCart = new ManagementCart(this);
 
         initView();
+        initListener();
         getBundle();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         reviewRecycler.setLayoutManager(linearLayoutManager);
         reviewAdapter = new ReviewAdapter(orderItemList);
         reviewRecycler.setAdapter(reviewAdapter);
         loadFeedback_Stats();
+    }
+
+    private void initListener() {
+        ratingListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShowDetailActivity.this, RatingListActivity.class);
+                intent.putExtra("object", object);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getBundle(){
@@ -186,6 +202,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         rating2Tv = findViewById(R.id.rating2Tv);
         soldTv = findViewById(R.id.soldTv);
         reviewQuantityTv = findViewById(R.id.reviewQuantityTv);
+        ratingListBtn = findViewById(R.id.ratingListBtn);
 //        seeMoreReviewsBtn = findViewById(R.id.seeMoreReviewsBtn);
         reviewRecycler = findViewById(R.id.reviewRecycler);
 
@@ -245,14 +262,22 @@ public class ShowDetailActivity extends AppCompatActivity {
                                 if (orderItem.getVariantID() == variantId)
                                 {
                                     if (orderItem.getRate() != 0){
-                                        orderItemList.add(orderItem);
                                         ratingScore += orderItem.getRate();
                                         reviewCount++;
+                                        if (reviewCount <= 5)
+                                            orderItemList.add(orderItem);
                                     }
                                     soldProductQuantity += orderItem.getQuantity();
                                     break;
                                 }
                             }
+                        }
+
+                        if (reviewCount <= 5){
+                            ratingListBtn.setVisibility(View.GONE);
+                        }
+                        else{
+                            ratingListBtn.setVisibility(View.VISIBLE);
                         }
 
 //                            Log.e("sizebeafter", String.valueOf(orderItemList.size()));

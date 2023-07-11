@@ -22,6 +22,18 @@
         android:theme="@style/Theme.Fashop"
         tools:targetApi="31">
         <activity
+            android:name=".activity.NewPasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RatingListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.StatisticsGraphActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
