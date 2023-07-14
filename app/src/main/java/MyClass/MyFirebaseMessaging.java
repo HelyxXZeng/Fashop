@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.OrderDetailsActivity;
 import com.example.fashop.activity.SellerOrderDetailActivity;
 import com.example.fashop.activity.UserOrderDetailActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,11 +31,15 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
 
+import Model.Order;
+
 public class MyFirebaseMessaging extends FirebaseMessagingService {
     private static final String NOTIFICATION_CHANNEL_ID = "MY_NOTIFICATION_CHANNEL_ID";
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+
+    private Intent intent;
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -69,7 +74,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
                             if (notificationType.equals("OrderStatusChanged")){
                                 String buyerUid = remoteMessage.getData().get("buyerUid");
                                 String sellerUid = remoteMessage.getData().get("shopAccountType");
-                                String orderId = remoteMessage.getData().get("orderUid");
+                                String orderId = remoteMessage.getData().get("orderId");
                                 String notificationTitle = remoteMessage.getData().get("notificationTitle");
                                 String notificationDescription = remoteMessage.getData().get("notificationMessage"); //
 
@@ -104,22 +109,13 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         }
 
         //handle notification click, start order activity
-        Intent intent = null;
+
         if (notificationType.equals("NewOrder")){
             //open OrderDetailsSellerActivity
-            intent = new Intent(this, SellerOrderDetailActivity.class);
-            intent.putExtra("orderId", orderId);
-            intent.putExtra("orderBy", buyerUid);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
+            intent = new Intent(this, OrderDetailsActivity.class);
         }
         else if (notificationType.equals("OrderStatusChanged")){
-            intent = new Intent(this, UserOrderDetailActivity.class);
-            intent.putExtra("orderId", orderId);
-            intent.putExtra("orderTo", sellerUid);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent = new Intent(this, OrderDetailsActivity.class);
         }
 
         PendingIntent pendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{intent} , PendingIntent.FLAG_ONE_SHOT);

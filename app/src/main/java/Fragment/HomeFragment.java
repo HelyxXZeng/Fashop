@@ -127,19 +127,19 @@ public class HomeFragment extends Fragment {
         rcCategories = view.findViewById(R.id.rcCategories);
         rcModels = view.findViewById(R.id.rcModel);
 
-        EditText edtSearch = view.findViewById(R.id.edtSearch);
-        edtSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateSearch();
-                Intent intent = new Intent(context, SearchActivity.class);
-                intent.putExtra("model_list_key", new Gson().toJson(modelList));
-                intent.putExtra("categories_list_key", new Gson().toJson(categories));
-                startActivity(intent);
-                //Log.v("Hi", "Works perfectly");
-            }
-
-        });
+//        EditText edtSearch = view.findViewById(R.id.edtSearch);
+//        edtSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateSearch();
+//                Intent intent = new Intent(context, SearchActivity.class);
+//                intent.putExtra("model_list_key", new Gson().toJson(modelList));
+//                intent.putExtra("categories_list_key", new Gson().toJson(categories));
+//                startActivity(intent);
+//                //Log.v("Hi", "Works perfectly");
+//            }
+//
+//        });
 
         /*edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
