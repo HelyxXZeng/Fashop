@@ -65,12 +65,15 @@ public class OrderHistoryActivity extends AppCompatActivity {
                         tab.setText("Shipping");
                         break;
                     case 3:
-                        tab.setText("Completed");
+                        tab.setText("Review");
                         break;
                     case 4:
-                        tab.setText("Declined");
+                        tab.setText("Completed");
                         break;
                     case 5:
+                        tab.setText("Declined");
+                        break;
+                    case 6:
                         tab.setText("Canceled");
                         break;
                 }

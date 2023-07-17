@@ -9,11 +9,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +27,12 @@ import com.example.fashop.activity.AboutUsActivity;
 import com.example.fashop.activity.ChangePasswordActivity;
 import com.example.fashop.activity.LegalInformationActivity;
 import com.example.fashop.activity.LoginActivity;
-import com.example.fashop.activity.MainActivity;
 import com.example.fashop.activity.OrderHistoryActivity;
 import com.example.fashop.activity.PrivacyPolicyActivity;
 import com.example.fashop.activity.ProfileEditUserActivity;
 import com.example.fashop.activity.QuestionsActivity;
-import com.example.fashop.activity.SettingActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,6 +46,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import Model.OrderItem;
 import MyClass.Constants;
 
 /**
@@ -73,8 +69,8 @@ public class MeFragment extends Fragment {
 
     private ImageView imgAvt;
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
-    private LinearLayout PendingLayout, ConfirmedLayout, ShippingLayout, CompletedLayout;
-    TextView pendingBadge, confirmedBadge, shippingBadge, completedBadge;
+    private LinearLayout PendingLayout, ConfirmedLayout, ShippingLayout, ReviewLayout, CompletedLayout;
+    TextView pendingBadge, confirmedBadge, shippingBadge, reviewBadge;
 
     private ImageButton editBtn;
 
@@ -156,11 +152,12 @@ public class MeFragment extends Fragment {
         ConfirmedLayout = view.findViewById(R.id.ConfirmedLayout);
         CompletedLayout = view.findViewById(R.id.CompletedLayout);
         ShippingLayout = view.findViewById(R.id.ShippingLayout);
+        ReviewLayout = view.findViewById(R.id.ReviewLayout);
 
         pendingBadge = view.findViewById(R.id.pendingBadge);
         shippingBadge = view.findViewById(R.id.shippingBadge);
         confirmedBadge = view.findViewById(R.id.confirmedBadge);
-        completedBadge = view.findViewById(R.id.completedBadge);
+        reviewBadge = view.findViewById(R.id.reviewBadge);
 
         //
 
@@ -181,7 +178,7 @@ public class MeFragment extends Fragment {
                 int pendingOrder = 0;
                 int shippingOrder = 0;
                 int confirmedOrder = 0;
-                int completedOrder = 0;
+                int[] completedOrder = {0};
                 for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
                     String status = orderSnapshot.child("status").getValue(String.class);
                     if (status == null) continue;
@@ -192,12 +189,40 @@ public class MeFragment extends Fragment {
                     } else if (status.equals("CONFIRMED")) {
                         confirmedOrder++;
                     } else if (status.equals("COMPLETED")) {
-                        completedOrder++;
+                        int id = orderSnapshot.child("id").getValue(int.class);
+                        Log.v("OrderID", Integer.toString(id));
+
+                        DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("OrderItem");
+                        Query query = ref2.orderByChild("orderID").equalTo(id);
+                        query.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot ds: snapshot.getChildren()){
+                                    OrderItem orderItem =  ds.getValue(OrderItem.class);
+
+                                    //
+                                    if (orderItem.getRate() != 0){
+                                        continue;
+                                    }
+                                    else{
+                                        completedOrder[0]++;
+                                        reviewBadge.setText(Integer.toString(completedOrder[0]));
+                                    }
+                                    break;
+                                    //
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
                 }
                 pendingBadge.setText(Integer.toString(pendingOrder));
                 shippingBadge.setText(Integer.toString(shippingOrder));
-                completedBadge.setText(Integer.toString(completedOrder));
+                reviewBadge.setText(Integer.toString(completedOrder[0]));
                 confirmedBadge.setText(Integer.toString(confirmedOrder));
             }
 
@@ -330,10 +355,18 @@ public class MeFragment extends Fragment {
             startActivity(intent);
         });
 
-        CompletedLayout.setOnClickListener(v->{
+        ReviewLayout.setOnClickListener(v->{
             Intent intent = new Intent(context, OrderHistoryActivity.class);
             Bundle args = new Bundle();
             args.putInt("tabIndex", 3);
+            intent.putExtras(args);
+            startActivity(intent);
+        });
+
+        CompletedLayout.setOnClickListener(v->{
+            Intent intent = new Intent(context, OrderHistoryActivity.class);
+            Bundle args = new Bundle();
+            args.putInt("tabIndex", 4);
             intent.putExtras(args);
             startActivity(intent);
         });
