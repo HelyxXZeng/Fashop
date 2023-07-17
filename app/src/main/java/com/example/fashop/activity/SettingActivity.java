@@ -57,6 +57,8 @@ public class SettingActivity extends AppCompatActivity {
 
     private RelativeLayout delBtnUI;
 
+    private TextView changePasswordBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class SettingActivity extends AppCompatActivity {
         fcmSwitch = findViewById(R.id.fcmSwitch);
         notificationStatusTv = findViewById(R.id.notificationStatusTv);
         delBtn = findViewById(R.id.delBtn);
+        changePasswordBtn = findViewById(R.id.changPasswordBtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -124,6 +127,12 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 deleteAccount();
+            }
+        });
+        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SettingActivity.this, ChangePasswordActivity.class));
             }
         });
     }
