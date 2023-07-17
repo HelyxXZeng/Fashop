@@ -27,8 +27,10 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
             case 2:
                 return new ShippingFragment();
             case 3:
-                return new CompletedFragment();
+                return new ReviewFragment();
             case 4:
+                return new CompletedFragment();
+            case 5:
                 return new DeclinedFragment();
             default:
                 return new CanceledFragment();

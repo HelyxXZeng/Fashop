@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fashop.R;
+import com.example.fashop.activity.OrderHistoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,13 +27,14 @@ import java.util.List;
 
 import Adapter.OrderAdapter;
 import Model.Order;
+import Model.OrderItem;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CompletedFragment#newInstance} factory method to
+ * Use the {@link PendingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CompletedFragment extends Fragment {
+public class ReviewFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,7 +49,7 @@ public class CompletedFragment extends Fragment {
     private RecyclerView OrderView;
     private OrderAdapter adapter;
 
-    public CompletedFragment() {
+    public ReviewFragment() {
         // Required empty public constructor
     }
 
@@ -57,11 +59,11 @@ public class CompletedFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CompletedFragment.
+     * @return A new instance of fragment PendingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CompletedFragment newInstance(String param1, String param2) {
-        CompletedFragment fragment = new CompletedFragment();
+    public static PendingFragment newInstance(String param1, String param2) {
+        PendingFragment fragment = new PendingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,7 +84,7 @@ public class CompletedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_completed, container, false);
+        View view = inflater.inflate(R.layout.fragment_pending, container, false);
         initUI(view);
         return view;
     }
@@ -94,6 +96,7 @@ public class CompletedFragment extends Fragment {
         OrderView.setHasFixedSize(true);
         OrderView.setAdapter(adapter);
         getOrderData();
+        loadOrder();
     }
     private void getOrderData(){
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -125,9 +128,36 @@ public class CompletedFragment extends Fragment {
     private void loadOrder(){
         loading.clear();
         for (Order order : orders){
-            if(order.getStatus().equals("COMPLETED")) loading.add(order);
+            if(order.getStatus().equals("COMPLETED")){
+
+                DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("OrderItem");
+                Query query = ref2.orderByChild("orderID").equalTo(order.getID());
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot ds: snapshot.getChildren()){
+                            OrderItem orderItem =  ds.getValue(OrderItem.class);
+
+                            //
+                            if (orderItem.getRate() != 0){
+                                continue;
+                            }
+                            else{
+                                loading.add(order);
+                                adapter.notifyDataSetChanged();
+                            }
+                            break;
+                            //
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
         }
         adapter.notifyDataSetChanged();
-
     }
 }
