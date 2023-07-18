@@ -354,7 +354,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="40dp"
                             android:orientation="vertical">
                             
                             <RelativeLayout
@@ -403,7 +403,7 @@
                             android:id="@+id/ConfirmedLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="40dp"
                             android:orientation="vertical">
 
 
@@ -450,7 +450,7 @@
                             android:id="@+id/ShippingLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="40dp"
                             android:orientation="vertical">
 
 
@@ -500,7 +500,6 @@
                             android:id="@+id/ReviewLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
                             android:orientation="vertical">
 
                             <RelativeLayout
@@ -541,54 +540,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="Review"
-                                android:textSize="12sp"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/CompletedLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:paddingTop="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:focusable="true"
-                                android:clipToPadding="false"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="10dp">
-
-
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/rate_outline"
-                                    android:layout_gravity="center"/>
-
-                                <!--<TextView
-                                    android:id="@+id/completedBadge"
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:textColor="@color/white"
-                                    android:background="@drawable/badge_shape"
-                                    android:gravity="center"
-                                    android:layout_marginTop="-5dp"
-                                    android:layout_marginLeft="27dp"
-                                    android:text="10"
-                                    android:textSize="9sp"/>-->
-
-
-                            </RelativeLayout>
-
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="Completed"
                                 android:textSize="12sp"/>
 
                         </LinearLayout>
