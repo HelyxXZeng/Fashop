@@ -175,7 +175,6 @@ public class RenueveActivity extends AppCompatActivity {
                 }
             }
         });
-        xAxis.setLabelRotationAngle(90);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         YAxis yAxis = chart.getAxisLeft();
