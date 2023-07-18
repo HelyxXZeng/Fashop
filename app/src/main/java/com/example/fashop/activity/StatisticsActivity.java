@@ -42,7 +42,7 @@ public class StatisticsActivity extends AppCompatActivity {
     private TextView tvNumberOfModels;
     private TextView tvRevenue;
     private boolean isDoneOrderItem = false;
-    private Button btnGraph;
+    private Button btnGraph, btnRevenue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -272,6 +272,11 @@ public class StatisticsActivity extends AppCompatActivity {
         btnGraph.setOnClickListener(v->{
             Intent intent = new Intent(StatisticsActivity.this, StatisticsGraphActivity.class);
             startActivity(intent);
+        });
+        btnRevenue = findViewById(R.id.btnSR);
+        btnRevenue.setOnClickListener(v -> {
+            Intent intern = new Intent(StatisticsActivity.this, RenueveActivity.class);
+            startActivity(intern);
         });
     }
 }
