@@ -189,9 +189,9 @@ public class RenueveActivity extends AppCompatActivity {
         chart.getAxisRight().setEnabled(false);
         BarDataSet barDataSet;
         if(isQ)
-            barDataSet = new BarDataSet(quarterEntries, "Quarter Revenue");
+            barDataSet = new BarDataSet(quarterEntries, "Quarter Revenue ($)");
         else
-            barDataSet = new BarDataSet(yearEntries, "Revenue");
+            barDataSet = new BarDataSet(yearEntries, "Revenue ($)");
 //        barDataSet.setColor(Color.BLUE); // Set your desired color for the bars
         barDataSet.setColor(Color.parseColor("#F44336"));
 
