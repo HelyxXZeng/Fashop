@@ -69,7 +69,7 @@ public class MeFragment extends Fragment {
 
     private ImageView imgAvt;
     private TextView tvName, tvPassword, tvAddress, tvEmail, tvPhone, tvUserName, tvUserEmail;
-    private LinearLayout PendingLayout, ConfirmedLayout, ShippingLayout, ReviewLayout, CompletedLayout;
+    private LinearLayout PendingLayout, ConfirmedLayout, ShippingLayout, ReviewLayout;
     TextView pendingBadge, confirmedBadge, shippingBadge, reviewBadge;
 
     private ImageButton editBtn;
@@ -150,7 +150,6 @@ public class MeFragment extends Fragment {
 
         PendingLayout = view.findViewById(R.id.PendingLayout);
         ConfirmedLayout = view.findViewById(R.id.ConfirmedLayout);
-        CompletedLayout = view.findViewById(R.id.CompletedLayout);
         ShippingLayout = view.findViewById(R.id.ShippingLayout);
         ReviewLayout = view.findViewById(R.id.ReviewLayout);
 
@@ -359,14 +358,6 @@ public class MeFragment extends Fragment {
             Intent intent = new Intent(context, OrderHistoryActivity.class);
             Bundle args = new Bundle();
             args.putInt("tabIndex", 3);
-            intent.putExtras(args);
-            startActivity(intent);
-        });
-
-        CompletedLayout.setOnClickListener(v->{
-            Intent intent = new Intent(context, OrderHistoryActivity.class);
-            Bundle args = new Bundle();
-            args.putInt("tabIndex", 4);
             intent.putExtras(args);
             startActivity(intent);
         });

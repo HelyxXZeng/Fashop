@@ -35,6 +35,6 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 6;
+        return 7;
     }
 }
