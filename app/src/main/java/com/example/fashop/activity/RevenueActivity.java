@@ -28,14 +28,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import Model.Order;
 
-public class RenueveActivity extends AppCompatActivity {
+public class RevenueActivity extends AppCompatActivity {
     private List<Integer> yearList = new ArrayList<>();
     private List<Integer> monthList = new ArrayList<>();
     private List<String> modeList = new ArrayList<>();
@@ -55,7 +54,7 @@ public class RenueveActivity extends AppCompatActivity {
         spinnerYear = findViewById(R.id.spinnerYear);
         spinnerMode = findViewById(R.id.spinnerMode);
 
-        for (int i = 1; i < 13; ++i){
+        for (int i = 0; i < 13; ++i){
             monthList.add(i);
         }
         for (int i = 2023; i < 2030; ++i){
@@ -131,6 +130,7 @@ public class RenueveActivity extends AppCompatActivity {
     void setData() {
         List<BarEntry> yearEntries = new ArrayList<>();
         List<BarEntry> quarterEntries = new ArrayList<>();
+        chart.clear();
 
         if(isQ) {
             for (Map.Entry<Integer, Double> entry : revenueByMonth.entrySet()) {

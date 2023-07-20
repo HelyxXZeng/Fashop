@@ -2,7 +2,6 @@ package com.example.fashop.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,11 +19,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.EditModelAdapter;
 import Adapter.ModelStatisticsAdapter;
 import Model.ModelImage;
 import Model.Order;
@@ -275,7 +272,7 @@ public class StatisticsActivity extends AppCompatActivity {
         });
         btnRevenue = findViewById(R.id.btnSR);
         btnRevenue.setOnClickListener(v -> {
-            Intent intern = new Intent(StatisticsActivity.this, RenueveActivity.class);
+            Intent intern = new Intent(StatisticsActivity.this, RevenueActivity.class);
             startActivity(intern);
         });
     }
