@@ -22,7 +22,7 @@
         android:theme="@style/Theme.Fashop"
         tools:targetApi="31">
         <activity
-            android:name=".activity.RenueveActivity"
+            android:name=".activity.RevenueActivity"
             android:exported="false" />
         <activity
             android:name=".activity.NewPasswordActivity"
